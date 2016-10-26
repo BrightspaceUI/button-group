@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "bower install",
-    "test": "npm run test:lint && npm run build && npm run test:unit:local",
+    "test": "npm run test:lint && npm run test:unit:local",
     "test:lint": "npm run test:lint:js && npm run test:lint:wc",
     "test:lint:js": "eslint --ext html .",
     "test:lint:wc": "polymer lint --input *.html",

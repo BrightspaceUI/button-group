@@ -75,7 +75,7 @@
 					var visible = [].filter.call(buttons, function(node) {
 						return node.style.display !== 'none';
 					});
-					expect(buttons.length).to.equal(1);
+					expect(visible.length).to.equal(1);
 
 					var menu = this.buttonGroup.$.menu;
 					expect(menu.style.display).to.equal('none');

@@ -61,7 +61,7 @@
 				});
 			},
 
-			showHideItems(start) {
+			showHideItems: function(start) {
 				var items = Polymer.dom(this.$.menu).children;
 				items.forEach(function(node, index) {
 					if (index <= start) {
