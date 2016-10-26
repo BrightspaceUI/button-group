@@ -1,0 +1,145 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="d2l-button-list.html">
+<link rel="import" href="d2l-button-menu.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+
+<!--
+# D2L Button Menu
+
+## Usage
+```
+<link rel="import" href="d2l-button-group">
+
+<d2l-button-group>
+	<template>
+		<button is="d2l-button">
+		</button>
+	</template>
+</d2l-button-group>
+```
+-->
+
+<dom-module id="d2l-button-group">
+	<template>
+		<content id="buttons" select="template"></content>
+		<template id="template" is="dom-template"></template>
+		<d2l-button-list id="list">
+		</d2l-button-list>
+		<d2l-button-menu id="menu" text="[[moreMenuLabel]]"></d2l-button-menu>
+	</template>
+	<script>
+		Polymer({
+			is: 'd2l-button-group',
+
+			behaviors: [Polymer.IronResizableBehavior],
+
+			properties: {
+				moreMenuLabel: {
+					type: String,
+					computed: '_getMenuLabel(mini)'
+				},
+				mini: {
+					type: Boolean,
+					readOnly: true,
+					value: false
+				}
+			},
+
+			_getMenuLabel: function(mini) {
+				return mini ? '' : 'More Actions';
+			},
+
+			listeners: {
+				'iron-resize': '_chomp'
+			},
+
+			ready: function() {
+				var self = this;
+				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
+					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
+					if (buttonTemplate) {
+						var template = self.$.template;
+						template.templatize(buttonTemplate);
+					} else {
+						console.warn('d2l-button-group requires a template to be provided'); // eslint-disable-line no-console
+					}
+					self.render();
+				});
+			},
+
+			render: function() {
+				var template = this.$.template;
+				var listClone = template.stamp({ list: true });
+				var menuClone = template.stamp({ menu: true });
+
+				var list = Polymer.dom(this.$.list);
+				var menu = Polymer.dom(this.$.menu);
+				while (list.lastChild) {
+					list.removeChild(list.lastChild);
+				}
+				while (menu.lastChild) {
+					menu.removeChild(menu.lastChild);
+				}
+				list.appendChild(listClone.root);
+				menu.appendChild(menuClone.root);
+
+				this._chomp();
+			},
+
+			_chomp: function() {
+				var items = Polymer.dom(this.$.list).children;
+				var index = items.length - 1;
+
+				this._showAll(items);
+				this._setMini(false);
+
+				if (this._isOnFirstRow(items, items[index])) {
+					this._hideItem(this.$.menu);
+					return;
+				}
+
+				this._showItem(this.$.menu);
+
+				while (index >= 0 && !this._isOnFirstRow(items, this.$.menu) && !this._keepItem(items[index])) {
+					this._hideItem(items[index]);
+					index--;
+				}
+
+				this._setMini(!this._isOnFirstRow(items, this.$.menu));
+
+				this.$.menu.showHideItems(index);
+			},
+
+			_isOnFirstRow: function(items, item) {
+				if (items.length === 0) {
+					return true;
+				}
+				var baseOffsetTop = items[0].offsetTop,
+					itemOffsetTop = item.offsetTop,
+					OFFSET_TOLERANCE =  15;
+
+				return (Math.abs(baseOffsetTop - itemOffsetTop) < OFFSET_TOLERANCE);
+			},
+
+			_keepItem: function(item) {
+				return item.primary;
+			},
+
+			_showAll: function(items) {
+				items.forEach(this._showItem);
+			},
+
+			_hideAll: function(items) {
+				items.forEach(this._hideItem);
+			},
+
+			_showItem: function(item) {
+				item.style.display = 'inline-block';
+			},
+
+			_hideItem: function(item) {
+				item.style.display = 'none';
+			}
+		});
+	</script>
+</dom-module>

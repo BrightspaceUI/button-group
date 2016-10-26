@@ -1,0 +1,107 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-icons/d2l-icon.html">
+<link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../d2l-menu/d2l-menu.html">
+<link rel="import" href="../d2l-menu/d2l-menu-item.html">
+
+<!--
+# D2L Button Menu
+
+## Usage
+```
+<link rel="import" href="d2l-button-menu.html">
+
+<d2l-button-menu>
+	<button is="d2l-button">Stuff</button>
+	<d2l-dropdown>
+		<d2l-dropdown-button text="[[text]]">
+			<d2l-dropdown-menu>
+				<d2l-menu label="some menu">
+				</d2l-menu>
+			</d2l-dropdown-menu>
+		</d2l-dropdown-button>
+	</d2l-dropdown>
+</d2l-button-menu>
+```
+-->
+
+<dom-module id="d2l-button-menu">
+	<template>
+		<d2l-dropdown>
+			<d2l-dropdown-button text="[[text]]">
+				<d2l-dropdown-menu>
+					<d2l-menu id="menu" label="[[text]]"></d2l-menu>
+				</d2l-dropdown-menu>
+			</d2l-dropdown-button>
+		</d2l-dropdown>
+	</template>
+	<script>
+		Polymer({
+			is: 'd2l-button-menu',
+
+			properties: {
+				text: String
+			},
+
+			ready: function() {
+				this._observer = Polymer.dom(this).observeNodes(function() {
+					var menu = Polymer.dom(this.$.menu);
+					this._clean(menu);
+					Polymer.dom(this).getEffectiveChildNodes()
+						.filter(function(node) {
+							return node.nodeType === Node.ELEMENT_NODE;
+						})
+						.map(this._createMenuItem.bind(this))
+						.forEach(function(item) {
+							menu.appendChild(item);
+						});
+				});
+			},
+
+			showHideItems(start) {
+				var items = Polymer.dom(this.$.menu).children;
+				items.forEach(function(node, index) {
+					if (index <= start) {
+						node.setAttribute('hidden', 'hidden');
+					} else {
+						node.removeAttribute('hidden');
+					}
+				});
+			},
+
+			_clean: function(node) {
+				while (node.lastChild) {
+					node.removeChild(node.lastChild);
+				}
+			},
+
+			_createMenuItem: function(item) {
+				var menuItem;
+				if (item.tagName.toLowerCase() === 'a') {
+					menuItem = document.createElement('d2l-menu-item-link');
+					menuItem.href = item.href;
+					menuItem.preventDefault = item.getAttribute('data-prevent-default');
+					menuItem.text = item.textContent;
+					menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, item));
+				} else if (item.tagName.toLowerCase() === 'd2l-dropdown') {
+					var subMenu = item.querySelector('d2l-menu');
+					menuItem = document.createElement('d2l-menu-item');
+					menuItem.text = subMenu.label;
+					Polymer.dom(menuItem).appendChild(Polymer.dom(subMenu).cloneNode(true));
+				} else {
+					menuItem = document.createElement('d2l-menu-item');
+					menuItem.text = item.textContent;
+					menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, item));
+				}
+				return menuItem;
+			},
+
+			_onSelectItem: function(item) {
+				item.click();
+			}
+		});
+	</script>
+</dom-module>

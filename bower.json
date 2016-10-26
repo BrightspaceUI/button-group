@@ -1,0 +1,28 @@
+{
+  "name": "d2l-button-group",
+  "description": "",
+  "main": "index.js",
+  "authors": [],
+  "license": "Apache-2.0",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "web-component-tester": "^4.3.5",
+    "iron-component-page": "^1.1.7",
+    "d2l-demo-template": "^0.0.3",
+    "d2l-link": "^3.1.1",
+    "d2l-button": "^3.0.6"
+  },
+  "dependencies": {
+    "d2l-menu": "^0.2.0",
+    "polymer": "^1.7.0",
+    "d2l-dropdown": "^3.0.0",
+    "iron-resizable-behavior": "^1.0.5"
+  }
+}

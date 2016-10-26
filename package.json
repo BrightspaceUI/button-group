@@ -1,0 +1,25 @@
+{
+  "name": "d2l-button-group",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install",
+    "test": "npm run test:lint && npm run build && npm run test:unit:local",
+    "test:lint": "npm run test:lint:js && npm run test:lint:wc",
+    "test:lint:js": "eslint --ext html .",
+    "test:lint:wc": "polymer lint --input *.html",
+    "test:unit:local": "polymer test --skip-plugin sauce"
+  },
+  "author": "D2L Corporation",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "bower": "^1.7.9"
+  },
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "eslint-config-brightspace": "^0.2.4",
+    "eslint-plugin-html": "^1.5.5",
+    "polymer-cli": "^0.16.0"
+  }
+}

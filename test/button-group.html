@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>wrapper tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../d2l-button-group.html">
+	</head>
+	<body>
+
+		<test-fixture id="one-button">
+			<template>
+				<d2l-button-group>
+					<template>
+						<button is="d2l-button" class="button">Button</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-button-group {
+						display: block;
+						width: 250px;
+					}
+				</style>
+				<d2l-button-group>
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button-restricted">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-button-group {
+						display: block;
+						width: 150px;
+					}
+				</style>
+				<d2l-button-group>
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<script>
+			describe('one-button', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('one-button');
+					flush(done);
+					this.buttonGroup.fire('iron-resize');
+				});
+
+				it('should show Button', function() {
+					var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
+					var visible = [].filter.call(buttons, function(node) {
+						return node.style.display !== 'none';
+					});
+					expect(buttons.length).to.equal(1);
+
+					var menu = this.buttonGroup.$.menu;
+					expect(menu.style.display).to.equal('none');
+				});
+			});
+
+			describe('two-button', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('two-button')[1];
+					flush(done);
+					this.buttonGroup.fire('iron-resize');
+				});
+
+				it('should show 2 buttons', function() {
+					var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
+					var visible = [].filter.call(buttons, function(node) {
+						return node.style.display !== 'none';
+					});
+					expect(visible.length).to.equal(2);
+
+					var menu = this.buttonGroup.$.menu;
+					expect(menu.style.display).to.equal('none');
+				});
+			});
+
+			describe('two-button-restricted', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('two-button-restricted')[1];
+					flush(done);
+					this.buttonGroup.fire('iron-resize');
+				});
+
+				it('should show menu buttons', function() {
+					var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
+					var visible = [].filter.call(buttons, function(node) {
+						return node.style.display !== 'none';
+					});
+					expect(visible.length).to.equal(0);
+
+					var menuItems = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item:not([hidden])');
+					expect(menuItems.length).to.equal(2);
+				});
+			});
+		</script>
+	</body>
+</html>
