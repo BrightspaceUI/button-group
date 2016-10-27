@@ -99,8 +99,8 @@
 					expect(menu.style.display).to.equal('none');
 				});
 
-				it('should not be mini', function() {
-					expect(this.buttonGroup.mini).to.equal(false);
+				it('should be mini', function() {
+					expect(this.buttonGroup.mini).to.equal(true);
 				});
 			});
 
@@ -122,8 +122,8 @@
 					expect(menu.style.display).to.equal('none');
 				});
 
-				it('should not be mini', function() {
-					expect(this.buttonGroup.mini).to.equal(false);
+				it('should be mini', function() {
+					expect(this.buttonGroup.mini).to.equal(true);
 				});
 			});
 
@@ -134,7 +134,7 @@
 					this.buttonGroup.fire('iron-resize');
 				});
 
-				it('should show menu buttons', function() {
+				it('should show only the menu button', function() {
 					var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
 					var visible = [].filter.call(buttons, function(node) {
 						return node.style.display !== 'none';
@@ -147,6 +147,42 @@
 
 				it('should not be mini', function() {
 					expect(this.buttonGroup.mini).to.equal(false);
+				});
+
+				describe('when keep=1', function() {
+					beforeEach(function(done) {
+						this.buttonGroup.keep = 1;
+						flush(done);
+					});
+
+					it('should show one button and menu button', function() {
+						var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
+						var visible = [].filter.call(buttons, function(node) {
+							return node.style.display !== 'none';
+						});
+						expect(visible.length).to.equal(1);
+
+						var menuItems = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item:not([hidden])');
+						expect(menuItems.length).to.equal(1);
+					});
+				});
+
+				describe('when keep=1', function() {
+					beforeEach(function(done) {
+						this.buttonGroup.keep = 2;
+						flush(done);
+					});
+
+					it('should show 2 buttons', function() {
+						var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
+						var visible = [].filter.call(buttons, function(node) {
+							return node.style.display !== 'none';
+						});
+						expect(visible.length).to.equal(2);
+
+						var menu = this.buttonGroup.$.menu;
+						expect(menu.style.display).to.equal('none');
+					});
 				});
 			});
 

@@ -29,21 +29,19 @@
 				--d2l-button-group-spacing: 0.5rem;
 			}
 
-			:host div {
+			:host div,
+			:host .button-list {
 				display: flex;
 				flex-wrap: wrap;
 				align-items: center;
 			}
-			:host([mini]) div {
+			:host([mini]) div,
+			:host([mini]) .button-list {
 				flex-wrap: nowrap;
 			}
 
 			:host([mini]) button {
 				white-space: normal;
-			}
-
-			:host .button-list {
-				display: inline-block;
 			}
 
 			:host .button-list > button,
@@ -88,6 +86,12 @@
 					readOnly: true,
 					value: false,
 					reflectToAttribute: true
+				},
+
+				keep: {
+					type: Number,
+					observer: '_chomp',
+					value: 0
 				}
 			},
 
@@ -140,14 +144,15 @@
 				this._showAll(items);
 				this._setMini(false);
 
-				if (this._isOnFirstRow(items, items[index])) {
+				if (this._isOnFirstRow(items, items[index]) || this.keep > index) {
 					this._hideItem(this.$.menu);
+					this._setMini(true);
 					return;
 				}
 
 				this._showItem(this.$.menu);
 
-				while (index >= 0 && !this._isOnFirstRow(items, this.$.menu) && !this._keepItem(items[index])) {
+				while (index >= this.keep && !this._isOnFirstRow(items, this.$.menu)) {
 					this._hideItem(items[index]);
 					index--;
 				}
@@ -166,10 +171,6 @@
 					OFFSET_TOLERANCE =  15;
 
 				return (Math.abs(baseOffsetTop - itemOffsetTop) < OFFSET_TOLERANCE);
-			},
-
-			_keepItem: function(item) {
-				return item.primary;
 			},
 
 			_showAll: function(items) {
