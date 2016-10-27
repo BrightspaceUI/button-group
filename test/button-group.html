@@ -28,7 +28,6 @@
 						box-sizing: border-box;
 					}
 					d2l-button-group {
-						display: block;
 						width: 250px;
 					}
 				</style>
@@ -49,8 +48,27 @@
 						box-sizing: border-box;
 					}
 					d2l-button-group {
-						display: block;
 						width: 150px;
+					}
+				</style>
+				<d2l-button-group>
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="mini">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-button-group {
+						width: 0;
 					}
 				</style>
 				<d2l-button-group>
@@ -80,6 +98,10 @@
 					var menu = this.buttonGroup.$.menu;
 					expect(menu.style.display).to.equal('none');
 				});
+
+				it('should not be mini', function() {
+					expect(this.buttonGroup.mini).to.equal(false);
+				});
 			});
 
 			describe('two-button', function() {
@@ -99,6 +121,10 @@
 					var menu = this.buttonGroup.$.menu;
 					expect(menu.style.display).to.equal('none');
 				});
+
+				it('should not be mini', function() {
+					expect(this.buttonGroup.mini).to.equal(false);
+				});
 			});
 
 			describe('two-button-restricted', function() {
@@ -117,6 +143,26 @@
 
 					var menuItems = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item:not([hidden])');
 					expect(menuItems.length).to.equal(2);
+				});
+
+				it('should not be mini', function() {
+					expect(this.buttonGroup.mini).to.equal(false);
+				});
+			});
+
+			describe('mini', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('mini')[1];
+					flush(done);
+					this.buttonGroup.fire('iron-resize');
+				});
+
+				it('should be mini', function() {
+					expect(this.buttonGroup.mini).to.equal(true);
+				});
+
+				it('menu should be mini', function() {
+					expect(this.buttonGroup.$.menu.mini).to.equal(true);
 				});
 			});
 		</script>

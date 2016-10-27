@@ -29,13 +29,31 @@
 -->
 
 <dom-module id="d2l-button-menu">
-	<template>
+	<template strip-whitespace>
+		<style include="d2l-dropdown-opener-styles">
+			:host button > span {
+				margin-right: 0.6rem;
+			}
+			:host-context([dir="rtl"]) button > span {
+				margin-left: 0.6rem;
+				margin-right: 0;
+			}
+
+			:host([mini]) button > span {
+				display: none;
+			}
+
+			:host([mini]) button {
+				padding: 0.5rem;
+			}
+		</style>
 		<d2l-dropdown>
-			<d2l-dropdown-button text="[[text]]">
-				<d2l-dropdown-menu>
-					<d2l-menu id="menu" label="[[text]]"></d2l-menu>
-				</d2l-dropdown-menu>
-			</d2l-dropdown-button>
+			<button is="d2l-button" class="d2l-dropdown-opener">
+				<span>[[text]]</span><d2l-icon icon="d2l-tier1:chevron-down"></d2l-icon>
+			</button>
+			<d2l-dropdown-menu>
+				<d2l-menu id="menu" label="[[text]]"></d2l-menu>
+			</d2l-dropdown-menu>
 		</d2l-dropdown>
 	</template>
 	<script>
@@ -43,7 +61,11 @@
 			is: 'd2l-button-menu',
 
 			properties: {
-				text: String
+				text: String,
+				mini: {
+					type: Boolean,
+					reflectToAttribute: true
+				}
 			},
 
 			ready: function() {
