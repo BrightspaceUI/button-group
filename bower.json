@@ -13,13 +13,12 @@
     "tests"
   ],
   "devDependencies": {
-    "web-component-tester": "^4.3.5",
+    "web-component-tester": "^5.0.0",
     "iron-component-page": "^1.1.7",
-    "d2l-demo-template": "^0.0.3",
-    "d2l-link": "^3.1.1",
-    "d2l-button": "^3.0.6"
+    "d2l-demo-template": "^0.0.3"
   },
   "dependencies": {
+    "d2l-button": "^3.0.6",
     "d2l-menu": "^0.2.0",
     "polymer": "^1.7.0",
     "d2l-dropdown": "^3.0.0",
