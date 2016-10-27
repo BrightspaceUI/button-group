@@ -26,7 +26,7 @@ bower install d2l-button-group
 ```html
 <d2l-button-group keep="1">
 	<template strip-whitespace>
-		<button is="d2l-button" primary>Primary</button>
+		<button is="d2l-button" primary>Primary Button</button>
 		<d2l-dropdown>
 			<d2l-dropdown-button text="Add Participants">
 				<d2l-dropdown-menu>
