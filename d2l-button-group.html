@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="d2l-button-menu.html">
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="d2l-chomp-behavior.html">
 
 <!--
 # D2L Button Group
@@ -29,13 +29,13 @@
 				--d2l-button-group-spacing: 0.5rem;
 			}
 
-			:host div,
+			:host .button-group,
 			:host .button-list {
 				display: flex;
 				flex-wrap: wrap;
-				align-items: center;
+				align-items: stretch;
 			}
-			:host([can-shrink]) div,
+			:host([can-shrink]) .button-group,
 			:host([can-shrink]) .button-list {
 				flex-wrap: nowrap;
 			}
@@ -67,7 +67,7 @@
 		</style>
 		<content id="buttons" select="template"></content>
 		<template id="template" is="dom-template"></template>
-		<div>
+		<div class="button-group">
 			<div id="list" class="button-list">
 			</div>
 			<d2l-button-menu id="menu" text="More Actions" mini="[[canShrink]]">
@@ -78,25 +78,10 @@
 		Polymer({
 			is: 'd2l-button-group',
 
-			behaviors: [Polymer.IronResizableBehavior],
+			behaviors: [D2L.PolymerBehaviors.ChompBehavior],
 
-			properties: {
-				canShrink: {
-					type: Boolean,
-					readOnly: true,
-					value: false,
-					reflectToAttribute: true
-				},
-
-				keep: {
-					type: Number,
-					observer: '_chomp',
-					value: 0
-				}
-			},
-
-			listeners: {
-				'iron-resize': '_chomp'
+			chomp: function() {
+				this._chomp(Polymer.dom(this.$.list).children, this.$.menu);
 			},
 
 			ready: function() {
@@ -113,6 +98,7 @@
 				});
 			},
 
+			/* Stamps the template into the Local DOM */
 			render: function() {
 				var template = this.$.template;
 				var listClone = template.stamp({ list: true });
@@ -127,6 +113,7 @@
 					menu.removeChild(menu.lastChild);
 				}
 
+				// Polymer.dom(*).appendChild(#document-fragment) does NOT apply styling correctly
 				while (listClone.root.firstChild) {
 					list.appendChild(listClone.root.firstChild);
 				}
@@ -134,62 +121,7 @@
 					menu.appendChild(menuClone.root.firstChild);
 				}
 
-				this._chomp();
-			},
-
-			_chomp: function() {
-				var items = Polymer.dom(this.$.list).children;
-				var index = items.length - 1;
-
-				this._showAll(items);
-				this._setCanShrink(false);
-
-				if (this.keep > index) {
-					this._setCanShrink(true);
-				}
-
-				if (this._isOnFirstRow(items, items[index]) || this.keep > index) {
-					this._hideItem(this.$.menu);
-					return;
-				}
-
-				this._showItem(this.$.menu);
-
-				while (index >= this.keep && !this._isOnFirstRow(items, this.$.menu)) {
-					this._hideItem(items[index]);
-					index--;
-				}
-
-				this._setCanShrink(this.clientWidth < this.$.menu.offsetWidth || !this._isOnFirstRow(items, this.$.menu));
-
-				this.$.menu.showHideItems(index);
-			},
-
-			_isOnFirstRow: function(items, item) {
-				if (items.length === 0) {
-					return true;
-				}
-				var baseOffsetTop = items[0].offsetTop,
-					itemOffsetTop = item.offsetTop,
-					OFFSET_TOLERANCE =  15;
-
-				return (Math.abs(baseOffsetTop - itemOffsetTop) < OFFSET_TOLERANCE);
-			},
-
-			_showAll: function(items) {
-				items.forEach(this._showItem);
-			},
-
-			_hideAll: function(items) {
-				items.forEach(this._hideItem);
-			},
-
-			_showItem: function(item) {
-				item.style.display = 'inline-block';
-			},
-
-			_hideItem: function(item) {
-				item.style.display = 'none';
+				this.chomp();
 			}
 		});
 	</script>

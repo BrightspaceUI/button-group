@@ -43,8 +43,13 @@
 				display: none;
 			}
 
+			:host([mini]) d2l-dropdown {
+				height: 100%;
+			}
+
 			:host([mini]) button {
 				padding: 0.5rem;
+				height: 100%;
 			}
 		</style>
 		<d2l-dropdown>
@@ -83,6 +88,7 @@
 				});
 			},
 
+			/* See ChompBehavior */
 			showHideItems: function(start) {
 				var items = Polymer.dom(this.$.menu).children;
 				items.forEach(function(node, index) {
