@@ -99,8 +99,8 @@
 					expect(menu.style.display).to.equal('none');
 				});
 
-				it('should be mini', function() {
-					expect(this.buttonGroup.mini).to.equal(true);
+				it('should not be able to shrink', function() {
+					expect(this.buttonGroup.canShrink).to.equal(false);
 				});
 			});
 
@@ -122,8 +122,8 @@
 					expect(menu.style.display).to.equal('none');
 				});
 
-				it('should be mini', function() {
-					expect(this.buttonGroup.mini).to.equal(true);
+				it('should not be able to shrink', function() {
+					expect(this.buttonGroup.canShrink).to.equal(false);
 				});
 			});
 
@@ -145,8 +145,8 @@
 					expect(menuItems.length).to.equal(2);
 				});
 
-				it('should not be mini', function() {
-					expect(this.buttonGroup.mini).to.equal(false);
+				it('should not be able to shrink', function() {
+					expect(this.buttonGroup.canShrink).to.equal(false);
 				});
 
 				describe('when keep=1', function() {
@@ -164,6 +164,14 @@
 
 						var menuItems = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item:not([hidden])');
 						expect(menuItems.length).to.equal(1);
+					});
+
+					it('should be able to shrink', function() {
+						expect(this.buttonGroup.canShrink).to.equal(true);
+					});
+
+					it('menu should be mini', function() {
+						expect(this.buttonGroup.$.menu.mini).to.equal(true);
 					});
 				});
 
@@ -183,6 +191,10 @@
 						var menu = this.buttonGroup.$.menu;
 						expect(menu.style.display).to.equal('none');
 					});
+
+					it('should be able to shrink', function() {
+						expect(this.buttonGroup.canShrink).to.equal(true);
+					});
 				});
 			});
 
@@ -193,8 +205,8 @@
 					this.buttonGroup.fire('iron-resize');
 				});
 
-				it('should be mini', function() {
-					expect(this.buttonGroup.mini).to.equal(true);
+				it('should be able to shrink', function() {
+					expect(this.buttonGroup.canShrink).to.equal(true);
 				});
 
 				it('menu should be mini', function() {

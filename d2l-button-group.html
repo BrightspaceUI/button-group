@@ -35,12 +35,12 @@
 				flex-wrap: wrap;
 				align-items: center;
 			}
-			:host([mini]) div,
-			:host([mini]) .button-list {
+			:host([can-shrink]) div,
+			:host([can-shrink]) .button-list {
 				flex-wrap: nowrap;
 			}
 
-			:host([mini]) button {
+			:host([can-shrink]) button {
 				white-space: normal;
 			}
 
@@ -70,7 +70,7 @@
 		<div>
 			<div id="list" class="button-list">
 			</div>
-			<d2l-button-menu id="menu" text="More Actions" mini="[[mini]]">
+			<d2l-button-menu id="menu" text="More Actions" mini="[[canShrink]]">
 			</d2l-button-menu>
 		</div>
 	</template>
@@ -81,7 +81,7 @@
 			behaviors: [Polymer.IronResizableBehavior],
 
 			properties: {
-				mini: {
+				canShrink: {
 					type: Boolean,
 					readOnly: true,
 					value: false,
@@ -142,11 +142,14 @@
 				var index = items.length - 1;
 
 				this._showAll(items);
-				this._setMini(false);
+				this._setCanShrink(false);
+
+				if (this.keep > index) {
+					this._setCanShrink(true);
+				}
 
 				if (this._isOnFirstRow(items, items[index]) || this.keep > index) {
 					this._hideItem(this.$.menu);
-					this._setMini(true);
 					return;
 				}
 
@@ -157,7 +160,7 @@
 					index--;
 				}
 
-				this._setMini(this.clientWidth < this.$.menu.offsetWidth || !this._isOnFirstRow(items, this.$.menu));
+				this._setCanShrink(this.clientWidth < this.$.menu.offsetWidth || !this._isOnFirstRow(items, this.$.menu));
 
 				this.$.menu.showHideItems(index);
 			},
