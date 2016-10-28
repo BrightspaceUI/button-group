@@ -13,14 +13,14 @@
 <body unresolved>
 
 	<d2l-demo-template title="d2l-icons">
-		<!--
-		Workaround for an interesting bug in Polymer that was causing errors
-		when event listeners were registered because d2l-demo-template doesn't
-		create a dataHost (A "Templatizer" grabs it's parent's dataHost, rather
-		than creating a new one)
-		-->
-		<template is="dom-bind">
 		<div class="d2l-demo-fixture">
+			<!--
+			Workaround for an interesting bug in Polymer that was causing errors
+			when event listeners were registered because d2l-demo-template doesn't
+			create a dataHost (A "Templatizer" grabs it's parent's dataHost, rather
+			than creating a new one)
+			-->
+			<template is="dom-bind">
 			<h2 class="d2l-heading-4">button menu</h2>
 			<p>
 				<d2l-button-group keep="1">
@@ -76,8 +76,8 @@
 					</template>
 				</d2l-button-group>
 			</p>
+			</template>
 		</div>
-		</template>
 	</d2l-demo-template>
 
 </body>
