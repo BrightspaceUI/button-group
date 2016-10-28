@@ -66,7 +66,6 @@
 			}
 		</style>
 		<content id="buttons" select="template"></content>
-		<template id="template" is="dom-template"></template>
 		<div class="button-group">
 			<div id="list" class="button-list">
 			</div>
@@ -78,10 +77,19 @@
 		Polymer({
 			is: 'd2l-button-group',
 
-			behaviors: [D2L.PolymerBehaviors.ChompBehavior],
+			behaviors: [D2L.PolymerBehaviors.ChompBehavior, Polymer.Templatizer],
 
 			chomp: function() {
 				this._chomp(Polymer.dom(this.$.list).children, this.$.menu);
+			},
+
+			_forwardParentProp: function(prop, value) {
+				this._listInstance.__setProperty(prop, value);
+				this._menuInstance.__setProperty(prop, value);
+			},
+			_forwardParentPath: function(path, value) {
+				this._listInstance._notifyPath(path, value);
+				this._menuInstance._notifyPath(path, value);
 			},
 
 			ready: function() {
@@ -89,7 +97,7 @@
 				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
 					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
 					if (buttonTemplate) {
-						var template = self.$.template;
+						var template = self;
 						template.templatize(buttonTemplate);
 					} else {
 						console.warn('d2l-button-group requires a template to be provided'); // eslint-disable-line no-console
@@ -100,9 +108,12 @@
 
 			/* Stamps the template into the Local DOM */
 			render: function() {
-				var template = this.$.template;
+				var template = this;
 				var listClone = template.stamp({ list: true });
 				var menuClone = template.stamp({ menu: true });
+
+				this._listInstance = listClone;
+				this._menuInstance = menuClone;
 
 				var list = Polymer.dom(this.$.list);
 				var menu = Polymer.dom(this.$.menu);

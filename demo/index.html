@@ -13,6 +13,13 @@
 <body unresolved>
 
 	<d2l-demo-template title="d2l-icons">
+		<!--
+		Workaround for an interesting bug in Polymer that was causing errors
+		when event listeners were registered because d2l-demo-template doesn't
+		create a dataHost (A "Templatizer" grabs it's parent's dataHost, rather
+		than creating a new one)
+		-->
+		<template is="dom-bind">
 		<div class="d2l-demo-fixture">
 			<h2 class="d2l-heading-4">button menu</h2>
 			<p>
@@ -56,7 +63,7 @@
 						<d2l-dropdown>
 							<d2l-dropdown-button text="Add Participants">
 								<d2l-dropdown-menu>
-									<d2l-menu label="Add Participants Menu">
+									<d2l-menu label="Add Participants">
 										<d2l-menu-item text="Add Existing Users"></d2l-menu-item>
 										<d2l-menu-item text="Create and enroll a new user"></d2l-menu-item>
 										<d2l-menu-item text="Import users from file"></d2l-menu-item>
@@ -70,6 +77,7 @@
 				</d2l-button-group>
 			</p>
 		</div>
+		</template>
 	</d2l-demo-template>
 
 </body>
