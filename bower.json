@@ -10,7 +10,8 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "screenshots"
   ],
   "devDependencies": {
     "web-component-tester": "^5.0.0",
