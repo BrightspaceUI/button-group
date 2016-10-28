@@ -57,6 +57,11 @@ bower install d2l-button-group
 #### Submenu in "More Actions"
 ![screenshot of group with three under dropdown and opened](screenshots/one-menu.png)
 
+### Compressed
+![screenshot of group with small screen size](screenshots/mini.png)
+
+![screenshot of group with smaller screen size](screenshots/compressed.png)
+
 ## Coding styles
 
 ### General
