@@ -24,7 +24,8 @@
 
 			<h2 class="d2l-heading-4">button menu</h2>
 			<p>
-				<d2l-button-group keep="1">
+				<span>[[buttonText]]</span>
+				<d2l-button-group id="button-group-0" keep="1">
 					<template strip-whitespace>
 						<button is="d2l-button" primary>Edit Submission Folder</button>
 						<button is="d2l-button">Email Users Without Submissions</button>
@@ -32,6 +33,14 @@
 						<button is="d2l-button">Submission Log</button>
 					</template>
 				</d2l-button-group>
+				<script>
+					(function() {
+						var group = document.getElementById('button-group-0');
+						group.addEventListener('d2l-button-group-select', function(e) {
+							group.dataHost.buttonText = e.detail.button.textContent + ' clicked!';
+						});
+					})();
+				</script>
 			</p>
 
 			<h2 class="d2l-heading-4">button menu keep 2</h2>
