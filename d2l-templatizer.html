@@ -14,10 +14,14 @@
 			var forwardParentProp = template._forwardParentProp;
 			Polymer.Templatizer.templatize.call(this, template);
 
+			if (!forwardParentProp) {
+				return;
+			}
+
 			// HACK HACK HACK. _forwardParentProp on template is overridden by second templatize call
 			template._forwardParentProp = (function(orig) {
 				return function() {
-					forwardParentProp && forwardParentProp.apply(this, arguments);
+					forwardParentProp.apply(this, arguments);
 					orig.apply(this, arguments);
 				};
 			})(template._forwardParentProp);
