@@ -78,6 +78,26 @@
 
 			behaviors: [D2L.PolymerBehaviors.ChompBehavior, Polymer.Templatizer],
 
+			listeners: {
+				'd2l-menu-item-select': '_onSelectItem',
+				'list.tap': '_onSelectItem'
+			},
+
+			_onSelectItem: function(e) {
+				if (
+					e.type === 'tap' &&
+					(
+						e.target.parentNode !== this.$.list ||
+						!e.target.tagName || e.target.tagName.toLowerCase() !== 'button'
+					)
+				) {
+					return;
+				}
+				this.fire('d2l-button-group-select', Object.assign({}, e.details, {
+					target: e.path[0]
+				}));
+			},
+
 			chomp: function() {
 				this._chomp(Polymer.dom(this.$.list).children, this.$.menu);
 			},
