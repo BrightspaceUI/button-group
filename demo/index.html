@@ -21,6 +21,7 @@
 			than creating a new one)
 			-->
 			<template is="dom-bind">
+
 			<h2 class="d2l-heading-4">button menu</h2>
 			<p>
 				<d2l-button-group keep="1">
@@ -60,21 +61,39 @@
 				<d2l-button-group keep="1">
 					<template strip-whitespace>
 						<button is="d2l-button" primary>Primary Button</button>
-						<d2l-dropdown>
-							<d2l-dropdown-button text="Add Participants">
-								<d2l-dropdown-menu>
-									<d2l-menu label="Add Participants">
-										<d2l-menu-item text="Add Existing Users"></d2l-menu-item>
-										<d2l-menu-item text="Create and enroll a new user"></d2l-menu-item>
-										<d2l-menu-item text="Import users from file"></d2l-menu-item>
-									</d2l-menu>
-								</d2l-dropdown-menu>
-							</d2l-dropdown-button>
-						</d2l-dropdown>
+						<d2l-dropdown-button text="Add Participants">
+							<d2l-dropdown-menu>
+								<d2l-menu label="Add Participants">
+									<d2l-menu-item text="Add Existing Users"></d2l-menu-item>
+									<d2l-menu-item text="Create and enroll a new user"></d2l-menu-item>
+									<d2l-menu-item text="Import users from file"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-button>
 						<button is="d2l-button">Something else</button>
 						<button is="d2l-button">Something else</button>
 					</template>
 				</d2l-button-group>
+			</p>
+
+			<h2 class="d2l-heading-4">button menu</h2>
+			<p>
+				<d2l-button-menu text="Dropdown">
+					<template strip-whitespace>
+						<button is="d2l-button" primary>Primary Button</button>
+						<d2l-dropdown-button text="Stuff">
+							<d2l-dropdown-menu>
+								<d2l-menu label="Stuff">
+									<d2l-menu-item text="Add Existing Users"></d2l-menu-item>
+									<d2l-menu-item text="Create and enroll a new user"></d2l-menu-item>
+									<d2l-menu-item text="Import users from file"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-button>
+						<button is="d2l-button">Something else</button>
+						<button is="d2l-button">Something else</button>
+					</template>
+				</d2l-button-menu>
 			</p>
 			</template>
 		</div>
