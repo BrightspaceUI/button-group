@@ -111,11 +111,19 @@ chomp: function() {
 		},
 
 		_showAll: function(items) {
-			items.forEach(this._showItem);
+			items
+				.filter(function(node) {
+					return node.nodeType === Node.ELEMENT_NODE;
+				})
+				.forEach(this._showItem);
 		},
 
 		_hideAll: function(items) {
-			items.forEach(this._hideItem);
+			items
+				.filter(function(node) {
+					return node.nodeType === Node.ELEMENT_NODE;
+				})
+				.forEach(this._hideItem);
 		},
 
 		_showItem: function(item) {

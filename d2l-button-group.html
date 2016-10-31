@@ -80,7 +80,7 @@
 			behaviors: [D2L.PolymerBehaviors.ChompBehavior, D2L.PolymerBehaviors.Templatizer],
 
 			listeners: {
-				'd2l-menu-item-select': '_onSelectItem',
+				'menu.d2l-menu-item-select': '_onSelectItem',
 				'list.tap': '_onTapItem'
 			},
 
@@ -102,9 +102,12 @@
 				var target = e.srcElement;
 				var button;
 				if (target.hasAttribute('data-index')) {
+					var children = Polymer.dom(this.$.list).childNodes.filter(function(node) {
+						return node.nodeType === Node.ELEMENT_NODE;
+					});
 					var index = +target.getAttribute('data-index');
 					if (!isNaN(index)) {
-						button = Polymer.dom(this.$.list).childNodes[index];
+						button = children[index];
 					}
 				}
 				this.fire('d2l-button-group-select', {
@@ -114,7 +117,10 @@
 			},
 
 			chomp: function() {
-				this._chomp(Polymer.dom(this.$.list).childNodes, this.$.menu);
+				var items = Polymer.dom(this.$.list).childNodes.filter(function(node) {
+					return node.nodeType === Node.ELEMENT_NODE;
+				});
+				this._chomp(items, this.$.menu);
 			},
 
 			_forwardParentProp: function(prop, value) {
