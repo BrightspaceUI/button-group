@@ -113,7 +113,7 @@ Or to re-use a template, use `templatize` and `render`
 				var menu = Polymer.dom(this.$.menu);
 				this._clean(menu);
 				this._instance = this.stamp({ menu: true });
-				var items = Polymer.dom(this._instance.root).children;
+				var items = Polymer.dom(this._instance.root).childNodes;
 				this._items = items
 					.filter(function(node) {
 						return node.nodeType === Node.ELEMENT_NODE;

@@ -85,36 +85,36 @@
 			},
 
 			_onTapItem: function(e) {
-				var button = e.path[0];
+				var button = e.srcElement;
 				if (
 					Polymer.dom(button).parentNode !== this.$.list ||
 					!button.tagName || button.tagName.toLowerCase() !== 'button'
 				) {
 					return;
 				}
-				this.fire('d2l-button-group-select', Object.assign({}, e.details, {
+				this.fire('d2l-button-group-select', {
 					target: button,
 					button: button
-				}));
+				});
 			},
 
 			_onSelectItem: function(e) {
-				var target = e.path[0];
+				var target = e.srcElement;
 				var button;
 				if (target.hasAttribute('data-index')) {
 					var index = +target.getAttribute('data-index');
 					if (!isNaN(index)) {
-						button = Polymer.dom(this.$.list).children[index];
+						button = Polymer.dom(this.$.list).childNodes[index];
 					}
 				}
-				this.fire('d2l-button-group-select', Object.assign({}, e.details, {
+				this.fire('d2l-button-group-select', {
 					target: target,
 					button: button
-				}));
+				});
 			},
 
 			chomp: function() {
-				this._chomp(Polymer.dom(this.$.list).children, this.$.menu);
+				this._chomp(Polymer.dom(this.$.list).childNodes, this.$.menu);
 			},
 
 			_forwardParentProp: function(prop, value) {
