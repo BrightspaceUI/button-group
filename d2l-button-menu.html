@@ -174,12 +174,13 @@ Or to re-use a template, use `templatize` and `render`
 				};
 			},
 
-			_updateMenuItem: function(item) {
+			_updateMenuItem: function(item, index) {
 				var menuItem = item.menuItem;
 				var source = item.source;
 				menuItem.href = source.href;
 				menuItem.preventDefault = source.getAttribute('data-prevent-default');
 				menuItem.text = source.label || source.textContent;
+				menuItem.setAttribute('data-index', index);
 				return menuItem;
 			},
 

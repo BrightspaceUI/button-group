@@ -120,6 +120,7 @@
 				it('should fire d2l-button-group-select on button click', function(done) {
 					var button = this.buttonGroup.$.list.querySelector('.button');
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.button).to.equal(button);
 						expect(e.detail.target).to.equal(button);
 						done();
 					});
@@ -127,8 +128,10 @@
 				});
 
 				it('should fire d2l-button-group-select on menu-item click', function(done) {
+					var button = this.buttonGroup.$.list.querySelector('.button');
 					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.button).to.equal(button);
 						expect(e.detail.target).to.equal(menuItem);
 						done();
 					});
@@ -197,6 +200,48 @@
 
 				it('should not be able to shrink', function() {
 					expect(this.buttonGroup.canShrink).to.equal(false);
+				});
+
+				it('should fire d2l-button-group-select on button click (first)', function(done) {
+					var button = this.buttonGroup.$.list.querySelector('.button');
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.button).to.equal(button);
+						expect(e.detail.target).to.equal(button);
+						done();
+					});
+					button.click();
+				});
+
+				it('should fire d2l-button-group-select on menu-item click (first)', function(done) {
+					var button = this.buttonGroup.$.list.querySelector('.button');
+					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.button).to.equal(button);
+						expect(e.detail.target).to.equal(menuItem);
+						done();
+					});
+					menuItem.click();
+				});
+
+				it('should fire d2l-button-group-select on button click (second)', function(done) {
+					var button = this.buttonGroup.$.list.querySelectorAll('.button')[1];
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.button).to.equal(button);
+						expect(e.detail.target).to.equal(button);
+						done();
+					});
+					button.click();
+				});
+
+				it('should fire d2l-button-group-select on menu-item click (second)', function(done) {
+					var button = this.buttonGroup.$.list.querySelectorAll('.button')[1];
+					var menuItem = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item')[1];
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.button).to.equal(button);
+						expect(e.detail.target).to.equal(menuItem);
+						done();
+					});
+					menuItem.click();
 				});
 			});
 

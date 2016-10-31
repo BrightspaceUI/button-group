@@ -81,21 +81,32 @@
 
 			listeners: {
 				'd2l-menu-item-select': '_onSelectItem',
-				'list.tap': '_onSelectItem'
+				'tap': '_onTapItem'
 			},
 
-			_onSelectItem: function(e) {
+			_onTapItem: function(e) {
+				var button = e.path[0];
 				if (
-					e.type === 'tap' &&
-					(
-						e.target.parentNode !== this.$.list ||
-						!e.target.tagName || e.target.tagName.toLowerCase() !== 'button'
-					)
+					Polymer.dom(button).parentNode !== this.$.list ||
+					!button.tagName || button.tagName.toLowerCase() !== 'button'
 				) {
 					return;
 				}
+				this._onSelectItem(e);
+			},
+
+			_onSelectItem: function(e) {
+				var target = e.path[0];
+				var button = target;
+				if (target.hasAttribute('data-index')) {
+					var index = +target.getAttribute('data-index');
+					if (!isNaN(index)) {
+						button = Polymer.dom(this.$.list).children[index];
+					}
+				}
 				this.fire('d2l-button-group-select', Object.assign({}, e.details, {
-					target: e.path[0]
+					target: target,
+					button: button
 				}));
 			},
 
