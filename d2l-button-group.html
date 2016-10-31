@@ -92,12 +92,15 @@
 				) {
 					return;
 				}
-				this._onSelectItem(e);
+				this.fire('d2l-button-group-select', Object.assign({}, e.details, {
+					target: button,
+					button: button
+				}));
 			},
 
 			_onSelectItem: function(e) {
 				var target = e.path[0];
-				var button = target;
+				var button;
 				if (target.hasAttribute('data-index')) {
 					var index = +target.getAttribute('data-index');
 					if (!isNaN(index)) {

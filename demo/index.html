@@ -22,9 +22,9 @@
 			-->
 			<template is="dom-bind">
 
+			<span>[[buttonText]]</span>
 			<h2 class="d2l-heading-4">button menu</h2>
 			<p>
-				<span>[[buttonText]]</span>
 				<d2l-button-group id="button-group-0" keep="1">
 					<template strip-whitespace>
 						<button is="d2l-button" primary>Edit Submission Folder</button>
@@ -33,14 +33,6 @@
 						<button is="d2l-button">Submission Log</button>
 					</template>
 				</d2l-button-group>
-				<script>
-					(function() {
-						var group = document.getElementById('button-group-0');
-						group.addEventListener('d2l-button-group-select', function(e) {
-							group.dataHost.buttonText = e.detail.button.textContent + ' clicked!';
-						});
-					})();
-				</script>
 			</p>
 
 			<h2 class="d2l-heading-4">button menu keep 2</h2>
@@ -104,6 +96,21 @@
 					</template>
 				</d2l-button-menu>
 			</p>
+
+			<script>
+				(function() {
+					var groups = document.getElementsByTagName('d2l-button-group');
+					[].forEach.call(groups, function(group) {
+						group.addEventListener('d2l-button-group-select', function(e) {
+							if (e.detail.button) { // a button
+								group.dataHost.buttonText = e.detail.button.textContent + ' button clicked!';
+							} else { // submenu item
+								group.dataHost.buttonText = e.detail.target.text + ' submenu item clicked!';
+							}
+						});
+					});
+				})();
+			</script>
 			</template>
 		</div>
 	</d2l-demo-template>
