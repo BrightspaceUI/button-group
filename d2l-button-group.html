@@ -103,12 +103,28 @@
 			},
 
 			_forwardParentProp: function(prop, value) {
-				this._listInstance.__setProperty(prop, value);
-				this._menuInstance.__setProperty(prop, value);
+				if (this._listInstance) {
+					this._listInstance.__setProperty(prop, value);
+				}
 			},
 			_forwardParentPath: function(path, value) {
-				this._listInstance._notifyPath(path, value);
-				this._menuInstance._notifyPath(path, value);
+				if (this._listInstance) {
+					this._listInstance._notifyPath(path, value);
+				}
+			},
+
+			templatize: function(template) {
+				Polymer.Templatizer.templatize.call(this, template);
+				var forwardParentProp = template._forwardParentProp;
+				this.$.menu.templatize(template);
+
+				/* HACK HACK HACK. _forwardParentProp on template is overridden by second templatize call */
+				template._forwardParentProp = (function(orig) {
+					return function() {
+						forwardParentProp.apply(this, arguments);
+						orig.apply(this, arguments);
+					};
+				})(template._forwardParentProp);
 			},
 
 			ready: function() {
@@ -116,39 +132,29 @@
 				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
 					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
 					if (buttonTemplate) {
-						var template = self;
-						template.templatize(buttonTemplate);
+						self.templatize(buttonTemplate);
+						self.render();
+						self.$.menu.render();
 					} else {
 						console.warn('d2l-button-group requires a template to be provided'); // eslint-disable-line no-console
 					}
-					self.render();
 				});
 			},
 
 			/* Stamps the template into the Local DOM */
 			render: function() {
-				var template = this;
-				var listClone = template.stamp({ list: true });
-				var menuClone = template.stamp({ menu: true });
+				var listClone = this.stamp({ list: true });
 
 				this._listInstance = listClone;
-				this._menuInstance = menuClone;
 
 				var list = Polymer.dom(this.$.list);
-				var menu = Polymer.dom(this.$.menu);
 				while (list.lastChild) {
 					list.removeChild(list.lastChild);
-				}
-				while (menu.lastChild) {
-					menu.removeChild(menu.lastChild);
 				}
 
 				// Polymer.dom(*).appendChild(#document-fragment) does NOT apply styling correctly
 				while (listClone.root.firstChild) {
 					list.appendChild(listClone.root.firstChild);
-				}
-				while (menuClone.root.firstChild) {
-					menu.appendChild(menuClone.root.firstChild);
 				}
 
 				this.chomp();
