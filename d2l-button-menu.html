@@ -189,7 +189,7 @@ top level menu item, the index is contained in `detail.index`.
 
 			_onSelectItem: function(source, e) {
 				var index;
-				var menuItem = e.srcElement;
+				var menuItem = e.target;
 				if (menuItem.hasAttribute('data-index')) {
 					index = +menuItem.getAttribute('data-index');
 					if (isNaN(index)) {

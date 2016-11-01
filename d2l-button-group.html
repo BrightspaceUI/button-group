@@ -89,7 +89,7 @@ is selected. The selected element is `detail.src`.
 			},
 
 			_onTapItem: function(e) {
-				var button = e.srcElement;
+				var button = e.target;
 				if (
 					Polymer.dom(button).parentNode !== this.$.list ||
 					!button.tagName || button.tagName.toLowerCase() !== 'button'
@@ -111,7 +111,7 @@ is selected. The selected element is `detail.src`.
 					button = children[index];
 				}
 				this.fire('d2l-button-group-select', {
-					src: button || e.detail.menuItem || e.srcElement
+					src: button || e.detail.menuItem || e.target
 				});
 			},
 
