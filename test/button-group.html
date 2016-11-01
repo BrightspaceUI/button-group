@@ -62,7 +62,7 @@
 						box-sizing: border-box;
 					}
 					d2l-button-group {
-						width: 150px;
+						width: 200px;
 					}
 				</style>
 				<d2l-button-group>
@@ -98,7 +98,7 @@
 			describe('one-button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('one-button');
-					flush(done);
+					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
 				it('should show Button', function() {
@@ -145,7 +145,7 @@
 					var self = this;
 					flush(function() {
 						self.buttonGroup = oneButtonBoundFixture.querySelector('d2l-button-group');
-						flush(done);
+						self.buttonGroup.async(flush.bind(null, done), 1);
 					});
 				});
 
@@ -182,7 +182,7 @@
 			describe('two-button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button')[1];
-					flush(done);
+					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
 				it('should show 2 buttons', function() {
@@ -246,7 +246,7 @@
 			describe('two-button-restricted', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button-restricted')[1];
-					flush(done);
+					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
 				it('should show only the menu button', function() {
@@ -267,7 +267,7 @@
 				describe('when keep=1', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 1;
-						flush(done);
+						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
 					it('should show one button and menu button', function() {
@@ -293,7 +293,7 @@
 				describe('when keep=2', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 2;
-						flush(done);
+						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
 					it('should show 2 buttons', function() {
@@ -316,7 +316,7 @@
 			describe('mini', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('mini')[1];
-					flush(done);
+					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
 				it('should be able to shrink', function() {
