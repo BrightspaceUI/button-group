@@ -158,11 +158,11 @@
 						expect(menuItem.text.trim()).to.equal('Test');
 
 						this._fixture.querySelector('[is=dom-bind]').foobar = 'Test2';
-					});
+					}, 1);
 					this.buttonGroup.async(function() {
 						expect(button.textContent.trim()).to.equal('Test2');
 						expect(menuItem.text.trim()).to.equal('Test2');
-					});
+					}, 1);
 				});
 
 				it('should onTap on button click', function(done) {
