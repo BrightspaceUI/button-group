@@ -13,24 +13,26 @@
 
 ## Usage
 ```
-<link rel="import" href="d2l-button-menu.html">
+<head>
+	<script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+	<link rel="import" href="../d2l-button-menu/d2l-button-menu.html">
+	<link rel="import" href="../d2l-button/d2l-button.html">
+	<link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
+	<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+</head>
 
 <d2l-button-menu>
 	<template>
 		<button is="d2l-button">Stuff</button>
-		<d2l-dropdown>
-			<d2l-dropdown-button text="[[text]]">
-				<d2l-dropdown-menu>
-					<d2l-menu label="some menu">
-					</d2l-menu>
-				</d2l-dropdown-menu>
-			</d2l-dropdown-button>
-		</d2l-dropdown>
+		<d2l-dropdown-button text="[[text]]">
+			<d2l-dropdown-menu>
+				<d2l-menu label="some menu">
+				</d2l-menu>
+			</d2l-dropdown-menu>
+		</d2l-dropdown-button>
 	</template>
 </d2l-button-menu>
 ```
-
-Or to re-use a template, use `templatize` and `render`
 
 The `d2l-button-menu-select` event will be fired when a menu item or sub-menu item
 is selected. The selected menuItem is `detail.menuItem`. If the menu item is a
@@ -98,23 +100,31 @@ top level menu item, the index is contained in `detail.index`.
 
 			ready: function() {
 				var self = this;
+				// Observer to load template from <content>
 				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
 					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
 					if (buttonTemplate) {
 						self.templatize(buttonTemplate);
 						self.render();
+					} else {
+						console.warn('d2l-button-menu requires a template to be provided'); // eslint-disable-line no-console
 					}
 				});
 			},
 
+			// Stamps the template into the Local DOM
 			render: function() {
 				this._instance = this.stamp({ menu: true });
+				// Wait for any Polymer stuff to complete
 				this.async(this._doRender);
 			},
 
 			_doRender: function() {
+				// Clean the current entries in menu
 				var menu = Polymer.dom(this.$.menu);
 				this._clean(menu);
+
+				// create menu items from template items
 				var items = Polymer.dom(this._instance.root).childNodes;
 				this._items = items
 					.filter(function(node) {
@@ -122,7 +132,11 @@ top level menu item, the index is contained in `detail.index`.
 					})
 					.map(this._createMenuItem.bind(this))
 					.map(this._updateMenuItem.bind(this));
+
+				// Set hidden attributes
 				this._refresh();
+
+				// Attach menu items to the menu
 				this._items
 					.forEach(function(item) {
 						menu.appendChild(item.menuItem);
@@ -144,7 +158,7 @@ top level menu item, the index is contained in `detail.index`.
 					});
 			},
 
-			/* See ChompBehavior */
+			// See ChompBehavior
 			showHideItems: function(start) {
 				this.start = start;
 			},
@@ -157,6 +171,7 @@ top level menu item, the index is contained in `detail.index`.
 
 			_createMenuItem: function(item) {
 				var menuItem, source = item;
+
 				if (item.tagName.toLowerCase() === 'a') {
 					menuItem = document.createElement('d2l-menu-item-link');
 				} else if (item.tagName.toLowerCase() === 'd2l-dropdown-button') {

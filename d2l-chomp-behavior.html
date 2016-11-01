@@ -69,6 +69,10 @@ chomp: function() {
 		},
 
 		_chomp: function(itemsFrom, itemsToContainer) {
+			if (!itemsFrom.length) {
+				this._hideItem(itemsToContainer);
+				return;
+			}
 			var index = itemsFrom.length - 1;
 
 			this._showAll(itemsFrom);
