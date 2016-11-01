@@ -34,13 +34,28 @@ is selected. The selected element is `detail.src`.
 
 			:host .button-group,
 			:host .button-list {
+				display: -ms-flexbox;
+				display: -webkit-flex;
 				display: flex;
+
+				-ms-flex-wrap: wrap;
+				-webkit-flex-wrap: wrap;
 				flex-wrap: wrap;
+				-ms-flex-align: stretch;
+				-webkit-align-items: stretch;
 				align-items: stretch;
 			}
 			:host([can-shrink]) .button-group,
 			:host([can-shrink]) .button-list {
+				-ms-flex-wrap: nowrap;
+				-webkit-flex-wrap: nowrap;
 				flex-wrap: nowrap;
+			}
+
+			:host .button-list {
+				-ms-flex: 0 1 auto;
+				-webkit-flex: 0 1 auto;
+				flex: 0 1 auto;
 			}
 
 			:host([can-shrink]) button {
@@ -159,7 +174,7 @@ is selected. The selected element is `detail.src`.
 					list.appendChild(this._listInstance.root.firstChild);
 				}
 
-				this.chomp();
+				this.async(this.chomp);
 			}
 		});
 	</script>
