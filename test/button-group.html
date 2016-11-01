@@ -151,13 +151,14 @@
 					var button = this.buttonGroup.$.list.querySelector('.button');
 					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
 
-					this._fixture.querySelector('[is=dom-bind]').foobar = 'Test';
+					var template = this._fixture.querySelector('[is=dom-bind]');
+					template.foobar = 'Test';
 
 					this.buttonGroup.async(function() {
 						expect(button.textContent.trim()).to.equal('Test');
 						expect(menuItem.text.trim()).to.equal('Test');
 
-						this._fixture.querySelector('[is=dom-bind]').foobar = 'Test2';
+						template.foobar = 'Test2';
 					}, 1);
 					this.buttonGroup.async(function() {
 						expect(button.textContent.trim()).to.equal('Test2');
@@ -169,16 +170,20 @@
 					this._fixture.querySelector('[is=dom-bind]').onTap = function() {
 						done();
 					};
-					var button = this.buttonGroup.$.list.querySelector('.button');
-					button.click();
+					this.buttonGroup.async(function() {
+						var button = this.$.list.querySelector('.button');
+						button.click();
+					});
 				});
 
 				it('should onTap on menu-item click', function(done) {
 					this._fixture.querySelector('[is=dom-bind]').onTap = function() {
 						done();
 					};
-					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
-					menuItem.click();
+					this.buttonGroup.async(function() {
+						var menuItem = this.$.menu.$.menu.querySelector('d2l-menu-item');
+						menuItem.click();
+					});
 				});
 			});
 
