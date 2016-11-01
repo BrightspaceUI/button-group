@@ -99,7 +99,6 @@
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('one-button');
 					flush(done);
-					this.buttonGroup.fire('iron-resize');
 				});
 
 				it('should show Button', function() {
@@ -184,7 +183,6 @@
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button')[1];
 					flush(done);
-					this.buttonGroup.fire('iron-resize');
 				});
 
 				it('should show 2 buttons', function() {
@@ -249,7 +247,6 @@
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button-restricted')[1];
 					flush(done);
-					this.buttonGroup.fire('iron-resize');
 				});
 
 				it('should show only the menu button', function() {
@@ -320,7 +317,6 @@
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('mini')[1];
 					flush(done);
-					this.buttonGroup.fire('iron-resize');
 				});
 
 				it('should be able to shrink', function() {
