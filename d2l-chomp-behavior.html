@@ -94,7 +94,8 @@ chomp: function() {
 				index--;
 			}
 
-			this._setCanShrink(this.clientWidth < itemsToContainer.offsetWidth || !this._isOnFirstRow(itemsFrom, itemsToContainer));
+			// <= required, since some browsers size the container and items the same when the size is restricted
+			this._setCanShrink(this.clientWidth <= itemsToContainer.offsetWidth || !this._isOnFirstRow(itemsFrom, itemsToContainer));
 
 			itemsToContainer.showHideItems(index);
 		},
