@@ -105,7 +105,7 @@ is selected. The selected element is `detail.src`.
 				var button;
 				if (e.detail.hasOwnProperty('index')) {
 					var children = Polymer.dom(this.$.list).childNodes.filter(function(node) {
-						return node.nodeType === Node.ELEMENT_NODE;
+						return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
 					});
 					var index = e.detail.index;
 					button = children[index];
@@ -117,20 +117,16 @@ is selected. The selected element is `detail.src`.
 
 			chomp: function() {
 				var items = Polymer.dom(this.$.list).childNodes.filter(function(node) {
-					return node.nodeType === Node.ELEMENT_NODE;
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
 				});
 				this._chomp(items, this.$.menu);
 			},
 
-			_forwardParentProp: function(prop, value) {
-				if (this._listInstance) {
-					this._listInstance.__setProperty(prop, value);
-				}
+			_forwardParentProp: function() {
+				this.render();
 			},
-			_forwardParentPath: function(path, value) {
-				if (this._listInstance) {
-					this._listInstance._notifyPath(path, value);
-				}
+			_forwardParentPath: function() {
+				this.render();
 			},
 
 			ready: function() {
@@ -148,18 +144,19 @@ is selected. The selected element is `detail.src`.
 
 			/* Stamps the template into the Local DOM */
 			render: function() {
-				var listClone = this.stamp({ list: true });
+				this._listInstance = this.stamp({ list: true });
+				this.async(this._doRender);
+			},
 
-				this._listInstance = listClone;
-
+			_doRender: function() {
 				var list = Polymer.dom(this.$.list);
 				while (list.lastChild) {
 					list.removeChild(list.lastChild);
 				}
 
 				// Polymer.dom(*).appendChild(#document-fragment) does NOT apply styling correctly
-				while (listClone.root.firstChild) {
-					list.appendChild(listClone.root.firstChild);
+				while (this._listInstance.root.firstChild) {
+					list.appendChild(this._listInstance.root.firstChild);
 				}
 
 				this.chomp();

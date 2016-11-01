@@ -22,12 +22,22 @@
 			-->
 			<template is="dom-bind">
 
+			<label for="some-input">Number of test buttons to add:</label>
+			<input id="some-input" type="number">
+			<br/>
+			<label for="some-input2">Keep at least this many:</label>
+			<input id="some-input2" type="number" value="{{keep::input}}">
+			<br/>
 			<span>[[buttonText]]</span>
+
 			<h2 class="d2l-heading-4">button menu</h2>
 			<p>
-				<d2l-button-group id="button-group-0" keep="1">
+				<d2l-button-group id="button-group-0" keep="[[keep]]">
 					<template strip-whitespace>
 						<button is="d2l-button" primary>Edit Submission Folder</button>
+						<template is="dom-repeat" items="[[items]]">
+							<button is="d2l-button">Test Button [[index]]</button>
+						</template>
 						<button is="d2l-button">Email Users Without Submissions</button>
 						<button is="d2l-button">Add Feedback Files</button>
 						<button is="d2l-button">Submission Log</button>
@@ -99,6 +109,7 @@
 
 			<script>
 				(function() {
+					var template = document.querySelector('[is=dom-bind]');
 					var groups = document.getElementsByTagName('d2l-button-group');
 					[].forEach.call(groups, function(group) {
 						group.addEventListener('d2l-button-group-select', function(e) {
@@ -110,6 +121,15 @@
 							}
 						});
 					});
+
+					var input = document.getElementById('some-input');
+					input.addEventListener('input', function() {
+						var value = +input.value;
+						var items = new Array(value);
+						template.items = items;
+					});
+
+					template.buttonText = 'nothing clicked yet!';
 				})();
 			</script>
 			</template>

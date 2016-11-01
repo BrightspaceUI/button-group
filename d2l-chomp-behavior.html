@@ -69,10 +69,6 @@ chomp: function() {
 		},
 
 		_chomp: function(itemsFrom, itemsToContainer) {
-			this.async(this._doChomp.bind(this, itemsFrom, itemsToContainer), 1);
-		},
-
-		_doChomp: function(itemsFrom, itemsToContainer) {
 			var index = itemsFrom.length - 1;
 
 			this._showAll(itemsFrom);
@@ -114,7 +110,7 @@ chomp: function() {
 		_showAll: function(items) {
 			items
 				.filter(function(node) {
-					return node.nodeType === Node.ELEMENT_NODE;
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
 				})
 				.forEach(this._showItem);
 		},
@@ -122,7 +118,7 @@ chomp: function() {
 		_hideAll: function(items) {
 			items
 				.filter(function(node) {
-					return node.nodeType === Node.ELEMENT_NODE;
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
 				})
 				.forEach(this._hideItem);
 		},

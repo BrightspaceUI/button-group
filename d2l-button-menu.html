@@ -89,17 +89,11 @@ top level menu item, the index is contained in `detail.index`.
 
 			behaviors: [D2L.PolymerBehaviors.Templatizer],
 
-			_forwardParentProp: function(prop, value) {
-				if (this._instance) {
-					this._instance.__setProperty(prop, value);
-					this._refresh();
-				}
+			_forwardParentProp: function() {
+				this.render();
 			},
-			_forwardParentPath: function(path, value) {
-				if (this._instance) {
-					this._instance._notifyPath(path, value);
-					this._refresh();
-				}
+			_forwardParentPath: function() {
+				this.render();
 			},
 
 			ready: function() {
@@ -114,15 +108,20 @@ top level menu item, the index is contained in `detail.index`.
 			},
 
 			render: function() {
+				this._instance = this.stamp({ menu: true });
+				this.async(this._doRender);
+			},
+
+			_doRender: function() {
 				var menu = Polymer.dom(this.$.menu);
 				this._clean(menu);
-				this._instance = this.stamp({ menu: true });
 				var items = Polymer.dom(this._instance.root).childNodes;
 				this._items = items
 					.filter(function(node) {
-						return node.nodeType === Node.ELEMENT_NODE;
+						return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
 					})
-					.map(this._createMenuItem.bind(this));
+					.map(this._createMenuItem.bind(this))
+					.map(this._updateMenuItem.bind(this));
 				this._refresh();
 				this._items
 					.forEach(function(item) {
@@ -136,12 +135,11 @@ top level menu item, the index is contained in `detail.index`.
 				}
 				var start = this.start;
 				this._items
-					.map(this._updateMenuItem.bind(this))
-					.forEach(function(node, index) {
+					.forEach(function(item, index) {
 						if (index <= start) {
-							node.setAttribute('hidden', 'hidden');
+							item.menuItem.setAttribute('hidden', 'hidden');
 						} else {
-							node.removeAttribute('hidden');
+							item.menuItem.removeAttribute('hidden');
 						}
 					});
 			},
@@ -184,7 +182,7 @@ top level menu item, the index is contained in `detail.index`.
 				menuItem.preventDefault = source.getAttribute('data-prevent-default');
 				menuItem.text = source.label || source.textContent;
 				menuItem.setAttribute('data-index', index);
-				return menuItem;
+				return item;
 			},
 
 			_onSelectItem: function(source, e) {
