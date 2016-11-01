@@ -28,9 +28,13 @@
 		</d2l-dropdown>
 	</template>
 </d2l-button-menu>
+```
 
 Or to re-use a template, use `templatize` and `render`
-```
+
+The `d2l-button-menu-select` event will be fired when a menu item or sub-menu item
+is selected. The selected menuItem is `detail.menuItem`. If the menu item is a
+top level menu item, the index is contained in `detail.index`.
 -->
 
 <dom-module id="d2l-button-menu">
@@ -157,7 +161,6 @@ Or to re-use a template, use `templatize` and `render`
 				var menuItem, source = item;
 				if (item.tagName.toLowerCase() === 'a') {
 					menuItem = document.createElement('d2l-menu-item-link');
-					menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, item));
 				} else if (item.tagName.toLowerCase() === 'd2l-dropdown-button') {
 					var subMenu = item.querySelector('d2l-menu');
 					source = subMenu;
@@ -165,9 +168,9 @@ Or to re-use a template, use `templatize` and `render`
 					Polymer.dom(menuItem).appendChild(subMenu);
 				} else {
 					menuItem = document.createElement('d2l-menu-item');
-					menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, item));
 				}
 
+				menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, source));
 				return {
 					menuItem: menuItem,
 					source: source
@@ -184,8 +187,20 @@ Or to re-use a template, use `templatize` and `render`
 				return menuItem;
 			},
 
-			_onSelectItem: function(item) {
-				item.click();
+			_onSelectItem: function(source, e) {
+				var index;
+				var menuItem = e.srcElement;
+				if (menuItem.hasAttribute('data-index')) {
+					index = +menuItem.getAttribute('data-index');
+					if (isNaN(index)) {
+						index = undefined;
+					}
+				}
+				this.fire('d2l-button-menu-select', {
+					menuItem: menuItem,
+					index: index
+				});
+				source.click();
 			}
 		});
 	</script>

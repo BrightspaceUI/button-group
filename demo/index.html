@@ -102,10 +102,11 @@
 					var groups = document.getElementsByTagName('d2l-button-group');
 					[].forEach.call(groups, function(group) {
 						group.addEventListener('d2l-button-group-select', function(e) {
-							if (e.detail.button) { // a button
-								group.dataHost.buttonText = e.detail.button.textContent + ' button clicked!';
-							} else { // submenu item
-								group.dataHost.buttonText = e.detail.target.text + ' submenu item clicked!';
+							var src = e.detail.src;
+							if (src.tagName.toLowerCase() === 'button') {
+								group.dataHost.buttonText = src.textContent + ' button clicked!';
+							} else {
+								group.dataHost.buttonText = src.text + ' submenu clicked!';
 							}
 						});
 					});

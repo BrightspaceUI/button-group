@@ -17,6 +17,9 @@
 	</template>
 </d2l-button-group>
 ```
+
+The `d2l-button-group-select` event will be fired when a button or sub-menu item
+is selected. The selected element is `detail.src`.
 @demo
 -->
 
@@ -79,9 +82,10 @@
 
 			behaviors: [D2L.PolymerBehaviors.ChompBehavior, D2L.PolymerBehaviors.Templatizer],
 
-			/*listeners: {
-				'menu.d2l-menu-item-select': '_onSelectItem',
-				'list.tap': '_onTapItem'
+			listeners: {
+				'menu.d2l-button-menu-select': '_onSelectItem',
+				'list.tap': '_onTapItem',
+				'list.d2l-menu-item-select': '_onSelectItem'
 			},
 
 			_onTapItem: function(e) {
@@ -93,28 +97,23 @@
 					return;
 				}
 				this.fire('d2l-button-group-select', {
-					target: button,
-					button: button
+					src: button
 				});
 			},
 
 			_onSelectItem: function(e) {
-				var target = e.srcElement;
 				var button;
-				if (target.hasAttribute('data-index')) {
+				if (e.detail.hasOwnProperty('index')) {
 					var children = Polymer.dom(this.$.list).childNodes.filter(function(node) {
 						return node.nodeType === Node.ELEMENT_NODE;
 					});
-					var index = +target.getAttribute('data-index');
-					if (!isNaN(index)) {
-						button = children[index];
-					}
+					var index = e.detail.index;
+					button = children[index];
 				}
 				this.fire('d2l-button-group-select', {
-					target: target,
-					button: button
+					src: button || e.detail.menuItem || e.srcElement
 				});
-			},*/
+			},
 
 			chomp: function() {
 				var items = Polymer.dom(this.$.list).childNodes.filter(function(node) {
