@@ -57,6 +57,12 @@ chomp: function() {
 				type: Number,
 				observer: 'chomp',
 				value: 0
+			},
+
+			keepMax: {
+				type: Number,
+				observer: 'chomp',
+				value: -1
 			}
 		},
 
@@ -78,11 +84,13 @@ chomp: function() {
 			this._showAll(itemsFrom);
 			this._setCanShrink(false);
 
-			if (this.keep > index) {
-				this._setCanShrink(true);
-			}
-
-			if (this._isOnFirstRow(itemsFrom, itemsFrom[index]) || this.keep > index) {
+			if (this.keepMax >= 0 && index >= this.keepMax) {
+				while (index >= this.keepMax) {
+					this._hideItem(itemsFrom[index]);
+					index--;
+				}
+			} else if (this._isOnFirstRow(itemsFrom, itemsFrom[index]) || this.keep > index) {
+				this._setCanShrink(this.keep > index);
 				this._hideItem(itemsToContainer);
 				return;
 			}
