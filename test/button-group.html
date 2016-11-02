@@ -20,6 +20,20 @@
 			</template>
 		</test-fixture>
 
+		<test-fixture id="one-button-bound">
+			<template>
+				<div>
+					<template is="dom-bind">
+						<d2l-button-group>
+							<template>
+								<button is="d2l-button" class="button" on-tap="onTap">[[foobar]]</button>
+							</template>
+						</d2l-button-group>
+					</template>
+				</div>
+			</template>
+		</test-fixture>
+
 		<test-fixture id="two-button">
 			<template>
 				<style>
@@ -48,7 +62,7 @@
 						box-sizing: border-box;
 					}
 					d2l-button-group {
-						width: 150px;
+						width: 170px;
 					}
 				</style>
 				<d2l-button-group>
@@ -84,8 +98,7 @@
 			describe('one-button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('one-button');
-					flush(done);
-					this.buttonGroup.fire('iron-resize');
+					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
 				it('should show Button', function() {
@@ -102,13 +115,82 @@
 				it('should not be able to shrink', function() {
 					expect(this.buttonGroup.canShrink).to.equal(false);
 				});
+
+				it('should fire d2l-button-group-select on button click', function(done) {
+					var button = this.buttonGroup.$.list.querySelector('.button');
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					button.click();
+				});
+
+				it('should fire d2l-button-group-select on menu-item click', function(done) {
+					var button = this.buttonGroup.$.list.querySelector('.button');
+					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					menuItem.click();
+				});
+			});
+
+			describe('one-button-bound', function() {
+				beforeEach(function(done) {
+					var oneButtonBoundFixture = fixture('one-button-bound');
+					this._fixture = oneButtonBoundFixture;
+					var self = this;
+					flush(function() {
+						self.buttonGroup = oneButtonBoundFixture.querySelector('d2l-button-group');
+						self.buttonGroup.async(flush.bind(null, done), 1);
+					});
+				});
+
+				it('should bind button text', function() {
+					var button = this.buttonGroup.$.list.querySelector('.button');
+					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
+
+					var template = this._fixture.querySelector('[is=dom-bind]');
+					template.foobar = 'Test';
+
+					this.buttonGroup.async(function() {
+						expect(button.textContent.trim()).to.equal('Test');
+						expect(menuItem.text.trim()).to.equal('Test');
+
+						template.foobar = 'Test2';
+					}, 1);
+					this.buttonGroup.async(function() {
+						expect(button.textContent.trim()).to.equal('Test2');
+						expect(menuItem.text.trim()).to.equal('Test2');
+					}, 1);
+				});
+
+				it('should onTap on button click', function(done) {
+					this._fixture.querySelector('[is=dom-bind]').onTap = function() {
+						done();
+					};
+					this.buttonGroup.async(function() {
+						var button = this.$.list.querySelector('.button');
+						button.click();
+					});
+				});
+
+				it('should onTap on menu-item click', function(done) {
+					this._fixture.querySelector('[is=dom-bind]').onTap = function() {
+						done();
+					};
+					this.buttonGroup.async(function() {
+						var menuItem = this.$.menu.$.menu.querySelector('d2l-menu-item');
+						menuItem.click();
+					});
+				});
 			});
 
 			describe('two-button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button')[1];
-					flush(done);
-					this.buttonGroup.fire('iron-resize');
+					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
 				it('should show 2 buttons', function() {
@@ -125,13 +207,50 @@
 				it('should not be able to shrink', function() {
 					expect(this.buttonGroup.canShrink).to.equal(false);
 				});
+
+				it('should fire d2l-button-group-select on button click (first)', function(done) {
+					var button = this.buttonGroup.$.list.querySelector('.button');
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					button.click();
+				});
+
+				it('should fire d2l-button-group-select on menu-item click (first)', function(done) {
+					var button = this.buttonGroup.$.list.querySelector('.button');
+					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					menuItem.click();
+				});
+
+				it('should fire d2l-button-group-select on button click (second)', function(done) {
+					var button = this.buttonGroup.$.list.querySelectorAll('.button')[1];
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					button.click();
+				});
+
+				it('should fire d2l-button-group-select on menu-item click (second)', function(done) {
+					var button = this.buttonGroup.$.list.querySelectorAll('.button')[1];
+					var menuItem = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item')[1];
+					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					menuItem.click();
+				});
 			});
 
 			describe('two-button-restricted', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button-restricted')[1];
-					flush(done);
-					this.buttonGroup.fire('iron-resize');
+					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
 				it('should show only the menu button', function() {
@@ -152,7 +271,7 @@
 				describe('when keep=1', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 1;
-						flush(done);
+						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
 					it('should show one button and menu button', function() {
@@ -175,10 +294,10 @@
 					});
 				});
 
-				describe('when keep=1', function() {
+				describe('when keep=2', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 2;
-						flush(done);
+						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
 					it('should show 2 buttons', function() {
@@ -201,8 +320,7 @@
 			describe('mini', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('mini')[1];
-					flush(done);
-					this.buttonGroup.fire('iron-resize');
+					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
 				it('should be able to shrink', function() {

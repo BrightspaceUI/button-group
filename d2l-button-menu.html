@@ -6,26 +6,37 @@
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
 <link rel="import" href="../d2l-menu/d2l-menu.html">
 <link rel="import" href="../d2l-menu/d2l-menu-item.html">
+<link rel="import" href="d2l-templatizer.html">
 
 <!--
 # D2L Button Menu
 
 ## Usage
 ```
-<link rel="import" href="d2l-button-menu.html">
+<head>
+	<script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+	<link rel="import" href="../d2l-button-menu/d2l-button-menu.html">
+	<link rel="import" href="../d2l-button/d2l-button.html">
+	<link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
+	<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+</head>
 
 <d2l-button-menu>
-	<button is="d2l-button">Stuff</button>
-	<d2l-dropdown>
+	<template>
+		<button is="d2l-button">Stuff</button>
 		<d2l-dropdown-button text="[[text]]">
 			<d2l-dropdown-menu>
 				<d2l-menu label="some menu">
 				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown-button>
-	</d2l-dropdown>
+	</template>
 </d2l-button-menu>
 ```
+
+The `d2l-button-menu-select` event will be fired when a menu item or sub-menu item
+is selected. The selected menuItem is `detail.menuItem`. If the menu item is a
+top level menu item, the index is contained in `detail.index`.
 -->
 
 <dom-module id="d2l-button-menu">
@@ -52,6 +63,7 @@
 				height: 100%;
 			}
 		</style>
+		<content id="buttons" select="template"></content>
 		<d2l-dropdown>
 			<button is="d2l-button" class="d2l-dropdown-opener">
 				<span>[[text]]</span><d2l-icon icon="d2l-tier1:chevron-down"></d2l-icon>
@@ -70,34 +82,85 @@
 				mini: {
 					type: Boolean,
 					reflectToAttribute: true
+				},
+				start: {
+					type: Number,
+					observer: '_refresh'
 				}
 			},
 
+			behaviors: [D2L.PolymerBehaviors.Templatizer],
+
+			_forwardParentProp: function() {
+				this.render();
+			},
+			_forwardParentPath: function() {
+				this.render();
+			},
+
 			ready: function() {
-				this._observer = Polymer.dom(this).observeNodes(function() {
-					var menu = Polymer.dom(this.$.menu);
-					this._clean(menu);
-					Polymer.dom(this).getEffectiveChildNodes()
-						.filter(function(node) {
-							return node.nodeType === Node.ELEMENT_NODE;
-						})
-						.map(this._createMenuItem.bind(this))
-						.forEach(function(item) {
-							menu.appendChild(item);
-						});
+				var self = this;
+				// Observer to load template from <content>
+				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
+					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
+					if (buttonTemplate) {
+						self.templatize(buttonTemplate);
+						self.render();
+					} else {
+						console.warn('d2l-button-menu requires a template to be provided'); // eslint-disable-line no-console
+					}
 				});
 			},
 
-			/* See ChompBehavior */
+			// Stamps the template into the Local DOM
+			render: function() {
+				this._instance = this.stamp({ menu: true });
+				// Wait for any Polymer stuff to complete
+				this.async(this._doRender);
+			},
+
+			_doRender: function() {
+				// Clean the current entries in menu
+				var menu = Polymer.dom(this.$.menu);
+				this._clean(menu);
+
+				// create menu items from template items
+				var items = Polymer.dom(this._instance.root).childNodes;
+				this._items = items
+					.filter(function(node) {
+						return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
+					})
+					.map(this._createMenuItem.bind(this))
+					.map(this._updateMenuItem.bind(this));
+
+				// Set hidden attributes
+				this._refresh();
+
+				// Attach menu items to the menu
+				this._items
+					.forEach(function(item) {
+						menu.appendChild(item.menuItem);
+					});
+			},
+
+			_refresh: function() {
+				if (!this._items) {
+					return;
+				}
+				var start = this.start;
+				this._items
+					.forEach(function(item, index) {
+						if (index <= start) {
+							item.menuItem.setAttribute('hidden', 'hidden');
+						} else {
+							item.menuItem.removeAttribute('hidden');
+						}
+					});
+			},
+
+			// See ChompBehavior
 			showHideItems: function(start) {
-				var items = Polymer.dom(this.$.menu).children;
-				items.forEach(function(node, index) {
-					if (index <= start) {
-						node.setAttribute('hidden', 'hidden');
-					} else {
-						node.removeAttribute('hidden');
-					}
-				});
+				this.start = start;
 			},
 
 			_clean: function(node) {
@@ -107,28 +170,50 @@
 			},
 
 			_createMenuItem: function(item) {
-				var menuItem;
+				var menuItem, source = item;
+
 				if (item.tagName.toLowerCase() === 'a') {
 					menuItem = document.createElement('d2l-menu-item-link');
-					menuItem.href = item.href;
-					menuItem.preventDefault = item.getAttribute('data-prevent-default');
-					menuItem.text = item.textContent;
-					menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, item));
-				} else if (item.tagName.toLowerCase() === 'd2l-dropdown') {
+				} else if (item.tagName.toLowerCase() === 'd2l-dropdown-button') {
 					var subMenu = item.querySelector('d2l-menu');
+					source = subMenu;
 					menuItem = document.createElement('d2l-menu-item');
-					menuItem.text = subMenu.label;
-					Polymer.dom(menuItem).appendChild(Polymer.dom(subMenu).cloneNode(true));
+					Polymer.dom(menuItem).appendChild(subMenu);
 				} else {
 					menuItem = document.createElement('d2l-menu-item');
-					menuItem.text = item.textContent;
-					menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, item));
 				}
-				return menuItem;
+
+				menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, source));
+				return {
+					menuItem: menuItem,
+					source: source
+				};
 			},
 
-			_onSelectItem: function(item) {
-				item.click();
+			_updateMenuItem: function(item, index) {
+				var menuItem = item.menuItem;
+				var source = item.source;
+				menuItem.href = source.href;
+				menuItem.preventDefault = source.getAttribute('data-prevent-default');
+				menuItem.text = source.label || source.textContent;
+				menuItem.setAttribute('data-index', index);
+				return item;
+			},
+
+			_onSelectItem: function(source, e) {
+				var index;
+				var menuItem = e.target;
+				if (menuItem.hasAttribute('data-index')) {
+					index = +menuItem.getAttribute('data-index');
+					if (isNaN(index)) {
+						index = undefined;
+					}
+				}
+				this.fire('d2l-button-menu-select', {
+					menuItem: menuItem,
+					index: index
+				});
+				source.click();
 			}
 		});
 	</script>

@@ -69,6 +69,10 @@ chomp: function() {
 		},
 
 		_chomp: function(itemsFrom, itemsToContainer) {
+			if (!itemsFrom.length) {
+				this._hideItem(itemsToContainer);
+				return;
+			}
 			var index = itemsFrom.length - 1;
 
 			this._showAll(itemsFrom);
@@ -90,7 +94,12 @@ chomp: function() {
 				index--;
 			}
 
-			this._setCanShrink(this.clientWidth < itemsToContainer.offsetWidth || !this._isOnFirstRow(itemsFrom, itemsToContainer));
+			// <= required, since some browsers size the container and items the same when the size is restricted
+			if (index === -1) {
+				this._setCanShrink(this.clientWidth <= itemsToContainer.offsetWidth);
+			} else {
+				this._setCanShrink(!this._isOnFirstRow(itemsFrom, itemsToContainer));
+			}
 
 			itemsToContainer.showHideItems(index);
 		},
@@ -107,11 +116,19 @@ chomp: function() {
 		},
 
 		_showAll: function(items) {
-			items.forEach(this._showItem);
+			items
+				.filter(function(node) {
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
+				})
+				.forEach(this._showItem);
 		},
 
 		_hideAll: function(items) {
-			items.forEach(this._hideItem);
+			items
+				.filter(function(node) {
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
+				})
+				.forEach(this._hideItem);
 		},
 
 		_showItem: function(item) {

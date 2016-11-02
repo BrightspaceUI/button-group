@@ -9,7 +9,7 @@
     "test:lint": "concurrently -p name -n js,wc \"npm run test:lint:js\" \"npm run test:lint:wc\"",
     "test:lint:js": "eslint --ext html .",
     "test:lint:wc": "polymer lint --input *.html",
-    "test:unit:local": "polymer test --skip-plugin sauce"
+    "test:unit:local": "wct --skip-plugin sauce"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
@@ -21,6 +21,7 @@
     "eslint": "^3.8.1",
     "eslint-config-brightspace": "^0.2.4",
     "eslint-plugin-html": "^1.5.5",
-    "polymer-cli": "^0.16.0"
+    "polymer-cli": "^0.16.0",
+    "web-component-tester": "^5.0.0"
   }
 }
