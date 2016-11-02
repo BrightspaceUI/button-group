@@ -42,7 +42,7 @@
 						box-sizing: border-box;
 					}
 					d2l-button-group {
-						width: 250px;
+						width: 300px;
 					}
 				</style>
 				<d2l-button-group>
@@ -95,26 +95,57 @@
 		</test-fixture>
 
 		<script>
+			function testGroup(list, menu, mini) {
+				function testList(buttonGroup) {
+					var buttons = buttonGroup.$.list.querySelectorAll('.button');
+					var visible = [].filter.call(buttons, function(node) {
+						return node.style.display !== 'none';
+					});
+					expect(visible.length).to.equal(list);
+				}
+
+				if (menu) {
+					it('should show ' + list + ' buttons and ' + menu + ' menu items', function() {
+						var menuEl = this.buttonGroup.$.menu;
+						expect(menuEl.style.display).to.not.equal('none');
+						var menuItems = menuEl.$.menu.querySelectorAll('d2l-menu-item:not([hidden])');
+						expect(menuItems.length).to.equal(menu);
+
+						testList(this.buttonGroup);
+					});
+				} else {
+					it('should show ' + list + ' buttons and no menu items', function() {
+						var menu = this.buttonGroup.$.menu;
+						expect(menu.style.display).to.equal('none');
+
+						testList(this.buttonGroup);
+					});
+				}
+
+				it('should ' + (mini ? '' : 'not ') + 'be able to shrink', function() {
+					expect(this.buttonGroup.canShrink).to.equal(mini);
+					expect(this.buttonGroup.$.menu.mini).to.equal(mini);
+				});
+			}
+
+			function testKeepMax(keepMax, list, menu, mini) {
+				describe('when keepMax=' + keepMax, function() {
+					beforeEach(function(done) {
+						this.buttonGroup.keepMax = keepMax;
+						this.buttonGroup.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(list, menu, mini);
+				});
+			}
+
 			describe('one-button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('one-button');
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
-				it('should show Button', function() {
-					var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
-					var visible = [].filter.call(buttons, function(node) {
-						return node.style.display !== 'none';
-					});
-					expect(visible.length).to.equal(1);
-
-					var menu = this.buttonGroup.$.menu;
-					expect(menu.style.display).to.equal('none');
-				});
-
-				it('should not be able to shrink', function() {
-					expect(this.buttonGroup.canShrink).to.equal(false);
-				});
+				testGroup(1, 0, false);
 
 				it('should fire d2l-button-group-select on button click', function(done) {
 					var button = this.buttonGroup.$.list.querySelector('.button');
@@ -134,12 +165,16 @@
 					});
 					menuItem.click();
 				});
+
+				testKeepMax(0, 0, 1, false);
+				testKeepMax(1, 1, 0, false);
 			});
 
 			describe('one-button-bound', function() {
 				beforeEach(function(done) {
 					var oneButtonBoundFixture = fixture('one-button-bound');
 					this._fixture = oneButtonBoundFixture;
+					this.template = this._fixture.querySelector('[is=dom-bind]');
 					var self = this;
 					flush(function() {
 						self.buttonGroup = oneButtonBoundFixture.querySelector('d2l-button-group');
@@ -151,7 +186,7 @@
 					var button = this.buttonGroup.$.list.querySelector('.button');
 					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
 
-					var template = this._fixture.querySelector('[is=dom-bind]');
+					var template = this.template;
 					template.foobar = 'Test';
 
 					this.buttonGroup.async(function() {
@@ -167,7 +202,7 @@
 				});
 
 				it('should onTap on button click', function(done) {
-					this._fixture.querySelector('[is=dom-bind]').onTap = function() {
+					this.template.onTap = function() {
 						done();
 					};
 					this.buttonGroup.async(function() {
@@ -177,7 +212,7 @@
 				});
 
 				it('should onTap on menu-item click', function(done) {
-					this._fixture.querySelector('[is=dom-bind]').onTap = function() {
+					this.template.onTap = function() {
 						done();
 					};
 					this.buttonGroup.async(function() {
@@ -193,20 +228,7 @@
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
-				it('should show 2 buttons', function() {
-					var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
-					var visible = [].filter.call(buttons, function(node) {
-						return node.style.display !== 'none';
-					});
-					expect(visible.length).to.equal(2);
-
-					var menu = this.buttonGroup.$.menu;
-					expect(menu.style.display).to.equal('none');
-				});
-
-				it('should not be able to shrink', function() {
-					expect(this.buttonGroup.canShrink).to.equal(false);
-				});
+				testGroup(2, 0, false);
 
 				it('should fire d2l-button-group-select on button click (first)', function(done) {
 					var button = this.buttonGroup.$.list.querySelector('.button');
@@ -245,6 +267,10 @@
 					});
 					menuItem.click();
 				});
+
+				testKeepMax(0, 0, 2, false);
+				testKeepMax(1, 1, 1, false);
+				testKeepMax(2, 2, 0, false);
 			});
 
 			describe('two-button-restricted', function() {
@@ -253,20 +279,10 @@
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
-				it('should show only the menu button', function() {
-					var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
-					var visible = [].filter.call(buttons, function(node) {
-						return node.style.display !== 'none';
-					});
-					expect(visible.length).to.equal(0);
-
-					var menuItems = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item:not([hidden])');
-					expect(menuItems.length).to.equal(2);
-				});
-
-				it('should not be able to shrink', function() {
-					expect(this.buttonGroup.canShrink).to.equal(false);
-				});
+				testGroup(0, 2, false);
+				testKeepMax(0, 0, 2, false);
+				testKeepMax(1, 0, 2, false);
+				testKeepMax(2, 0, 2, false);
 
 				describe('when keep=1', function() {
 					beforeEach(function(done) {
@@ -274,24 +290,10 @@
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
-					it('should show one button and menu button', function() {
-						var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
-						var visible = [].filter.call(buttons, function(node) {
-							return node.style.display !== 'none';
-						});
-						expect(visible.length).to.equal(1);
-
-						var menuItems = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item:not([hidden])');
-						expect(menuItems.length).to.equal(1);
-					});
-
-					it('should be able to shrink', function() {
-						expect(this.buttonGroup.canShrink).to.equal(true);
-					});
-
-					it('menu should be mini', function() {
-						expect(this.buttonGroup.$.menu.mini).to.equal(true);
-					});
+					testGroup(1, 1, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 1, 1, true);
 				});
 
 				describe('when keep=2', function() {
@@ -300,20 +302,10 @@
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
-					it('should show 2 buttons', function() {
-						var buttons = this.buttonGroup.$.list.querySelectorAll('.button');
-						var visible = [].filter.call(buttons, function(node) {
-							return node.style.display !== 'none';
-						});
-						expect(visible.length).to.equal(2);
-
-						var menu = this.buttonGroup.$.menu;
-						expect(menu.style.display).to.equal('none');
-					});
-
-					it('should be able to shrink', function() {
-						expect(this.buttonGroup.canShrink).to.equal(true);
-					});
+					testGroup(2, 0, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 2, 0, true);
 				});
 			});
 
@@ -323,13 +315,10 @@
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
-				it('should be able to shrink', function() {
-					expect(this.buttonGroup.canShrink).to.equal(true);
-				});
-
-				it('menu should be mini', function() {
-					expect(this.buttonGroup.$.menu.mini).to.equal(true);
-				});
+				testGroup(0, 2, true);
+				testKeepMax(0, 0, 2, true);
+				testKeepMax(1, 0, 2, true);
+				testKeepMax(2, 0, 2, true);
 			});
 		</script>
 	</body>
