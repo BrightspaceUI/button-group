@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="d2l-button-menu.html">
+<link rel="import" href="d2l-buttons-menu.html">
 <link rel="import" href="d2l-chomp-behavior.html">
 <link rel="import" href="d2l-templatizer.html">
 
@@ -100,11 +100,10 @@ is selected. The selected element is `detail.src`.
 			}
 		</style>
 		<div class="button-group">
-			<div id="list" class="button-list">
-			</div>
-			<d2l-button-menu id="menu" text="More Actions" mini="[[canShrink]]">
+			<content select="d2l-button-list"></content>
+			<d2l-buttons-menu id="menu" text="More Actions" mini="[[canShrink]]">
 				<content id="buttons" select="template"></content>
-			</d2l-button-menu>
+			</d2l-buttons-menu>
 		</div>
 	</template>
 	<script>
@@ -140,9 +139,13 @@ is selected. The selected element is `detail.src`.
 					});
 					var index = e.detail.index;
 					button = children[index];
+					if (button) {
+						button.click();
+						return;
+					}
 				}
 				this.fire('d2l-button-group-select', {
-					src: button || e.detail.menuItem || e.target
+					src: e.detail.menuItem || e.target
 				});
 			},
 
