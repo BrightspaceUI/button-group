@@ -97,7 +97,7 @@
 		<script>
 			function testGroup(list, menu, mini) {
 				function testList(buttonGroup) {
-					var buttons = buttonGroup.$.list.querySelectorAll('.button');
+					var buttons = buttonGroup.querySelector('d2l-button-list').querySelectorAll('.button');
 					var visible = [].filter.call(buttons, function(node) {
 						return node.style.display !== 'none';
 					});
@@ -148,7 +148,7 @@
 				testGroup(1, 0, false);
 
 				it('should fire d2l-button-group-select on button click', function(done) {
-					var button = this.buttonGroup.$.list.querySelector('.button');
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
@@ -157,7 +157,7 @@
 				});
 
 				it('should fire d2l-button-group-select on menu-item click', function(done) {
-					var button = this.buttonGroup.$.list.querySelector('.button');
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
@@ -183,7 +183,7 @@
 				});
 
 				it('should bind button text', function() {
-					var button = this.buttonGroup.$.list.querySelector('.button');
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
 
 					var template = this.template;
@@ -206,7 +206,7 @@
 						done();
 					};
 					this.buttonGroup.async(function() {
-						var button = this.$.list.querySelector('.button');
+						var button = this.querySelector('d2l-button-list').querySelector('.button');
 						button.click();
 					});
 				});
@@ -231,7 +231,7 @@
 				testGroup(2, 0, false);
 
 				it('should fire d2l-button-group-select on button click (first)', function(done) {
-					var button = this.buttonGroup.$.list.querySelector('.button');
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
@@ -240,7 +240,7 @@
 				});
 
 				it('should fire d2l-button-group-select on menu-item click (first)', function(done) {
-					var button = this.buttonGroup.$.list.querySelector('.button');
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
@@ -250,7 +250,7 @@
 				});
 
 				it('should fire d2l-button-group-select on button click (second)', function(done) {
-					var button = this.buttonGroup.$.list.querySelectorAll('.button')[1];
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelectorAll('.button')[1];
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
@@ -259,7 +259,7 @@
 				});
 
 				it('should fire d2l-button-group-select on menu-item click (second)', function(done) {
-					var button = this.buttonGroup.$.list.querySelectorAll('.button')[1];
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelectorAll('.button')[1];
 					var menuItem = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item')[1];
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
