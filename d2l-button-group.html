@@ -192,7 +192,8 @@ is selected. The selected element is `detail.src`.
 					list.appendChild(this._listInstance.root.firstChild);
 				}
 
-				this.async(this.chomp);
+				// FIXME: need to wait 2 microtask cycles before chomp calculation will be correct
+				this.async(this.async.bind(this, this.chomp));
 			}
 		});
 	</script>
