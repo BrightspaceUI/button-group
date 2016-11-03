@@ -6,6 +6,7 @@
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
 <link rel="import" href="../d2l-menu/d2l-menu.html">
 <link rel="import" href="../d2l-menu/d2l-menu-item.html">
+<link rel="import" href="../d2l-menu/d2l-menu-item-separator.html">
 <link rel="import" href="d2l-templatizer.html">
 
 <!--
@@ -15,13 +16,13 @@
 ```
 <head>
 	<script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
-	<link rel="import" href="../d2l-button-menu/d2l-button-menu.html">
+	<link rel="import" href="../d2l-buttons-menu/d2l-buttons-menu.html">
 	<link rel="import" href="../d2l-button/d2l-button.html">
 	<link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
 	<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
 </head>
 
-<d2l-button-menu>
+<d2l-buttons-menu>
 	<template>
 		<button is="d2l-button">Stuff</button>
 		<d2l-dropdown-button text="[[text]]">
@@ -31,15 +32,15 @@
 			</d2l-dropdown-menu>
 		</d2l-dropdown-button>
 	</template>
-</d2l-button-menu>
+</d2l-buttons-menu>
 ```
 
-The `d2l-button-menu-select` event will be fired when a menu item or sub-menu item
+The `d2l-buttons-menu-select` event will be fired when a menu item or sub-menu item
 is selected. The selected menuItem is `detail.menuItem`. If the menu item is a
 top level menu item, the index is contained in `detail.index`.
 -->
 
-<dom-module id="d2l-button-menu">
+<dom-module id="d2l-buttons-menu">
 	<template strip-whitespace>
 		<style include="d2l-dropdown-opener-styles">
 			:host button > span {
@@ -69,13 +70,15 @@ top level menu item, the index is contained in `detail.index`.
 				<span>[[text]]</span><d2l-icon icon="d2l-tier1:chevron-down"></d2l-icon>
 			</button>
 			<d2l-dropdown-menu>
-				<d2l-menu id="menu" label="[[text]]"></d2l-menu>
+				<d2l-menu label="[[text]]">
+					<content></content>
+				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown>
 	</template>
 	<script>
 		Polymer({
-			is: 'd2l-button-menu',
+			is: 'd2l-buttons-menu',
 
 			properties: {
 				text: String,
@@ -107,7 +110,7 @@ top level menu item, the index is contained in `detail.index`.
 						self.templatize(buttonTemplate);
 						self.render();
 					} else {
-						console.warn('d2l-button-menu requires a template to be provided'); // eslint-disable-line no-console
+						console.warn('d2l-buttons-menu requires a template to be provided'); // eslint-disable-line no-console
 					}
 				});
 			},
@@ -121,8 +124,7 @@ top level menu item, the index is contained in `detail.index`.
 
 			_doRender: function() {
 				// Clean the current entries in menu
-				var menu = Polymer.dom(this.$.menu);
-				this._clean(menu);
+				this._clean();
 
 				// create menu items from template items
 				var items = Polymer.dom(this._instance.root).childNodes;
@@ -136,6 +138,7 @@ top level menu item, the index is contained in `detail.index`.
 				// Set hidden attributes
 				this._refresh();
 
+				var menu = Polymer.dom(this);
 				// Attach menu items to the menu
 				this._items
 					.forEach(function(item) {
@@ -163,17 +166,24 @@ top level menu item, the index is contained in `detail.index`.
 				this.start = start;
 			},
 
-			_clean: function(node) {
-				while (node.lastChild) {
-					node.removeChild(node.lastChild);
+			_clean: function() {
+				if (!this._items) {
+					return;
 				}
+				var menu = Polymer.dom(this);
+				this._items.forEach(function(item) {
+					menu.removeChild(item.menuItem);
+				});
 			},
 
 			_createMenuItem: function(item) {
-				var menuItem, source = item;
+				var menuItem, source = item, addListener = true;
 
 				if (item.tagName.toLowerCase() === 'a') {
 					menuItem = document.createElement('d2l-menu-item-link');
+				} else if (item.getAttribute('role') === 'separator') {
+					menuItem = document.createElement('d2l-menu-item-separator');
+					addListener = false;
 				} else if (item.tagName.toLowerCase() === 'd2l-dropdown-button') {
 					var subMenu = item.querySelector('d2l-menu');
 					source = subMenu;
@@ -183,7 +193,7 @@ top level menu item, the index is contained in `detail.index`.
 					menuItem = document.createElement('d2l-menu-item');
 				}
 
-				menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, source));
+				addListener && menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, source));
 				return {
 					menuItem: menuItem,
 					source: source
@@ -209,11 +219,10 @@ top level menu item, the index is contained in `detail.index`.
 						index = undefined;
 					}
 				}
-				this.fire('d2l-button-menu-select', {
+				this.fire('d2l-buttons-menu-select', {
 					menuItem: menuItem,
 					index: index
 				});
-				source.click();
 			}
 		});
 	</script>
