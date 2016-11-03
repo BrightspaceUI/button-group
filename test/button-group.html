@@ -108,7 +108,7 @@
 					it('should show ' + list + ' buttons and ' + menu + ' menu items', function() {
 						var menuEl = this.buttonGroup.$.menu;
 						expect(menuEl.style.display).to.not.equal('none');
-						var menuItems = menuEl.$.menu.querySelectorAll('d2l-menu-item:not([hidden])');
+						var menuItems = menuEl.querySelectorAll('d2l-menu-item:not([hidden])');
 						expect(menuItems.length).to.equal(menu);
 
 						testList(this.buttonGroup);
@@ -158,7 +158,7 @@
 
 				it('should fire d2l-button-group-select on menu-item click', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
-					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
+					var menuItem = this.buttonGroup.$.menu.querySelector('d2l-menu-item');
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
@@ -184,7 +184,7 @@
 
 				it('should bind button text', function() {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
-					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
+					var menuItem = this.buttonGroup.$.menu.querySelector('d2l-menu-item');
 
 					var template = this.template;
 					template.foobar = 'Test';
@@ -216,7 +216,7 @@
 						done();
 					};
 					this.buttonGroup.async(function() {
-						var menuItem = this.$.menu.$.menu.querySelector('d2l-menu-item');
+						var menuItem = this.$.menu.querySelector('d2l-menu-item');
 						menuItem.click();
 					});
 				});
@@ -241,7 +241,7 @@
 
 				it('should fire d2l-button-group-select on menu-item click (first)', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
-					var menuItem = this.buttonGroup.$.menu.$.menu.querySelector('d2l-menu-item');
+					var menuItem = this.buttonGroup.$.menu.querySelector('d2l-menu-item');
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
@@ -260,7 +260,7 @@
 
 				it('should fire d2l-button-group-select on menu-item click (second)', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelectorAll('.button')[1];
-					var menuItem = this.buttonGroup.$.menu.$.menu.querySelectorAll('d2l-menu-item')[1];
+					var menuItem = this.buttonGroup.$.menu.querySelectorAll('d2l-menu-item')[1];
 					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();

@@ -70,7 +70,9 @@ top level menu item, the index is contained in `detail.index`.
 				<span>[[text]]</span><d2l-icon icon="d2l-tier1:chevron-down"></d2l-icon>
 			</button>
 			<d2l-dropdown-menu>
-				<d2l-menu id="menu" label="[[text]]"></d2l-menu>
+				<d2l-menu label="[[text]]">
+					<content></content>
+				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown>
 	</template>
@@ -122,8 +124,7 @@ top level menu item, the index is contained in `detail.index`.
 
 			_doRender: function() {
 				// Clean the current entries in menu
-				var menu = Polymer.dom(this.$.menu);
-				this._clean(menu);
+				this._clean();
 
 				// create menu items from template items
 				var items = Polymer.dom(this._instance.root).childNodes;
@@ -137,6 +138,7 @@ top level menu item, the index is contained in `detail.index`.
 				// Set hidden attributes
 				this._refresh();
 
+				var menu = Polymer.dom(this);
 				// Attach menu items to the menu
 				this._items
 					.forEach(function(item) {
@@ -164,10 +166,14 @@ top level menu item, the index is contained in `detail.index`.
 				this.start = start;
 			},
 
-			_clean: function(node) {
-				while (node.lastChild) {
-					node.removeChild(node.lastChild);
+			_clean: function() {
+				if (!this._items) {
+					return;
 				}
+				var menu = Polymer.dom(this);
+				this._items.forEach(function(item) {
+					menu.removeChild(item.menuItem);
+				});
 			},
 
 			_createMenuItem: function(item) {
