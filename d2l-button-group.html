@@ -43,7 +43,11 @@ Clicking a menu-item will trigger `click()` on the associated button.
 If a button is hidden, it will be reflected in the menu, but only after `chomp()`
 is called or window is resized.
 
-TODO: call `chomp()` when `<d2l-button-list>` contents are modified
+DO NOT modify the children of d2l-button-list directly. The behavior is undefined. If the
+buttons need to be modified, replace the template or modify it and call `render()`
+or call `templatize(template)` and `render()`. If the template contains Polymer
+components, the list will be refreshed when a binding changes or text changes
+
 @demo
 -->
 
@@ -137,7 +141,17 @@ TODO: call `chomp()` when `<d2l-button-list>` contents are modified
 			},
 
 			chomp: function() {
+				if (!this._listElement) {
+					return;
+				}
+				this._listObserver.disconnect();
 				this._chomp(this._listNodes, this.$.menu);
+				this._listObserver.observe(this._listElement, {
+					childList: true,
+					characterData: true,
+					attributes: true,
+					subtree: true
+				});
 			},
 
 			_forwardParentProp: function() {
@@ -145,6 +159,10 @@ TODO: call `chomp()` when `<d2l-button-list>` contents are modified
 			},
 			_forwardParentPath: function() {
 				this.render();
+			},
+
+			created: function() {
+				this._listObserver = new MutationObserver(this.chomp.bind(this));
 			},
 
 			ready: function() {
@@ -171,6 +189,7 @@ TODO: call `chomp()` when `<d2l-button-list>` contents are modified
 			_doRender: function() {
 				// Create d2l-button-list element
 				this._listElement && Polymer.dom(this).removeChild(this._listElement);
+				this._listObserver.disconnect();
 				var list = document.createElement('d2l-button-list');
 				this.listen(list, 'tap', '_onTapItem');
 				this.listen(list, 'd2l-menu-item-select', '_onSelectItem');

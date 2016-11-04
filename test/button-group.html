@@ -166,6 +166,26 @@
 					menuItem.click();
 				});
 
+				it('should update when text changes', function(done) {
+					sinon.spy(this.buttonGroup, '_chomp');
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
+					button.textContent = 'Something changed';
+					this.buttonGroup.async(function() {
+						expect(this._chomp).to.have.been.calledOnce;
+						done();
+					}, 1);
+				});
+
+				it('should update when class changes', function(done) {
+					sinon.spy(this.buttonGroup, '_chomp');
+					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
+					button.classList.add('changes');
+					this.buttonGroup.async(function() {
+						expect(this._chomp).to.have.been.calledOnce;
+						done();
+					}, 1);
+				});
+
 				testKeepMax(0, 0, 1, false);
 				testKeepMax(1, 1, 0, false);
 			});
@@ -182,22 +202,24 @@
 					});
 				});
 
-				it('should bind button text', function() {
-					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
-					var menuItem = this.buttonGroup.$.menu.querySelector('d2l-menu-item');
-
+				it('should bind button text', function(done) {
 					var template = this.template;
 					template.foobar = 'Test';
 
 					this.buttonGroup.async(function() {
+						var button = this.querySelector('d2l-button-list').querySelector('.button');
+						var menuItem = this.$.menu.querySelector('d2l-menu-item');
 						expect(button.textContent.trim()).to.equal('Test');
 						expect(menuItem.text.trim()).to.equal('Test');
 
 						template.foobar = 'Test2';
 					}, 1);
 					this.buttonGroup.async(function() {
+						var button = this.querySelector('d2l-button-list').querySelector('.button');
+						var menuItem = this.$.menu.querySelector('d2l-menu-item');
 						expect(button.textContent.trim()).to.equal('Test2');
 						expect(menuItem.text.trim()).to.equal('Test2');
+						done();
 					}, 1);
 				});
 
