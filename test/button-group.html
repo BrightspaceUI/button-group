@@ -213,13 +213,14 @@
 						expect(menuItem.text.trim()).to.equal('Test');
 
 						template.foobar = 'Test2';
-					}, 1);
-					this.buttonGroup.async(function() {
-						var button = this.querySelector('d2l-button-list').querySelector('.button');
-						var menuItem = this.$.menu.querySelector('d2l-menu-item');
-						expect(button.textContent.trim()).to.equal('Test2');
-						expect(menuItem.text.trim()).to.equal('Test2');
-						done();
+
+						this.async(function() {
+							var button = this.querySelector('d2l-button-list').querySelector('.button');
+							var menuItem = this.$.menu.querySelector('d2l-menu-item');
+							expect(button.textContent.trim()).to.equal('Test2');
+							expect(menuItem.text.trim()).to.equal('Test2');
+							done();
+						}, 1);
 					}, 1);
 				});
 
