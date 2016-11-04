@@ -9,16 +9,16 @@
 	 * arguments: `itemsFrom` and `itemsToContainer`. Items from the `itemsFrom`
 	 * array will be hidden until `itemsToContainer` doesn't wrap. If `itemsFrom`
 	 * doesn't wrap, `itemsToContainer` will be hidden.
-	 * `itemsToContainer.showHideItems` will be called with the index of the
-	 * last visible item.
+	 * `itemsToContainer.showHideItems` will be called with the indexes of the
+	 * hidden items
 	 *
 	 * For example:
 	 * * Staring with: *A B C D | M* (itemsFrom = [A,B,C,D], itemsToContainer = M)
 	 * * When `this._chomp(itemsFrom, itemsToContainer)` is called,
-	 *   * If result is: *A B C ~~D~~ | M*, then `M.showHideItems(2)` is called
-	 *   * If result is: *A B ~~C D~~ | M*, then `M.showHideItems(1)` is called
-	 *   * If result is: *A ~~B C D~~ | M*, then `M.showHideItems(0)` is called
-	 *   * If result is: *~~A B C D~~ | M*, then `M.showHideItems(-1)` is called
+	 *   * If result is: *A B C ~~D~~ | M*, then `M.showHideItems([3])` is called
+	 *   * If result is: *A B ~~C D~~ | M*, then `M.showHideItems([3,2])` is called
+	 *   * If result is: *A ~~B C D~~ | M*, then `M.showHideItems([3,2,3])` is called
+	 *   * If result is: *~~A B C D~~ | M*, then `M.showHideItems([3,2,1,0])` is called
 	 *   * If result is: *A B C D ~~| M~~*, then `M.showHideItems` is not called
 	 * * The case that has no wrapping or wrapping with `keep` items is the one that `_chomp` selects
 	 *
@@ -81,12 +81,17 @@ chomp: function() {
 			}
 			var index = itemsFrom.length - 1;
 
+			var hiddenList = [];
+
 			this._showAll(itemsFrom);
 			this._setCanShrink(false);
 
 			if (this.keepMax >= 0 && index >= this.keepMax) {
 				while (index >= this.keepMax) {
-					this._hideItem(itemsFrom[index]);
+					if (this._isVisible(itemsFrom[index])) {
+						this._hideItem(itemsFrom[index]);
+						hiddenList.push(index);
+					}
 					index--;
 				}
 			} else if (this._isOnFirstRow(itemsFrom, itemsFrom[index]) || this.keep > index) {
@@ -98,7 +103,10 @@ chomp: function() {
 			this._showItem(itemsToContainer);
 
 			while (index >= this.keep && !this._isOnFirstRow(itemsFrom, itemsToContainer)) {
-				this._hideItem(itemsFrom[index]);
+				if (this._isVisible(itemsFrom[index])) {
+					this._hideItem(itemsFrom[index]);
+					hiddenList.push(index);
+				}
 				index--;
 			}
 
@@ -109,7 +117,15 @@ chomp: function() {
 				this._setCanShrink(!this._isOnFirstRow(itemsFrom, itemsToContainer));
 			}
 
-			itemsToContainer.showHideItems(index);
+			hiddenList = hiddenList.sort(function(a, b) {
+				return b - a;
+			});
+
+			if (hiddenList.length === 0) {
+				this._hideItem(itemsToContainer);
+			} else {
+				itemsToContainer.showHideItems(hiddenList);
+			}
 		},
 
 		_isOnFirstRow: function(items, item) {
@@ -121,6 +137,10 @@ chomp: function() {
 				OFFSET_TOLERANCE =  15;
 
 			return (Math.abs(baseOffsetTop - itemOffsetTop) < OFFSET_TOLERANCE);
+		},
+
+		_isVisible: function(item) {
+			return item.offsetWidth > 0;
 		},
 
 		_showAll: function(items) {
@@ -140,7 +160,7 @@ chomp: function() {
 		},
 
 		_showItem: function(item) {
-			item.style.display = 'inline-block';
+			item.style.display = '';
 		},
 
 		_hideItem: function(item) {

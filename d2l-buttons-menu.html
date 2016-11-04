@@ -86,8 +86,8 @@ top level menu item, the index is contained in `detail.index`.
 					type: Boolean,
 					reflectToAttribute: true
 				},
-				start: {
-					type: Number,
+				hiddenList: {
+					type: Array,
 					observer: '_refresh'
 				}
 			},
@@ -150,20 +150,25 @@ top level menu item, the index is contained in `detail.index`.
 				if (!this._items) {
 					return;
 				}
-				var start = this.start;
+				var hiddenList = [];
+				if (this.hiddenList) {
+					hiddenList = this.hiddenList.slice();
+				}
+				var hiddenItem = hiddenList.pop();
 				this._items
 					.forEach(function(item, index) {
-						if (index <= start) {
-							item.menuItem.setAttribute('hidden', 'hidden');
-						} else {
+						if (hiddenItem === index) {
+							hiddenItem = hiddenList.pop();
 							item.menuItem.removeAttribute('hidden');
+						} else {
+							item.menuItem.setAttribute('hidden', 'hidden');
 						}
 					});
 			},
 
 			// See ChompBehavior
-			showHideItems: function(start) {
-				this.start = start;
+			showHideItems: function(hiddenList) {
+				this.hiddenList = hiddenList;
 			},
 
 			_clean: function() {

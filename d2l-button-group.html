@@ -37,6 +37,13 @@
 
 The `d2l-button-group-select` event will be fired when a button or sub-menu item
 is selected. The selected element is `detail.src`.
+
+All items within the template will be placed inside a `<d2l-button-list>`.
+Clicking a menu-item will trigger `click()` on the associated button.
+If a button is hidden, it will be reflected in the menu, but only after `chomp()`
+is called or window is resized.
+
+TODO: call `chomp()` when `<d2l-button-list>` contents are modified
 @demo
 -->
 
