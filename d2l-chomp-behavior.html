@@ -140,7 +140,7 @@ chomp: function() {
 		},
 
 		_isVisible: function(item) {
-			return item.offsetWidth > 0;
+			return !!item.offsetParent;
 		},
 
 		_showAll: function(items) {
