@@ -94,7 +94,7 @@ components, the list will be refreshed when a binding changes or text changes
 				autoKeep: {
 					type: Boolean,
 					value: false,
-					observer: '_calculateKeep'
+					observer: '_handleAutoKeepChange'
 				}
 			},
 
@@ -193,17 +193,20 @@ components, the list will be refreshed when a binding changes or text changes
 				var list = document.createElement('d2l-button-list');
 				this.listen(list, 'tap', '_onTapItem');
 				this.listen(list, 'd2l-menu-item-select', '_onSelectItem');
-				this._listElement = list;
 				this._updateButtonList(this.canShrink);
 				Polymer.dom(list).appendChild(this._listInstance.root);
 
 				// Find keep and keepMax properties if autoKeep is true
-				this._calculateKeep();
+				this._calculateKeep(list);
 
 				// Attach to the light DOM and run chomp
 				Polymer.dom(this).appendChild(list);
-				// FIXME: need to wait 2 microtask cycles before chomp calculation will be correct
-				this.async(this.async.bind(this, this.chomp));
+				this._listElement = list;
+
+				if (this.isAttached) {
+					// FIXME: need to wait 2 microtask cycles before chomp calculation will be correct
+					this.async(this.async.bind(this, this.chomp));
+				}
 			},
 
 			_updateButtonList: function(canShrink) {
@@ -212,12 +215,20 @@ components, the list will be refreshed when a binding changes or text changes
 				}
 			},
 
-			_calculateKeep: function() {
+			_handleAutoKeepChange: function() {
+				this._calculateKeep(this._listElement);
+			},
+
+			_calculateKeep: function(list) {
 				if (!this.autoKeep) {
 					return;
 				}
+
+				var listNodes = Polymer.dom(list).childNodes.filter(function(node) {
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
+				});
 				var keep, keepMax;
-				this._listNodes.forEach(function(node, index) {
+				listNodes.forEach(function(node, index) {
 					if (node.classList.contains('d2l-button-group-keep')) {
 						keep = index + 1;
 					}
