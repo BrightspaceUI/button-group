@@ -70,7 +70,7 @@ chomp: function() {
 		 * **You MUST implement this method.** Implement by calling
 		 * `_chomp` with the appropriate arguments
 		 */
-		chomp: function() {
+		chomp: /* istanbul ignore next */ function() {
 			throw new Error('You must implement this method');
 		},
 
@@ -109,6 +109,7 @@ chomp: function() {
 				}
 				index--;
 			}
+			// assert(hiddenList.length > 0)
 
 			// <= required, since some browsers size the container and items the same when the size is restricted
 			if (index === -1) {
@@ -120,18 +121,11 @@ chomp: function() {
 			hiddenList = hiddenList.sort(function(a, b) {
 				return b - a;
 			});
-
-			if (hiddenList.length === 0) {
-				this._hideItem(itemsToContainer);
-			} else {
-				itemsToContainer.showHideItems(hiddenList);
-			}
+			itemsToContainer.showHideItems(hiddenList);
 		},
 
 		_isOnFirstRow: function(items, item) {
-			if (items.length === 0) {
-				return true;
-			}
+			// assert(items.length > 0 && !!item)
 			var baseOffsetTop = items[0].offsetTop,
 				itemOffsetTop = item.offsetTop,
 				OFFSET_TOLERANCE =  15;
@@ -140,7 +134,7 @@ chomp: function() {
 		},
 
 		_isVisible: function(item) {
-			return !!item.offsetParent;
+			return !!item.offsetWidth;
 		},
 
 		_showAll: function(items) {
@@ -149,14 +143,6 @@ chomp: function() {
 					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
 				})
 				.forEach(this._showItem);
-		},
-
-		_hideAll: function(items) {
-			items
-				.filter(function(node) {
-					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
-				})
-				.forEach(this._hideItem);
 		},
 
 		_showItem: function(item) {
