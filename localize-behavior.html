@@ -1,0 +1,93 @@
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
+<script>
+(function() {
+	'use strict';
+
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
+
+	/** @polymerBehavior */
+	var LocalizeBehavior = {
+		properties: {
+			language: {
+				type: String,
+				computed: '_computeLanguage(resources)'
+			},
+			resources: {
+				value: function() {
+					var ar = {
+						'moreActions': 'المزيد من الأفعال'
+					};
+					var en = {
+						'moreActions': 'More Actions'
+					};
+					var es = {
+						'moreActions': 'Mas acciones'
+					};
+					var fi = {
+						'moreActions': 'lisää toimintoja'
+					};
+					var fr = {
+						'moreActions': 'Plus d\'actions'
+					};
+					var ja = {
+						'moreActions': 'その他のアクション'
+					};
+					var ko = {
+						'moreActions': '추가 작업'
+					};
+					var pt = {
+						'moreActions': 'Mais ações'
+					};
+					var sv = {
+						'moreActions': 'fler åtgärder'
+					};
+					var tr = {
+						'moreActions': 'Daha fazla hareket'
+					};
+					var zhCN = {
+						'moreActions': '更多操作'
+					};
+					var zhTW = {
+						'moreActions': '更多操作'
+					};
+					return {
+						'ar': ar,
+						'en': en,
+						'es': es,
+						'fi': fi,
+						'fr': fr,
+						'ja': ja,
+						'ko': ko,
+						'pt': pt,
+						'sv': sv,
+						'tr': tr,
+						'zh': zhCN,
+						'zh-tw': zhTW
+					};
+				}
+			}
+		},
+		_computeLanguage: function(resources) {
+			var locale = document.documentElement.lang
+				|| document.documentElement.getAttribute('data-lang-default')
+				|| 'en-us';
+			locale = locale.toLowerCase();
+			if (resources[locale]) {
+				return locale;
+			}
+			var langAndRegion = locale.split('-');
+			if (resources[langAndRegion[0]]) {
+				return langAndRegion[0];
+			}
+			return 'en';
+		}
+	};
+	/** @polymerBehavior */
+	D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior = [
+		Polymer.AppLocalizeBehavior,
+		LocalizeBehavior
+	];
+})();
+</script>
