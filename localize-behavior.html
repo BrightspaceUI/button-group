@@ -2,7 +2,12 @@
 <script>
 (function() {
 	'use strict';
-	/** @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior */
+
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
+
+	/** @polymerBehavior */
 	var LocalizeBehavior = {
 		properties: {
 			language: {
@@ -79,11 +84,8 @@
 			return 'en';
 		}
 	};
-	window.D2L = window.D2L || {};
-	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
 	/** @polymerBehavior */
-	window.D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior = [
+	D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior = [
 		Polymer.AppLocalizeBehavior,
 		LocalizeBehavior
 	];
