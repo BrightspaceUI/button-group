@@ -10,11 +10,35 @@
 	</head>
 	<body>
 
+		<test-fixture id="zero-button">
+			<template>
+				<d2l-button-group>
+					<template>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
 		<test-fixture id="one-button">
 			<template>
 				<d2l-button-group>
 					<template>
 						<button is="d2l-button" class="button">Button</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="one-button-hidden">
+			<template>
+				<style>
+					.hidden {
+						display: none;
+					}
+				</style>
+				<d2l-button-group>
+					<template>
+						<button is="d2l-button" class="button hidden">Button</button>
 					</template>
 				</d2l-button-group>
 			</template>
@@ -48,6 +72,30 @@
 				<d2l-button-group>
 					<template>
 						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button-one-hidden">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					.hidden {
+						display: none;
+					}
+					d2l-button-group {
+						width: 170px;
+					}
+				</style>
+				<d2l-button-group>
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="hidden button">Hidden Button</button>
 						<button is="d2l-button" class="button">Button2</button>
 					</template>
 				</d2l-button-group>
@@ -99,7 +147,7 @@
 				function testList(buttonGroup) {
 					var buttons = buttonGroup.querySelector('d2l-button-list').querySelectorAll('.button');
 					var visible = [].filter.call(buttons, function(node) {
-						return node.style.display !== 'none';
+						return !!node.offsetParent;
 					});
 					expect(visible.length).to.equal(list);
 				}
@@ -107,7 +155,7 @@
 				if (menu) {
 					it('should show ' + list + ' buttons and ' + menu + ' menu items', function() {
 						var menuEl = this.buttonGroup.$.menu;
-						expect(menuEl.style.display).to.not.equal('none');
+						expect(menuEl.offsetParent).to.be.okay;
 						var menuItems = menuEl.querySelectorAll('d2l-menu-item:not([hidden])');
 						expect(menuItems.length).to.equal(menu);
 
@@ -116,7 +164,7 @@
 				} else {
 					it('should show ' + list + ' buttons and no menu items', function() {
 						var menu = this.buttonGroup.$.menu;
-						expect(menu.style.display).to.equal('none');
+						expect(menu.offsetParent).to.not.be.okay;
 
 						testList(this.buttonGroup);
 					});
@@ -138,6 +186,24 @@
 					testGroup(list, menu, mini);
 				});
 			}
+
+			describe('zero-button', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('zero-button');
+					this.buttonGroup.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 0, false);
+			});
+
+			describe('one hidden button', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('one-button-hidden')[1];
+					this.buttonGroup.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 0, false);
+			});
 
 			describe('one-button', function() {
 				beforeEach(function(done) {
@@ -294,6 +360,55 @@
 				testKeepMax(0, 0, 2, false);
 				testKeepMax(1, 1, 1, false);
 				testKeepMax(2, 2, 0, false);
+			});
+
+			describe('two visible button and one hidden button', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('two-button-one-hidden')[1];
+					this.buttonGroup.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 2, false);
+				testKeepMax(0, 0, 2, false);
+				testKeepMax(1, 0, 2, false);
+				testKeepMax(2, 0, 2, false);
+
+				describe('when keep=1', function() {
+					beforeEach(function(done) {
+						this.buttonGroup.keep = 1;
+						this.buttonGroup.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(1, 1, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 1, 1, true);
+				});
+
+				describe('when keep=2', function() {
+					beforeEach(function(done) {
+						this.buttonGroup.keep = 2;
+						this.buttonGroup.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(1, 1, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 1, 1, true);
+				});
+
+				describe('when keep=3', function() {
+					beforeEach(function(done) {
+						this.buttonGroup.keep = 3;
+						this.buttonGroup.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(2, 0, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 1, 1, true);
+					testKeepMax(3, 2, 0, true);
+				});
 			});
 
 			describe('two-button-restricted', function() {
