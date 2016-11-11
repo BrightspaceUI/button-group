@@ -24,6 +24,6 @@
     "polymer": "^1.7.0",
     "d2l-dropdown": "^3.0.0",
     "iron-resizable-behavior": "^1.0.5",
-    "app-localize-behavior": "^0.10.0"
+    "app-localize-behavior": "https://github.com/Brightspace/app-localize-behavior.git#master"
   }
 }
