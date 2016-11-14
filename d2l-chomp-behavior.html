@@ -24,13 +24,6 @@
 	 *
 	 * # Usage
 	 * ```
-<style>
-:host {
-    // The container of the buttons MUST be relative IF elements can be hidden by some external Javascript to work in IE10
-    position: relative;
-}
-</style>
-...
 behaviors: [D2L.PolymerBehaviors.ChompBehavior],
 chomp: function() {
 	this._chomp(this.itemsFrom, this.itemsToContainer);
@@ -141,7 +134,7 @@ chomp: function() {
 		},
 
 		_isVisible: function(item) {
-			return !!item.offsetParent && item.offsetParent !== document.body;
+			return window.getComputedStyle(item).getPropertyValue('display') !== 'none';
 		},
 
 		_showAll: function(items) {
