@@ -147,6 +147,24 @@
 			</template>
 		</test-fixture>
 
+		<test-fixture id="three-button-auto-keep">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+				</style>
+				<d2l-button-group auto-keep>
+					<template>
+						<button is="d2l-button" class="button d2l-button-group-keep">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+						<button is="d2l-button" class="button d2l-button-group-no-keep">Button3</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
 		<test-fixture id="mini">
 			<template>
 				<style>
@@ -506,6 +524,20 @@
 					testKeepMax(1, 1, 2, true);
 					testKeepMax(2, 2, 1, true);
 				});
+			});
+
+			describe('three-button-auto-keep', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('three-button-auto-keep')[1];
+					this.buttonGroup.async(flush.bind(null, done), 1);
+				});
+				it('should have keep=1', function() {
+					expect(this.buttonGroup.keep).to.equal(1);
+				});
+				it('should have keep-max=2', function() {
+					expect(this.buttonGroup.keepMax).to.equal(2);
+				});
+				testGroup(2, 1, false);
 			});
 
 			describe('mini', function() {
