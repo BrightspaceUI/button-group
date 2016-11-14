@@ -122,6 +122,31 @@
 			</template>
 		</test-fixture>
 
+		<test-fixture id="two-button-one-zero-width-restricted">
+			<template>
+				<style>
+					button.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					.zero-width {
+						width: 0;
+						box-sizing: border-box;
+					}
+					d2l-button-group {
+						width: 170px;
+					}
+				</style>
+				<d2l-button-group>
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+						<span class="zero-width button"></span>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
 		<test-fixture id="mini">
 			<template>
 				<style>
@@ -444,6 +469,42 @@
 					testKeepMax(0, 0, 2, false);
 					testKeepMax(1, 1, 1, true);
 					testKeepMax(2, 2, 0, true);
+				});
+			});
+
+			describe('two-button-one-zero-width-restricted', function() {
+				beforeEach(function(done) {
+					this.buttonGroup = fixture('two-button-one-zero-width-restricted')[1];
+					this.buttonGroup.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 3, false);
+				testKeepMax(0, 0, 3, false);
+				testKeepMax(1, 0, 3, false);
+				testKeepMax(3, 0, 3, false);
+
+				describe('when keep=1', function() {
+					beforeEach(function(done) {
+						this.buttonGroup.keep = 1;
+						this.buttonGroup.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(1, 2, true);
+					testKeepMax(0, 0, 3, false);
+					testKeepMax(1, 1, 2, true);
+					testKeepMax(2, 1, 2, true);
+				});
+
+				describe('when keep=2', function() {
+					beforeEach(function(done) {
+						this.buttonGroup.keep = 2;
+						this.buttonGroup.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(2, 1, true);
+					testKeepMax(0, 0, 3, false);
+					testKeepMax(1, 1, 2, true);
+					testKeepMax(2, 2, 1, true);
 				});
 			});
 
