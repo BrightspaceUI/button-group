@@ -57,6 +57,8 @@ components, the list will be refreshed when a binding changes or text changes
 		<style>
 			:host {
 				display: block;
+				/* Needed for IE10 visibility check */
+				position: relative;
 			}
 
 			:host([can-shrink]) .button-group,
@@ -64,9 +66,6 @@ components, the list will be refreshed when a binding changes or text changes
 				display: -ms-flexbox;
 				display: -webkit-flex;
 				display: flex;
-
-				/* Needed for IE10 visibility check */
-				position: relative;
 
 				-ms-flex-align: stretch;
 				-webkit-align-items: stretch;
