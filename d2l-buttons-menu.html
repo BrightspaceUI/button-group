@@ -7,6 +7,7 @@
 <link rel="import" href="../d2l-menu/d2l-menu.html">
 <link rel="import" href="../d2l-menu/d2l-menu-item.html">
 <link rel="import" href="../d2l-menu/d2l-menu-item-separator.html">
+<link rel="import" href="../d2l-offscreen/d2l-offscreen-shared-styles.html">
 <link rel="import" href="d2l-templatizer.html">
 
 <!--
@@ -42,7 +43,7 @@ top level menu item, the index is contained in `detail.index`.
 
 <dom-module id="d2l-buttons-menu">
 	<template strip-whitespace>
-		<style include="d2l-dropdown-opener-styles">
+		<style include="d2l-dropdown-opener-styles d2l-offscreen-shared-styles">
 			:host button > span {
 				margin-right: 0.6rem;
 			}
@@ -52,7 +53,7 @@ top level menu item, the index is contained in `detail.index`.
 			}
 
 			:host([mini]) button > span {
-				display: none;
+				@apply(--d2l-offscreen);
 			}
 
 			:host([mini]) d2l-dropdown {
@@ -67,7 +68,7 @@ top level menu item, the index is contained in `detail.index`.
 		<content id="buttons" select="template"></content>
 		<d2l-dropdown>
 			<button is="d2l-button" class="d2l-dropdown-opener">
-				<span>[[text]]</span><d2l-icon icon="d2l-tier1:chevron-down"></d2l-icon>
+				<span>[[text]]</span><d2l-icon icon="[[icon]]" aria-hidden="true"></d2l-icon>
 			</button>
 			<d2l-dropdown-menu>
 				<d2l-menu label="[[text]]">
@@ -89,6 +90,10 @@ top level menu item, the index is contained in `detail.index`.
 				hiddenList: {
 					type: Array,
 					observer: '_refresh'
+				},
+				icon: {
+					type: String,
+					computed: '_getIcon(mini)'
 				}
 			},
 
@@ -99,6 +104,10 @@ top level menu item, the index is contained in `detail.index`.
 			},
 			_forwardParentPath: function() {
 				this.render();
+			},
+
+			_getIcon: function(mini) {
+				return mini ? 'd2l-tier1:more' : 'd2l-tier1:chevron-down';
 			},
 
 			ready: function() {

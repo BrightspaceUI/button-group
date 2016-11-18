@@ -216,6 +216,7 @@
 				it('should ' + (mini ? '' : 'not ') + 'be able to shrink', function() {
 					expect(this.buttonGroup.canShrink).to.equal(mini);
 					expect(this.buttonGroup.$.menu.mini).to.equal(mini);
+					expect(this.buttonGroup.$.menu.icon).to.equal(mini ? 'd2l-tier1:more' : 'd2l-tier1:chevron-down');
 				});
 			}
 
