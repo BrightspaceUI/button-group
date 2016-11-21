@@ -37,6 +37,8 @@
 				white-space: normal;
 			}
 
+			/* FIXME: Specificity in Shady DOM is too low if d2l-button or
+			   d2l-image-action is imported after d2l-button-list */
 			:host > ::slotted(*) {
 				margin-right: var(--d2l-button-list-spacing-inner);
 			}
