@@ -1,0 +1,238 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="d2l-buttons-menu.html">
+<link rel="import" href="d2l-button-list.html">
+<link rel="import" href="d2l-chomp-behavior.html">
+<link rel="import" href="d2l-templatizer.html">
+
+<!--
+# D2L Responsive Button List
+
+The `d2l-responsive-button-list` event will be fired when a button or sub-menu item
+is selected. The selected element is `detail.src`.
+
+All items within the template will be placed inside a `<d2l-button-list>`.
+Clicking a menu-item will trigger `click()` on the associated button.
+If a button is hidden, it will be reflected in the menu, but only after `chomp()`
+is called or window is resized.
+
+DO NOT modify the children of d2l-button-list directly. The behavior is undefined. If the
+buttons need to be modified, replace the template or modify it and call `render()`
+or call `templatize(template)` and `render()`. If the template contains Polymer
+components, the list will be refreshed when a binding changes or text changes
+
+@demo
+-->
+
+<dom-module id="d2l-responsive-button-list">
+	<template strip-whitespace>
+		<style>
+			:host {
+				display: block;
+			}
+
+			:host([can-shrink]) .responsive-button-list,
+			:host([can-shrink]) .responsive-button-list > ::slotted(d2l-button-list) {
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+
+				-ms-flex-align: stretch;
+				-webkit-align-items: stretch;
+				align-items: stretch;
+
+				-ms-flex-wrap: nowrap;
+				-webkit-flex-wrap: nowrap;
+				flex-wrap: nowrap;
+			}
+
+			:host([can-shrink]) .responsive-button-list > ::slotted(d2l-button-list) {
+				-ms-flex: 0 1 auto;
+				-webkit-flex: 0 1 auto;
+				flex: 0 1 auto;
+			}
+		</style>
+		<div class="responsive-button-list">
+			<slot name="d2l-button-list"></slot>
+			<d2l-buttons-menu id="menu" text="[[menuText]]" mini="[[canShrink]]">
+				<slot id="buttons"></slot>
+			</d2l-buttons-menu>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'd2l-responsive-button-list',
+
+			properties: {
+				menuText: String,
+				autoKeep: {
+					type: Boolean,
+					value: false,
+					observer: '_handleAutoKeepChange'
+				},
+				keepClass: {
+					type: String,
+					value: '',
+					observer: '_handleAutoKeepChange'
+				},
+				noKeepClass: {
+					type: String,
+					value: '',
+					observer: '_handleAutoKeepChange'
+				}
+			},
+
+			behaviors: [
+				D2L.PolymerBehaviors.ChompBehavior,
+				D2L.PolymerBehaviors.Templatizer
+			],
+
+			observers: [
+				'_updateButtonList(canShrink)'
+			],
+
+			listeners: {
+				'menu.d2l-buttons-menu-select': '_onSelectItem'
+			},
+
+			get _listNodes() {
+				return Polymer.dom(this._listElement).childNodes.filter(function(node) {
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
+				});
+			},
+
+			_onTapItem: function(e) {
+				var button = Polymer.dom(e).localTarget;
+				if (
+					Polymer.dom(button).parentNode === this._listElement &&
+					button.tagName && button.tagName.toLowerCase() === 'button'
+				) {
+					this.fire('d2l-responsive-button-list-select', {
+						src: button
+					});
+				}
+			},
+
+			_onSelectItem: function(e) {
+				if (typeof e.detail.index === 'number') {
+					var index = e.detail.index;
+					var button = this._listNodes[index];
+					if (button) {
+						button.click();
+						return;
+					}
+				}
+				this.fire('d2l-responsive-button-list-select', {
+					src: e.detail.menuItem || e.target
+				});
+			},
+
+			chomp: function() {
+				if (!this._listElement) {
+					return;
+				}
+				this._listObserver.disconnect();
+				this._chomp(this._listNodes, this.$.menu);
+				this._listObserver.observe(this._listElement, {
+					childList: true,
+					characterData: true,
+					attributes: true,
+					subtree: true
+				});
+			},
+
+			_forwardParentProp: function() {
+				this.render();
+			},
+			_forwardParentPath: function() {
+				this.render();
+			},
+
+			created: function() {
+				this._listObserver = new MutationObserver(this.chomp.bind(this));
+			},
+
+			ready: function() {
+				var self = this;
+				// Observer to load template from <slot>
+				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
+					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
+					if (buttonTemplate) {
+						self.templatize(buttonTemplate);
+						self.render();
+					} else {
+						console.warn('d2l-responsive-button-list requires a template to be provided'); // eslint-disable-line no-console
+					}
+				});
+			},
+
+			// Stamps the template into the Local DOM
+			render: function() {
+				this._listInstance = this.stamp({ list: true });
+				// FIXME: Wait for any Polymer stuff to complete for the fixme in _doRender
+				this.async(this._doRender);
+			},
+
+			_doRender: function() {
+				// Create d2l-button-list element
+				this._listElement && Polymer.dom(this).removeChild(this._listElement);
+				this._listObserver.disconnect();
+				var list = document.createElement('d2l-button-list');
+				list.setAttribute('slot', 'd2l-button-list');
+				this.listen(list, 'tap', '_onTapItem');
+				this.listen(list, 'd2l-menu-item-select', '_onSelectItem');
+				this._updateButtonList(this.canShrink);
+				Polymer.dom(list).appendChild(this._listInstance.root);
+
+				// Find keep and keepMax properties if autoKeep is true
+				this._calculateKeep(list);
+
+				// Attach to the light DOM and run chomp
+				Polymer.dom(this).appendChild(list);
+				this._listElement = list;
+
+				if (this.isAttached) {
+					// FIXME: need to wait 2 microtask cycles before chomp calculation will be correct
+					this.async(this.async.bind(this, this.chomp));
+				}
+			},
+
+			_updateButtonList: function(canShrink) {
+				if (this._listElement) {
+					this._listElement.canShrink = canShrink;
+				}
+			},
+
+			_handleAutoKeepChange: function() {
+				this._calculateKeep(this._listElement);
+			},
+
+			_calculateKeep: function(list) {
+				if (!this.autoKeep || (!this.keepClass && !this.noKeepClass)) {
+					return;
+				}
+
+				var listNodes = Polymer.dom(list).childNodes.filter(function(node) {
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
+				});
+				var keep, keepMax;
+				var keepClass = this.keepClass;
+				var noKeepClass = this.noKeepClass;
+				listNodes.forEach(function(node, index) {
+					if (keepClass && node.classList.contains(keepClass)) {
+						keep = index + 1;
+					}
+					if (noKeepClass && keepMax === undefined && node.classList.contains(noKeepClass)) {
+						keepMax = index;
+					}
+				});
+
+				if (keep !== undefined) {
+					this.keep = keep;
+				}
+				if (keepMax !== undefined) {
+					this.keepMax = keepMax;
+				}
+			}
+		});
+	</script>
+</dom-module>

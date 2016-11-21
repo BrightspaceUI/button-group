@@ -1,0 +1,557 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>wrapper tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../d2l-responsive-button-list.html">
+	</head>
+	<body>
+
+		<test-fixture id="zero-button">
+			<template>
+				<d2l-responsive-button-list menu-text="More Actions">
+					<template>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="one-button">
+			<template>
+				<d2l-responsive-button-list menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button</button>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="one-button-hidden">
+			<template>
+				<style>
+					.hidden {
+						display: none;
+					}
+				</style>
+				<d2l-responsive-button-list menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button hidden">Button</button>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="one-button-bound">
+			<template>
+				<div>
+					<template is="dom-bind">
+						<d2l-responsive-button-list menu-text="More Actions">
+							<template>
+								<button is="d2l-button" class="button" on-tap="onTap">[[foobar]]</button>
+							</template>
+						</d2l-responsive-button-list>
+					</template>
+				</div>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-responsive-button-list {
+						width: 300px;
+					}
+				</style>
+				<d2l-responsive-button-list menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button-one-hidden">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					.hidden {
+						display: none;
+					}
+					d2l-responsive-button-list {
+						width: 170px;
+					}
+				</style>
+				<d2l-responsive-button-list menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="hidden button">Hidden Button</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button-restricted">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-responsive-button-list {
+						width: 170px;
+					}
+				</style>
+				<d2l-responsive-button-list menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button-one-zero-width-restricted">
+			<template>
+				<style>
+					button.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					.zero-width {
+						width: 0;
+						box-sizing: border-box;
+					}
+					d2l-responsive-button-list {
+						width: 170px;
+					}
+				</style>
+				<d2l-responsive-button-list menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+						<span class="zero-width button"></span>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="three-button-auto-keep">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+				</style>
+				<d2l-responsive-button-list auto-keep keep-class="d2l-responsive-button-list-keep" no-keep-class="d2l-responsive-button-list-no-keep">
+					<template>
+						<button is="d2l-button" class="button d2l-responsive-button-list-keep">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+						<button is="d2l-button" class="button d2l-responsive-button-list-no-keep">Button3</button>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="mini">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-responsive-button-list {
+						width: 0;
+					}
+				</style>
+				<d2l-responsive-button-list menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-responsive-button-list>
+			</template>
+		</test-fixture>
+
+		<script>
+			function testGroup(list, menu, mini) {
+				function testList(buttonList) {
+					var buttons = buttonList.querySelector('d2l-button-list').querySelectorAll('.button');
+					var visible = [].filter.call(buttons, function(node) {
+						return window.getComputedStyle(node).display !== 'none';
+					});
+					expect(visible.length).to.equal(list);
+				}
+
+				if (menu) {
+					it('should show ' + list + ' buttons and ' + menu + ' menu items', function() {
+						var menuEl = this.buttonList.$.menu;
+						expect(menuEl.offsetParent).to.be.okay;
+						var menuItems = menuEl.querySelectorAll('d2l-menu-item:not([hidden])');
+						expect(menuItems.length).to.equal(menu);
+
+						testList(this.buttonList);
+					});
+				} else {
+					it('should show ' + list + ' buttons and no menu items', function() {
+						var menu = this.buttonList.$.menu;
+						expect(menu.offsetParent).to.not.be.okay;
+
+						testList(this.buttonList);
+					});
+				}
+
+				it('should ' + (mini ? '' : 'not ') + 'be able to shrink', function() {
+					expect(this.buttonList.canShrink).to.equal(mini);
+					expect(this.buttonList.$.menu.mini).to.equal(mini);
+					expect(this.buttonList.$.menu.icon).to.equal(mini ? 'd2l-tier1:more' : 'd2l-tier1:chevron-down');
+				});
+			}
+
+			function testKeepMax(keepMax, list, menu, mini) {
+				describe('when keepMax=' + keepMax, function() {
+					beforeEach(function(done) {
+						this.buttonList.keepMax = keepMax;
+						this.buttonList.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(list, menu, mini);
+				});
+			}
+
+			describe('zero-button', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('zero-button');
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 0, false);
+			});
+
+			describe('one hidden button', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('one-button-hidden')[1];
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 0, false);
+			});
+
+			describe('one-button', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('one-button');
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(1, 0, false);
+
+				it('should fire d2l-responsive-button-list-select on button click', function(done) {
+					var button = this.buttonList.querySelector('d2l-button-list').querySelector('.button');
+					this.buttonList.addEventListener('d2l-responsive-button-list-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					button.click();
+				});
+
+				it('should fire d2l-responsive-button-list-select on menu-item click', function(done) {
+					var button = this.buttonList.querySelector('d2l-button-list').querySelector('.button');
+					var menuItem = this.buttonList.$.menu.querySelector('d2l-menu-item');
+					this.buttonList.addEventListener('d2l-responsive-button-list-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					menuItem.click();
+				});
+
+				it('should update when text changes', function(done) {
+					sinon.spy(this.buttonList, '_chomp');
+					var button = this.buttonList.querySelector('d2l-button-list').querySelector('.button');
+					button.textContent = 'Something changed';
+					this.buttonList.async(function() {
+						expect(this._chomp).to.have.been.calledOnce;
+						done();
+					}, 1);
+				});
+
+				it('should update when class changes', function(done) {
+					sinon.spy(this.buttonList, '_chomp');
+					var button = this.buttonList.querySelector('d2l-button-list').querySelector('.button');
+					button.classList.add('changes');
+					this.buttonList.async(function() {
+						expect(this._chomp).to.have.been.calledOnce;
+						done();
+					}, 1);
+				});
+
+				testKeepMax(0, 0, 1, false);
+				testKeepMax(1, 1, 0, false);
+			});
+
+			describe('one-button-bound', function() {
+				beforeEach(function(done) {
+					var oneButtonBoundFixture = fixture('one-button-bound');
+					this._fixture = oneButtonBoundFixture;
+					this.template = this._fixture.querySelector('[is=dom-bind]');
+					var self = this;
+					flush(function() {
+						self.buttonList = oneButtonBoundFixture.querySelector('d2l-responsive-button-list');
+						self.buttonList.async(flush.bind(null, done), 1);
+					});
+				});
+
+				it('should bind button text', function(done) {
+					var template = this.template;
+					template.foobar = 'Test';
+
+					this.buttonList.async(function() {
+						var button = this.querySelector('d2l-button-list').querySelector('.button');
+						var menuItem = this.$.menu.querySelector('d2l-menu-item');
+						expect(button.textContent.trim()).to.equal('Test');
+						expect(menuItem.text.trim()).to.equal('Test');
+
+						template.foobar = 'Test2';
+
+						this.async(function() {
+							var button = this.querySelector('d2l-button-list').querySelector('.button');
+							var menuItem = this.$.menu.querySelector('d2l-menu-item');
+							expect(button.textContent.trim()).to.equal('Test2');
+							expect(menuItem.text.trim()).to.equal('Test2');
+							done();
+						}, 1);
+					}, 1);
+				});
+
+				it('should onTap on button click', function(done) {
+					this.template.onTap = function() {
+						done();
+					};
+					this.buttonList.async(function() {
+						var button = this.querySelector('d2l-button-list').querySelector('.button');
+						button.click();
+					});
+				});
+
+				it('should onTap on menu-item click', function(done) {
+					this.template.onTap = function() {
+						done();
+					};
+					this.buttonList.async(function() {
+						var menuItem = this.$.menu.querySelector('d2l-menu-item');
+						menuItem.click();
+					});
+				});
+			});
+
+			describe('two-button', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('two-button')[1];
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(2, 0, false);
+
+				it('should fire d2l-responsive-button-list-select on button click (first)', function(done) {
+					var button = this.buttonList.querySelector('d2l-button-list').querySelector('.button');
+					this.buttonList.addEventListener('d2l-responsive-button-list-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					button.click();
+				});
+
+				it('should fire d2l-responsive-button-list-select on menu-item click (first)', function(done) {
+					var button = this.buttonList.querySelector('d2l-button-list').querySelector('.button');
+					var menuItem = this.buttonList.$.menu.querySelector('d2l-menu-item');
+					this.buttonList.addEventListener('d2l-responsive-button-list-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					menuItem.click();
+				});
+
+				it('should fire d2l-responsive-button-list-select on button click (second)', function(done) {
+					var button = this.buttonList.querySelector('d2l-button-list').querySelectorAll('.button')[1];
+					this.buttonList.addEventListener('d2l-responsive-button-list-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					button.click();
+				});
+
+				it('should fire d2l-responsive-button-list-select on menu-item click (second)', function(done) {
+					var button = this.buttonList.querySelector('d2l-button-list').querySelectorAll('.button')[1];
+					var menuItem = this.buttonList.$.menu.querySelectorAll('d2l-menu-item')[1];
+					this.buttonList.addEventListener('d2l-responsive-button-list-select', function(e) {
+						expect(e.detail.src).to.equal(button);
+						done();
+					});
+					menuItem.click();
+				});
+
+				testKeepMax(0, 0, 2, false);
+				testKeepMax(1, 1, 1, false);
+				testKeepMax(2, 2, 0, false);
+			});
+
+			describe('two visible button and one hidden button', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('two-button-one-hidden')[1];
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 2, false);
+				testKeepMax(0, 0, 2, false);
+				testKeepMax(1, 0, 2, false);
+				testKeepMax(2, 0, 2, false);
+
+				describe('when keep=1', function() {
+					beforeEach(function(done) {
+						this.buttonList.keep = 1;
+						this.buttonList.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(1, 1, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 1, 1, true);
+				});
+
+				describe('when keep=2', function() {
+					beforeEach(function(done) {
+						this.buttonList.keep = 2;
+						this.buttonList.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(1, 1, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 1, 1, true);
+				});
+
+				describe('when keep=3', function() {
+					beforeEach(function(done) {
+						this.buttonList.keep = 3;
+						this.buttonList.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(2, 0, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 1, 1, true);
+					testKeepMax(3, 2, 0, true);
+				});
+			});
+
+			describe('two-button-restricted', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('two-button-restricted')[1];
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 2, false);
+				testKeepMax(0, 0, 2, false);
+				testKeepMax(1, 0, 2, false);
+				testKeepMax(2, 0, 2, false);
+
+				describe('when keep=1', function() {
+					beforeEach(function(done) {
+						this.buttonList.keep = 1;
+						this.buttonList.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(1, 1, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 1, 1, true);
+				});
+
+				describe('when keep=2', function() {
+					beforeEach(function(done) {
+						this.buttonList.keep = 2;
+						this.buttonList.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(2, 0, true);
+					testKeepMax(0, 0, 2, false);
+					testKeepMax(1, 1, 1, true);
+					testKeepMax(2, 2, 0, true);
+				});
+			});
+
+			describe('two-button-one-zero-width-restricted', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('two-button-one-zero-width-restricted')[1];
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 3, false);
+				testKeepMax(0, 0, 3, false);
+				testKeepMax(1, 0, 3, false);
+				testKeepMax(3, 0, 3, false);
+
+				describe('when keep=1', function() {
+					beforeEach(function(done) {
+						this.buttonList.keep = 1;
+						this.buttonList.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(1, 2, true);
+					testKeepMax(0, 0, 3, false);
+					testKeepMax(1, 1, 2, true);
+					testKeepMax(2, 1, 2, true);
+				});
+
+				describe('when keep=2', function() {
+					beforeEach(function(done) {
+						this.buttonList.keep = 2;
+						this.buttonList.async(flush.bind(null, done), 1);
+					});
+
+					testGroup(2, 1, true);
+					testKeepMax(0, 0, 3, false);
+					testKeepMax(1, 1, 2, true);
+					testKeepMax(2, 2, 1, true);
+				});
+			});
+
+			describe('three-button-auto-keep', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('three-button-auto-keep')[1];
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+				it('should have keep=1', function() {
+					expect(this.buttonList.keep).to.equal(1);
+				});
+				it('should have keep-max=2', function() {
+					expect(this.buttonList.keepMax).to.equal(2);
+				});
+				testGroup(2, 1, false);
+			});
+
+			describe('mini', function() {
+				beforeEach(function(done) {
+					this.buttonList = fixture('mini')[1];
+					this.buttonList.async(flush.bind(null, done), 1);
+				});
+
+				testGroup(0, 2, true);
+				testKeepMax(0, 0, 2, true);
+				testKeepMax(1, 0, 2, true);
+				testKeepMax(2, 0, 2, true);
+			});
+		</script>
+	</body>
+</html>

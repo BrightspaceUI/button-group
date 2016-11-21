@@ -6,16 +6,17 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 		<script src="../../web-component-tester/browser.js"></script>
-		<link rel="import" href="../d2l-button-group.html">
+		<link rel="import" href="../../d2l-image-action/d2l-image-action.html">
+		<link rel="import" href="../d2l-action-button-group.html">
 	</head>
 
 	<test-fixture id="one-button">
 		<template>
-			<d2l-button-group>
+			<d2l-action-button-group>
 				<template>
-					<button is="d2l-button" class="button">Button</button>
+					<button is="d2l-image-action" class="button">Button</button>
 				</template>
-			</d2l-button-group>
+			</d2l-action-button-group>
 		</template>
 	</test-fixture>
 
@@ -32,28 +33,18 @@
 					expect(childNodes).to.contain(template);
 				});
 
-				it('should pass auto-keep, keep, keepMax to d2l-responsive-button-list', function() {
+				it('should pass keep, keepMax to d2l-responsive-button-list', function() {
 					var responsiveButtonList = this.buttonGroup.$$('d2l-responsive-button-list');
 
-					this.buttonGroup.autoKeep = false;
 					this.buttonGroup.keep = 0;
 					this.buttonGroup.keepMax = -1;
-					expect(responsiveButtonList.autoKeep).to.equal(this.buttonGroup.autoKeep);
 					expect(responsiveButtonList.keep).to.equal(this.buttonGroup.keep);
 					expect(responsiveButtonList.keepMax).to.equal(this.buttonGroup.keepMax);
 
-					this.buttonGroup.autoKeep = true;
 					this.buttonGroup.keep = 1;
 					this.buttonGroup.keepMax = 0;
-					expect(responsiveButtonList.autoKeep).to.equal(this.buttonGroup.autoKeep);
 					expect(responsiveButtonList.keep).to.equal(this.buttonGroup.keep);
 					expect(responsiveButtonList.keepMax).to.equal(this.buttonGroup.keepMax);
-				});
-
-				it('should set keep-class and no-keep-class', function() {
-					var responsiveButtonList = this.buttonGroup.$$('d2l-responsive-button-list');
-					expect(responsiveButtonList.keepClass).to.equal('d2l-button-group-keep');
-					expect(responsiveButtonList.noKeepClass).to.equal('d2l-button-group-no-keep');
 				});
 			});
 		</script>

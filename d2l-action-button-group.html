@@ -1,0 +1,69 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="d2l-responsive-button-list.html">
+<link rel="import" href="localize-behavior.html">
+
+<!--
+# D2L Action Button Group
+
+## Usage
+```
+<head>
+	<script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+	<link rel="import" href="../d2l-action-button-group/d2l-action-button-group.html">
+	<link rel="import" href="../d2l-image-action/d2l-image-action.html">
+	<link rel="import" href="../d2l-icons/tier1-icons.html">
+</head>
+
+<d2l-action-button-group keep="1">
+	<template strip-whitespace>
+		<button is="d2l-image-action" icon="d2l-tier1:email">Email</button>
+		<button is="d2l-image-action" icon="d2l-tier1:messages">Instant Message</button>
+		<button is="d2l-image-action" icon="d2l-tier1:print">Print</button>
+	</template>
+</d2l-action-button-group>
+```
+
+@demo
+-->
+
+<dom-module id="d2l-action-button-group">
+	<template strip-whitespace>
+		<style>
+			:host {
+				--d2l-buttons-menu-button: {
+					padding: 0;
+					margin: 0;
+					border: 0;
+					background-color: transparent;
+					line-height: 0;
+					min-height: auto;
+					max-height: auto;
+					font-weight: 400;
+				};
+				--d2l-buttons-menu-button-text-spacing: 0.2rem;
+			}
+		</style>
+		<d2l-responsive-button-list
+			keep="[[keep]]"
+			keep-max="[[keepMax]]"
+			menu-text="{{localize('more')}}"
+		>
+			<slot></slot>
+		</d2l-responsive-button-list>
+	</template>
+	<script>
+		Polymer({
+			is: 'd2l-action-button-group',
+
+			properties: {
+				autoKeep: Boolean,
+				keep: Boolean,
+				keepMax: Boolean
+			},
+
+			behaviors: [
+				D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior
+			]
+		});
+	</script>
+</dom-module>

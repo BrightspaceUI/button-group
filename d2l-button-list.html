@@ -30,7 +30,7 @@
 	<template strip-whitespace>
 		<style>
 			:host {
-				--d2l-button-list-spacing: 0.5rem;
+				--d2l-button-list-spacing-inner: var(--d2l-button-list-spacing, 0.5rem);
 			}
 
 			:host([can-shrink]) > ::slotted(button) {
@@ -38,20 +38,20 @@
 			}
 
 			:host > ::slotted(*) {
-				margin-right: var(--d2l-button-list-spacing);
+				margin-right: var(--d2l-button-list-spacing-inner);
 			}
 
 			:host > ::slotted(:last-child) {
-				margin-right: var(--d2l-button-list-spacing);
+				margin-right: var(--d2l-button-list-spacing-inner);
 			}
 
 			:host-context([dir="rtl"]) > ::slotted(*) {
 				margin-right: 0;
-				margin-left: var(--d2l-button-list-spacing);
+				margin-left: var(--d2l-button-list-spacing-inner);
 			}
 
 			:host-context([dir="rtl"]) > ::slotted(:last-child) {
-				margin-left: var(--d2l-button-list-spacing);
+				margin-left: var(--d2l-button-list-spacing-inner);
 			}
 		</style>
 		<slot></slot>
