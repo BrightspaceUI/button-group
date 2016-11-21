@@ -33,28 +33,28 @@
 				--d2l-button-list-spacing: 0.5rem;
 			}
 
-			:host([can-shrink]) > ::content > button {
+			:host([can-shrink]) > ::slotted(button) {
 				white-space: normal;
 			}
 
-			:host > ::content > * {
+			:host > ::slotted(*) {
 				margin-right: var(--d2l-button-list-spacing);
 			}
 
-			:host > ::content > :last-child {
+			:host > ::slotted(:last-child) {
 				margin-right: var(--d2l-button-list-spacing);
 			}
 
-			:host-context([dir="rtl"]) > ::content > * {
+			:host-context([dir="rtl"]) > ::slotted(*) {
 				margin-right: 0;
 				margin-left: var(--d2l-button-list-spacing);
 			}
 
-			:host-context([dir="rtl"]) > ::content > :last-child {
+			:host-context([dir="rtl"]) > ::slotted(:last-child) {
 				margin-left: var(--d2l-button-list-spacing);
 			}
 		</style>
-		<content></content>
+		<slot></slot>
 	</template>
 	<script>
 		Polymer({
