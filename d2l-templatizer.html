@@ -31,7 +31,7 @@
 		_getRootDataHost: function() {
 			// Use the dataHost of the template
 			// Bindings will be done in the scope of the template parentNode instead of the current host
-			// See d2l-button-group where template is passed to d2l-button-menu via <content>
+			// See d2l-button-group where template is passed to d2l-button-menu via <content> or <slot>
 			if (this._templatized) {
 				var template = Polymer.dom(this._templatized);
 				if (template.parentNode && template.parentNode.dataHost) {

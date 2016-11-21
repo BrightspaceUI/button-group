@@ -65,17 +65,17 @@ top level menu item, the index is contained in `detail.index`.
 				height: 100%;
 			}
 		</style>
-		<content id="buttons" select="template"></content>
 		<d2l-dropdown>
 			<button is="d2l-button" class="d2l-dropdown-opener">
 				<span>[[text]]</span><d2l-icon icon="[[icon]]" aria-hidden="true"></d2l-icon>
 			</button>
 			<d2l-dropdown-menu>
 				<d2l-menu label="[[text]]">
-					<content></content>
+					<slot name="items"></slot>
 				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown>
+		<slot id="buttons"></slot>
 	</template>
 	<script>
 		Polymer({
@@ -112,7 +112,7 @@ top level menu item, the index is contained in `detail.index`.
 
 			ready: function() {
 				var self = this;
-				// Observer to load template from <content>
+				// Observer to load template from <slot>
 				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
 					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
 					if (buttonTemplate) {
@@ -206,6 +206,7 @@ top level menu item, the index is contained in `detail.index`.
 				} else {
 					menuItem = document.createElement('d2l-menu-item');
 				}
+				menuItem.setAttribute('slot', 'items');
 
 				addListener && menuItem.addEventListener('d2l-menu-item-select', this._onSelectItem.bind(this, source));
 				return {

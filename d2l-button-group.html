@@ -60,7 +60,7 @@ components, the list will be refreshed when a binding changes or text changes
 			}
 
 			:host([can-shrink]) .button-group,
-			:host([can-shrink]) .button-group > ::content > d2l-button-list {
+			:host([can-shrink]) .button-group > ::slotted(d2l-button-list) {
 				display: -ms-flexbox;
 				display: -webkit-flex;
 				display: flex;
@@ -74,16 +74,16 @@ components, the list will be refreshed when a binding changes or text changes
 				flex-wrap: nowrap;
 			}
 
-			:host([can-shrink]) .button-group > ::content > d2l-button-list {
+			:host([can-shrink]) .button-group > ::slotted(d2l-button-list) {
 				-ms-flex: 0 1 auto;
 				-webkit-flex: 0 1 auto;
 				flex: 0 1 auto;
 			}
 		</style>
 		<div class="button-group">
-			<content select="d2l-button-list"></content>
+			<slot name="d2l-button-list"></slot>
 			<d2l-buttons-menu id="menu" text="{{localize('moreActions')}}" mini="[[canShrink]]">
-				<content id="buttons" select="template"></content>
+				<slot id="buttons"></slot>
 			</d2l-buttons-menu>
 		</div>
 	</template>
@@ -172,7 +172,7 @@ components, the list will be refreshed when a binding changes or text changes
 
 			ready: function() {
 				var self = this;
-				// Observer to load template from <content>
+				// Observer to load template from <slot>
 				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
 					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
 					if (buttonTemplate) {
@@ -196,6 +196,7 @@ components, the list will be refreshed when a binding changes or text changes
 				this._listElement && Polymer.dom(this).removeChild(this._listElement);
 				this._listObserver.disconnect();
 				var list = document.createElement('d2l-button-list');
+				list.setAttribute('slot', 'd2l-button-list');
 				this.listen(list, 'tap', '_onTapItem');
 				this.listen(list, 'd2l-menu-item-select', '_onSelectItem');
 				this._updateButtonList(this.canShrink);
