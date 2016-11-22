@@ -8,10 +8,10 @@
 
 	/**
 	 * HACK HACK HACK Templatizer patches
-	 * @polymerBehavior
+	 * @polymerBehavior D2L.PolymerBehaviors.Templatizer
 	 * @demo
 	 */
-	var Templatizer = {
+	D2L.PolymerBehaviors.TemplatizerImpl = {
 		// Patches a bug where _forwardParentProp is overwritten. TODO: Submit patch
 		templatize: function(template) {
 			var forwardParentProp = template._forwardParentProp;
@@ -47,7 +47,7 @@
 	/** @polymerBehavior */
 	D2L.PolymerBehaviors.Templatizer = [
 		Polymer.Templatizer,
-		Templatizer
+		D2L.PolymerBehaviors.TemplatizerImpl
 	];
 })();
 </script>

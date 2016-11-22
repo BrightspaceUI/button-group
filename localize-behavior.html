@@ -7,8 +7,8 @@
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
 
-	/** @polymerBehavior */
-	var LocalizeBehavior = {
+	/** @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior */
+	D2L.PolymerBehaviors.ButtonGroup.LocalizeBehaviorImpl = {
 		properties: {
 			language: {
 				type: String,
@@ -99,7 +99,7 @@
 	/** @polymerBehavior */
 	D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior = [
 		Polymer.AppLocalizeBehavior,
-		LocalizeBehavior
+		D2L.PolymerBehaviors.ButtonGroup.LocalizeBehaviorImpl
 	];
 })();
 </script>

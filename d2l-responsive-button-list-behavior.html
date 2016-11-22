@@ -10,8 +10,34 @@
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
 
-	/** @polymerBehavior */
-	var ResponsiveButtonListBehavior = {
+	/**
+	 * `ResponsiveButtonListBehavior` is a behavior to create responsive lists
+	 * # Usage
+	 * There is 1 slot: *d2l-button-list*
+	 * *d2l-button-list* is the slot that has a vanilla button list.
+	 *
+	 * There must be elements identified by `menu` and `buttons`.
+	 * `menu` is the thing that will be chomped. It must have a `showHideItems` method.
+	 * `buttons` is a template that will be stamped into the button-list.
+	 * A template is used so that the list can be duplicated into the collapsed menu preserving bindings.
+	 * ```
+<template strip-whitespace>
+	<style include="d2l-responsive-button-list-shared-styles"></style>
+	<div class="responsive-button-list">
+		<slot name="d2l-button-list"></slot>
+		<d2l-buttons-menu id="menu" text="[[localize('moreActions')]]" mini="[[canShrink]]">
+			<slot id="buttons"></slot>
+		</d2l-buttons-menu>
+	</div>
+</template>
+...
+behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
+	 * ```
+	 *
+	 * @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior
+	 * @demo
+	 */
+	D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehaviorImpl = {
 		properties: {
 			autoKeep: {
 				type: Boolean,
@@ -172,7 +198,7 @@
 	D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior = [
 		D2L.PolymerBehaviors.ChompBehavior,
 		D2L.PolymerBehaviors.Templatizer,
-		ResponsiveButtonListBehavior
+		D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehaviorImpl
 	];
 })();
 </script>

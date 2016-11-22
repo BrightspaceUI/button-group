@@ -33,10 +33,10 @@ chomp: function() {
 }
 	 * ```
 	 *
-	 * @polymerBehavior
+	 * @polymerBehavior D2L.PolymerBehaviors.ChompBehavior
 	 * @demo
 	 */
-	var ChompBehavior = {
+	D2L.PolymerBehaviors.ChompBehaviorImpl = {
 		listeners: {
 			'iron-resize': 'chomp'
 		},
@@ -157,6 +157,6 @@ chomp: function() {
 		}
 	};
 	/** @polymerBehavior */
-	D2L.PolymerBehaviors.ChompBehavior = [Polymer.IronResizableBehavior, ChompBehavior];
+	D2L.PolymerBehaviors.ChompBehavior = [Polymer.IronResizableBehavior, D2L.PolymerBehaviors.ChompBehaviorImpl];
 })();
 </script>
