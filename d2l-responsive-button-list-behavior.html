@@ -6,10 +6,11 @@
 (function() {
 	'use strict';
 
-	/**
-	 * @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior
-	 * @demo
-	 */
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
+
+	/** @polymerBehavior */
 	var ResponsiveButtonListBehavior = {
 		properties: {
 			autoKeep: {
@@ -167,9 +168,11 @@
 			}
 		}
 	};
-	window.D2L = window.D2L || {};
-	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
-	window.D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior = [D2L.PolymerBehaviors.ChompBehavior, D2L.PolymerBehaviors.Templatizer, ResponsiveButtonListBehavior];
+	/** @polymerBehavior */
+	D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior = [
+		D2L.PolymerBehaviors.ChompBehavior,
+		D2L.PolymerBehaviors.Templatizer,
+		ResponsiveButtonListBehavior
+	];
 })();
 </script>
