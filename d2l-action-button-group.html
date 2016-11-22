@@ -1,5 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="d2l-responsive-button-list.html">
+<link rel="import" href="d2l-buttons-menu.html">
+<link rel="import" href="d2l-responsive-button-list-behavior.html">
+<link rel="import" href="d2l-responsive-button-list-shared-styles.html">
 <link rel="import" href="localize-behavior.html">
 
 <!--
@@ -28,7 +30,7 @@
 
 <dom-module id="d2l-action-button-group">
 	<template strip-whitespace>
-		<style>
+		<style include="d2l-responsive-button-list-shared-styles">
 			:host {
 				--d2l-buttons-menu-button: {
 					padding: 0;
@@ -45,26 +47,20 @@
 				--d2l-buttons-menu-button-text-spacing: 0.2rem;
 			}
 		</style>
-		<d2l-responsive-button-list
-			keep="[[keep]]"
-			keep-max="[[keepMax]]"
-			menu-text="{{localize('more')}}"
-		>
-			<slot></slot>
-		</d2l-responsive-button-list>
+		<div class="responsive-button-list">
+			<slot name="d2l-button-list"></slot>
+			<d2l-buttons-menu id="menu" text="[[localize('more')]]" mini="[[canShrink]]">
+				<slot id="buttons"></slot>
+			</d2l-buttons-menu>
+		</div>
 	</template>
 	<script>
 		Polymer({
 			is: 'd2l-action-button-group',
 
-			properties: {
-				autoKeep: Boolean,
-				keep: Boolean,
-				keepMax: Boolean
-			},
-
 			behaviors: [
-				D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior
+				D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior,
+				D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior
 			]
 		});
 	</script>
