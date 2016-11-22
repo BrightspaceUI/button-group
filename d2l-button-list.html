@@ -33,7 +33,13 @@
 				--d2l-button-list-spacing-inner: var(--d2l-button-list-spacing, 0.5rem);
 			}
 
-			:host([can-shrink]) > ::slotted(button) {
+			:host > ::slotted(button),
+			:host > ::slotted(a) {
+				white-space: nowrap;
+			}
+
+			:host([can-shrink]) > ::slotted(button),
+			:host([can-shrink]) > ::slotted(a) {
 				white-space: normal;
 			}
 

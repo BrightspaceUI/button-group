@@ -30,8 +30,12 @@ components, the list will be refreshed when a binding changes or text changes
 				display: block;
 			}
 
-			:host([can-shrink]) .responsive-button-list,
-			:host([can-shrink]) .responsive-button-list > ::slotted(d2l-button-list) {
+			.responsive-button-list {
+				position: relative;
+			}
+
+			:host .responsive-button-list,
+			:host .responsive-button-list > ::slotted(d2l-button-list) {
 				display: -ms-flexbox;
 				display: -webkit-flex;
 				display: flex;
@@ -40,12 +44,19 @@ components, the list will be refreshed when a binding changes or text changes
 				-webkit-align-items: stretch;
 				align-items: stretch;
 
+				-ms-flex-wrap: wrap;
+				-webkit-flex-wrap: wrap;
+				flex-wrap: wrap;
+			}
+
+			:host([can-shrink]) .responsive-button-list,
+			:host([can-shrink]) .responsive-button-list > ::slotted(d2l-button-list) {
 				-ms-flex-wrap: nowrap;
 				-webkit-flex-wrap: nowrap;
 				flex-wrap: nowrap;
 			}
 
-			:host([can-shrink]) .responsive-button-list > ::slotted(d2l-button-list) {
+			:host .responsive-button-list > ::slotted(d2l-button-list) {
 				-ms-flex: 0 1 auto;
 				-webkit-flex: 0 1 auto;
 				flex: 0 1 auto;
