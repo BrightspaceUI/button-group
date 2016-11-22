@@ -4,6 +4,9 @@
 (function() {
 	'use strict';
 
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+
 	/**
 	 * `ChompBehavior` is a behavior that adds the `_chomp` method. It takes two
 	 * arguments: `itemsFrom` and `itemsToContainer`. Items from the `itemsFrom`
@@ -33,7 +36,7 @@ chomp: function() {
 	 * @polymerBehavior D2L.PolymerBehaviors.ChompBehavior
 	 * @demo
 	 */
-	var ChompBehavior = {
+	D2L.PolymerBehaviors.ChompBehaviorImpl = {
 		listeners: {
 			'iron-resize': 'chomp'
 		},
@@ -153,8 +156,7 @@ chomp: function() {
 			item.style.display = 'none';
 		}
 	};
-	window.D2L = window.D2L || {};
-	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-	window.D2L.PolymerBehaviors.ChompBehavior = [Polymer.IronResizableBehavior, ChompBehavior];
+	/** @polymerBehavior */
+	D2L.PolymerBehaviors.ChompBehavior = [Polymer.IronResizableBehavior, D2L.PolymerBehaviors.ChompBehaviorImpl];
 })();
 </script>

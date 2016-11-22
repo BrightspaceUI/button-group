@@ -12,7 +12,7 @@
 
 		<test-fixture id="zero-button">
 			<template>
-				<d2l-button-group>
+				<d2l-button-group menu-text="More Actions">
 					<template>
 					</template>
 				</d2l-button-group>
@@ -21,7 +21,7 @@
 
 		<test-fixture id="one-button">
 			<template>
-				<d2l-button-group>
+				<d2l-button-group menu-text="More Actions">
 					<template>
 						<button is="d2l-button" class="button">Button</button>
 					</template>
@@ -36,7 +36,7 @@
 						display: none;
 					}
 				</style>
-				<d2l-button-group>
+				<d2l-button-group menu-text="More Actions">
 					<template>
 						<button is="d2l-button" class="button hidden">Button</button>
 					</template>
@@ -48,7 +48,7 @@
 			<template>
 				<div>
 					<template is="dom-bind">
-						<d2l-button-group>
+						<d2l-button-group menu-text="More Actions">
 							<template>
 								<button is="d2l-button" class="button" on-tap="onTap">[[foobar]]</button>
 							</template>
@@ -69,7 +69,7 @@
 						width: 300px;
 					}
 				</style>
-				<d2l-button-group>
+				<d2l-button-group menu-text="More Actions">
 					<template>
 						<button is="d2l-button" class="button">Button1</button>
 						<button is="d2l-button" class="button">Button2</button>
@@ -92,7 +92,7 @@
 						width: 170px;
 					}
 				</style>
-				<d2l-button-group>
+				<d2l-button-group menu-text="More Actions">
 					<template>
 						<button is="d2l-button" class="button">Button1</button>
 						<button is="d2l-button" class="hidden button">Hidden Button</button>
@@ -113,7 +113,7 @@
 						width: 170px;
 					}
 				</style>
-				<d2l-button-group>
+				<d2l-button-group menu-text="More Actions">
 					<template>
 						<button is="d2l-button" class="button">Button1</button>
 						<button is="d2l-button" class="button">Button2</button>
@@ -137,7 +137,7 @@
 						width: 170px;
 					}
 				</style>
-				<d2l-button-group>
+				<d2l-button-group menu-text="More Actions">
 					<template>
 						<button is="d2l-button" class="button">Button1</button>
 						<button is="d2l-button" class="button">Button2</button>
@@ -155,7 +155,7 @@
 						box-sizing: border-box;
 					}
 				</style>
-				<d2l-button-group auto-keep>
+				<d2l-button-group auto-keep keep-class="d2l-button-group-keep" no-keep-class="d2l-button-group-no-keep">
 					<template>
 						<button is="d2l-button" class="button d2l-button-group-keep">Button1</button>
 						<button is="d2l-button" class="button">Button2</button>
@@ -176,7 +176,7 @@
 						width: 0;
 					}
 				</style>
-				<d2l-button-group>
+				<d2l-button-group menu-text="More Actions">
 					<template>
 						<button is="d2l-button" class="button">Button1</button>
 						<button is="d2l-button" class="button">Button2</button>
@@ -257,19 +257,19 @@
 
 				testGroup(1, 0, false);
 
-				it('should fire d2l-button-group-select on button click', function(done) {
+				it('should fire d2l-responsive-button-list-select on button click', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
-					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+					this.buttonGroup.addEventListener('d2l-responsive-button-list-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
 					});
 					button.click();
 				});
 
-				it('should fire d2l-button-group-select on menu-item click', function(done) {
+				it('should fire d2l-responsive-button-list-select on menu-item click', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					var menuItem = this.buttonGroup.$.menu.querySelector('d2l-menu-item');
-					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+					this.buttonGroup.addEventListener('d2l-responsive-button-list-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
 					});
@@ -363,38 +363,38 @@
 
 				testGroup(2, 0, false);
 
-				it('should fire d2l-button-group-select on button click (first)', function(done) {
+				it('should fire d2l-responsive-button-list-select on button click (first)', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
-					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+					this.buttonGroup.addEventListener('d2l-responsive-button-list-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
 					});
 					button.click();
 				});
 
-				it('should fire d2l-button-group-select on menu-item click (first)', function(done) {
+				it('should fire d2l-responsive-button-list-select on menu-item click (first)', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					var menuItem = this.buttonGroup.$.menu.querySelector('d2l-menu-item');
-					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+					this.buttonGroup.addEventListener('d2l-responsive-button-list-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
 					});
 					menuItem.click();
 				});
 
-				it('should fire d2l-button-group-select on button click (second)', function(done) {
+				it('should fire d2l-responsive-button-list-select on button click (second)', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelectorAll('.button')[1];
-					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+					this.buttonGroup.addEventListener('d2l-responsive-button-list-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
 					});
 					button.click();
 				});
 
-				it('should fire d2l-button-group-select on menu-item click (second)', function(done) {
+				it('should fire d2l-responsive-button-list-select on menu-item click (second)', function(done) {
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelectorAll('.button')[1];
 					var menuItem = this.buttonGroup.$.menu.querySelectorAll('d2l-menu-item')[1];
-					this.buttonGroup.addEventListener('d2l-button-group-select', function(e) {
+					this.buttonGroup.addEventListener('d2l-responsive-button-list-select', function(e) {
 						expect(e.detail.src).to.equal(button);
 						done();
 					});

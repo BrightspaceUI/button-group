@@ -45,24 +45,40 @@ top level menu item, the index is contained in `detail.index`.
 	<template strip-whitespace>
 		<style include="d2l-dropdown-opener-styles d2l-offscreen-shared-styles">
 			:host button > span {
-				margin-right: 0.6rem;
+				margin-right: var(--d2l-buttons-menu-button-text-spacing, 0.6rem);
+				@apply(--d2l-buttons-menu-text);
 			}
 			:host-context([dir="rtl"]) button > span {
-				margin-left: 0.6rem;
+				margin-left: var(--d2l-buttons-menu-button-text-spacing, 0.6rem);
 				margin-right: 0;
+				@apply(--d2l-buttons-menu-text-rtl);
+			}
+
+			:host d2l-dropdown {
+				@apply(--d2l-buttons-menu-dropdown);
+			}
+
+			:host button {
+				@apply(--d2l-buttons-menu-button);
+			}
+			:host button > d2l-icon {
+				@apply(--d2l-buttons-menu-icon);
 			}
 
 			:host([mini]) button > span {
 				@apply(--d2l-offscreen);
+				@apply(--d2l-buttons-menu-text-mini);
 			}
 
 			:host([mini]) d2l-dropdown {
 				height: 100%;
+				@apply(--d2l-buttons-menu-dropdown-mini);
 			}
 
 			:host([mini]) button {
 				padding: 0.5rem;
 				height: 100%;
+				@apply(--d2l-buttons-menu-button-mini);
 			}
 		</style>
 		<d2l-dropdown>
