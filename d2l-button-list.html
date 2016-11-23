@@ -31,22 +31,30 @@
 		<style>
 			:host {
 				--d2l-button-list-spacing-inner: var(--d2l-button-list-spacing, 0.5rem);
-			}
 
-			:host > ::slotted(button),
-			:host > ::slotted(a) {
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+
+				-ms-flex-align: stretch;
+				-webkit-align-items: stretch;
+				align-items: stretch;
+
+				-ms-flex-wrap: wrap;
+				-webkit-flex-wrap: wrap;
+				flex-wrap: wrap;
+
 				white-space: nowrap;
-			}
-
-			:host([can-shrink]) > ::slotted(button),
-			:host([can-shrink]) > ::slotted(a) {
-				white-space: normal;
 			}
 
 			/* FIXME: Specificity in Shady DOM is too low if d2l-button or
 			   d2l-image-action is imported after d2l-button-list */
 			:host > ::slotted(*) {
 				margin-right: var(--d2l-button-list-spacing-inner);
+
+				-ms-flex: 0 1 auto;
+				-webkit-flex: 0 1 auto;
+				flex: 0 1 auto;
 			}
 
 			:host > ::slotted(:last-child) {
