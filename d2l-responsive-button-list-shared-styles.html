@@ -11,8 +11,7 @@
 				position: relative;
 			}
 
-			:host .responsive-button-list,
-			:host .responsive-button-list > ::slotted(d2l-button-list) {
+			:host .responsive-button-list {
 				display: -ms-flexbox;
 				display: -webkit-flex;
 				display: flex;
@@ -31,12 +30,20 @@
 				-ms-flex-wrap: nowrap;
 				-webkit-flex-wrap: nowrap;
 				flex-wrap: nowrap;
+
+				white-space: normal;
 			}
 
 			:host .responsive-button-list > ::slotted(d2l-button-list) {
 				-ms-flex: 0 1 auto;
 				-webkit-flex: 0 1 auto;
 				flex: 0 1 auto;
+			}
+
+			:host([can-shrink]) .responsive-button-list > ::slotted(d2l-button-list) {
+				-ms-flex: 0 0 auto;
+				-webkit-flex: 0 0 auto;
+				flex: 0 0 auto;
 			}
 		</style>
 	</template>
