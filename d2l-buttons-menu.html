@@ -169,6 +169,9 @@ top level menu item, the index is contained in `detail.index`.
 					.forEach(function(item) {
 						menu.appendChild(item.menuItem);
 					});
+
+				Polymer.dom.flush();
+				this.fire('dom-change');
 			},
 
 			_refresh: function() {

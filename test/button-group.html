@@ -312,23 +312,33 @@
 					});
 				});
 
-				it('should bind button text', function(done) {
+				it('should bind button text and fire dom-change', function(done) {
 					var template = this.template;
 					template.foobar = 'Test';
+
+					var triggered = [];
+					this.buttonGroup.addEventListener('dom-change', function(e) {
+						triggered.push(e.target);
+					});
 
 					this.buttonGroup.async(function() {
 						var button = this.querySelector('d2l-button-list').querySelector('.button');
 						var menuItem = this.$.menu.querySelector('d2l-menu-item');
 						expect(button.textContent.trim()).to.equal('Test');
 						expect(menuItem.text.trim()).to.equal('Test');
+						expect(triggered).to.contain(this);
+						expect(triggered).to.contain(this.$.menu);
 
 						template.foobar = 'Test2';
+						triggered = [];
 
 						this.async(function() {
 							var button = this.querySelector('d2l-button-list').querySelector('.button');
 							var menuItem = this.$.menu.querySelector('d2l-menu-item');
 							expect(button.textContent.trim()).to.equal('Test2');
 							expect(menuItem.text.trim()).to.equal('Test2');
+							expect(triggered).to.contain(this);
+							expect(triggered).to.contain(this.$.menu);
 							done();
 						}, 1);
 					}, 1);

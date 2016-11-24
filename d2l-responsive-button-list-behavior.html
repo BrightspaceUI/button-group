@@ -154,6 +154,9 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 				// FIXME: need to wait 2 microtask cycles before chomp calculation will be correct
 				this.async(this.async.bind(this, this.chomp));
 			}
+
+			Polymer.dom.flush();
+			this.fire('dom-change');
 		},
 
 		_updateButtonList: function(canShrink) {
