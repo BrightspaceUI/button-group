@@ -46,6 +46,20 @@
 				};
 				--d2l-buttons-menu-button-text-spacing: 0.2rem;
 			}
+
+			.responsive-button-list > ::slotted(d2l-button-list) {
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+
+				-ms-flex-align: stretch;
+				-webkit-align-items: stretch;
+				align-items: stretch;
+
+				-ms-flex-wrap: wrap;
+				-webkit-flex-wrap: wrap;
+				flex-wrap: wrap;
+			}
 		</style>
 		<div class="responsive-button-list">
 			<slot name="d2l-button-list"></slot>
