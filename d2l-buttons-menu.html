@@ -185,13 +185,17 @@ top level menu item, the index is contained in `detail.index`.
 				var hiddenItem = hiddenList.pop();
 				this._items
 					.forEach(function(item, index) {
-						if (hiddenItem === index) {
-							hiddenItem = hiddenList.pop();
+						if (hiddenItem && hiddenItem.index === index) {
+							this._updateMenuItem({
+								menuItem: item.menuItem,
+								source: hiddenItem.item
+							}, index);
 							item.menuItem.removeAttribute('hidden');
+							hiddenItem = hiddenList.pop();
 						} else {
 							item.menuItem.setAttribute('hidden', 'hidden');
 						}
-					});
+					}.bind(this));
 			},
 
 			// See ChompBehavior
