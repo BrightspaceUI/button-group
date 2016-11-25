@@ -93,7 +93,10 @@ chomp: function() {
 				while (index >= this.keepMax) {
 					if (this._isVisible(itemsFrom[index])) {
 						this._hideItem(itemsFrom[index]);
-						hiddenList.push(index);
+						hiddenList.push({
+							index: index,
+							item: itemsFrom[index]
+						});
 					}
 					index--;
 				}
@@ -108,7 +111,10 @@ chomp: function() {
 			while (index >= this.keep && !this._isOnFirstRow(itemsFrom, itemsToContainer)) {
 				if (this._isVisible(itemsFrom[index])) {
 					this._hideItem(itemsFrom[index]);
-					hiddenList.push(index);
+					hiddenList.push({
+						index: index,
+						item: itemsFrom[index]
+					});
 				}
 				index--;
 			}
@@ -122,7 +128,7 @@ chomp: function() {
 			}
 
 			hiddenList = hiddenList.sort(function(a, b) {
-				return b - a;
+				return b.index - a.index;
 			});
 			itemsToContainer.showHideItems(hiddenList);
 		},

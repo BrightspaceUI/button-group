@@ -185,9 +185,10 @@ top level menu item, the index is contained in `detail.index`.
 				var hiddenItem = hiddenList.pop();
 				this._items
 					.forEach(function(item, index) {
-						if (hiddenItem === index) {
-							hiddenItem = hiddenList.pop();
+						if (hiddenItem && hiddenItem.index === index) {
 							item.menuItem.removeAttribute('hidden');
+							item.menuItem.disabled = hiddenItem.item.disabled;
+							hiddenItem = hiddenList.pop();
 						} else {
 							item.menuItem.setAttribute('hidden', 'hidden');
 						}
