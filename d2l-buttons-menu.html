@@ -241,6 +241,7 @@ top level menu item, the index is contained in `detail.index`.
 				menuItem.preventDefault = source.getAttribute('data-prevent-default');
 				menuItem.text = source.label || source.textContent;
 				menuItem.setAttribute('data-index', index);
+				menuItem.disabled = source.disabled;
 				return item;
 			},
 
