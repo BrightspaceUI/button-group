@@ -325,8 +325,8 @@
 					expect(domChange).to.have.been.calledTwice;
 					domChange.reset();
 					template.foobar = 'Test2';
-					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
-					var menuItem = this.buttonGroup.$.menu.querySelector('d2l-menu-item');
+					button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
+					menuItem = this.buttonGroup.$.menu.querySelector('d2l-menu-item');
 					expect(button.textContent.trim()).to.equal('Test2');
 					expect(menuItem.text.trim()).to.equal('Test2');
 					expect(domChange).to.have.been.calledTwice;
