@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>wrapper tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../d2l-button-group.html">
+	</head>
+	<body>
+
+		<test-fixture id="one-button">
+			<template>
+				<d2l-button-group menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="one-button-hidden">
+			<template>
+				<style>
+					.hidden {
+						display: none;
+					}
+				</style>
+				<d2l-button-group menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button hidden">Button</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-button-group {
+						width: 300px;
+					}
+				</style>
+				<d2l-button-group menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button-one-hidden">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					.hidden {
+						display: none;
+					}
+					d2l-button-group {
+						width: 170px;
+					}
+				</style>
+				<d2l-button-group menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="hidden button">Hidden Button</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button-restricted">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-button-group {
+						width: 170px;
+					}
+				</style>
+				<d2l-button-group menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="two-button-one-zero-width-restricted">
+			<template>
+				<style>
+					button.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					.zero-width {
+						width: 0;
+						box-sizing: border-box;
+					}
+					d2l-button-group {
+						width: 170px;
+					}
+				</style>
+				<d2l-button-group menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+						<span class="zero-width button"></span>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="three-button-auto-keep">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+				</style>
+				<d2l-button-group auto-keep keep-class="d2l-button-group-keep" no-keep-class="d2l-button-group-no-keep">
+					<template>
+						<button is="d2l-button" class="button d2l-button-group-keep">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+						<button is="d2l-button" class="button d2l-button-group-no-keep">Button3</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="mini">
+			<template>
+				<style>
+					.button {
+						width: 100px;
+						box-sizing: border-box;
+					}
+					d2l-button-group {
+						width: 0;
+					}
+				</style>
+				<d2l-button-group menu-text="More Actions">
+					<template>
+						<button is="d2l-button" class="button">Button1</button>
+						<button is="d2l-button" class="button">Button2</button>
+					</template>
+				</d2l-button-group>
+			</template>
+		</test-fixture>
+
+		<script>
+			describe('a11y', function() {
+				a11ySuite('one-button');
+				a11ySuite('one-button-hidden');
+				a11ySuite('two-button');
+				a11ySuite('two-button-one-hidden');
+				a11ySuite('two-button-restricted');
+				a11ySuite('two-button-one-zero-width-restricted');
+				a11ySuite('three-button-auto-keep');
+				a11ySuite('mini');
+			});
+		</script>
+	</body>
+</html>
