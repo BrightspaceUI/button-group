@@ -144,9 +144,15 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 			// Find keep and keepMax properties if autoKeep is true
 			this._calculateKeep(list);
 
+			this._listElement = list;
+			this._listNodes.forEach(function(node) {
+				if (!node.hasAttribute('role')) {
+					node.setAttribute('role', 'listitem');
+				}
+			});
+
 			// Attach to the light DOM and run chomp
 			Polymer.dom(this).appendChild(list);
-			this._listElement = list;
 
 			if (this.isAttached) {
 				// FIXME: need to wait 2 microtask cycles before chomp calculation will be correct
