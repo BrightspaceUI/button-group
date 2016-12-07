@@ -1,5 +1,17 @@
 {
 	"plugins": {
+		"istanbul": {
+			"dir": "./coverage",
+			"reporters": ["text-summary", "lcov"],
+			"include": [
+				"/d2l-button-group.html",
+				"/d2l-button-menu.html",
+				"/d2l-button-list.html",
+				"/d2l-chomp-behavior.html",
+				"/d2l-templatizer.html"
+			],
+			"exclude": []
+		},
 		"local": {
 			"browsers": ["chrome"]
 		},
