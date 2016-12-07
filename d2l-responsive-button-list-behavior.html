@@ -111,28 +111,26 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 			this._listObserver = new MutationObserver(this.chomp.bind(this));
 		},
 
+		_updateTemplate: function() {
+			var buttonTemplate = Polymer.dom(this.$.buttons).getDistributedNodes()[0];
+			if (buttonTemplate !== this._template) {
+				this._template = buttonTemplate;
+				this.templatize(buttonTemplate);
+				this.render();
+			} else if (!buttonTemplate) {
+				console.warn('d2l-responsive-button-list requires a template to be provided'); // eslint-disable-line no-console
+			}
+		},
+
 		ready: function() {
-			var self = this;
+			this._updateTemplate();
 			// Observer to load template from <slot>
-			this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
-				var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
-				if (buttonTemplate) {
-					self.templatize(buttonTemplate);
-					self.render();
-				} else {
-					console.warn('d2l-responsive-button-list requires a template to be provided'); // eslint-disable-line no-console
-				}
-			});
+			this._observer = Polymer.dom(this.$.buttons).observeNodes(this._updateTemplate.bind(this));
 		},
 
 		// Stamps the template into the Local DOM
 		render: function() {
 			this._listInstance = this.stamp({ list: true });
-			// FIXME: Wait for any Polymer stuff to complete for the fixme in _doRender
-			this.async(this._doRender);
-		},
-
-		_doRender: function() {
 			// Create d2l-button-list element
 			this._listElement && Polymer.dom(this).removeChild(this._listElement);
 			this._listObserver.disconnect();

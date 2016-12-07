@@ -126,28 +126,26 @@ top level menu item, the index is contained in `detail.index`.
 				return mini ? 'd2l-tier1:more' : 'd2l-tier1:chevron-down';
 			},
 
+			_updateTemplate: function() {
+				var buttonTemplate = Polymer.dom(this.$.buttons).getDistributedNodes()[0];
+				if (buttonTemplate !== this._template) {
+					this._template = buttonTemplate;
+					this.templatize(buttonTemplate);
+					this.render();
+				} else if (!buttonTemplate) {
+					console.warn('d2l-buttons-menu requires a template to be provided'); // eslint-disable-line no-console
+				}
+			},
+
 			ready: function() {
-				var self = this;
+				this._updateTemplate();
 				// Observer to load template from <slot>
-				this._observer = Polymer.dom(this.$.buttons).observeNodes(function() {
-					var buttonTemplate = Polymer.dom(self.$.buttons).getDistributedNodes()[0];
-					if (buttonTemplate) {
-						self.templatize(buttonTemplate);
-						self.render();
-					} else {
-						console.warn('d2l-buttons-menu requires a template to be provided'); // eslint-disable-line no-console
-					}
-				});
+				this._observer = Polymer.dom(this.$.buttons).observeNodes(this._updateTemplate.bind(this));
 			},
 
 			// Stamps the template into the Local DOM
 			render: function() {
 				this._instance = this.stamp({ menu: true });
-				// Wait for any Polymer stuff to complete
-				this.async(this._doRender);
-			},
-
-			_doRender: function() {
 				// Clean the current entries in menu
 				this._clean();
 
