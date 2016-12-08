@@ -122,10 +122,14 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 			}
 		},
 
-		ready: function() {
+		attached: function() {
 			this._updateTemplate();
 			// Observer to load template from <slot>
 			this._observer = Polymer.dom(this.$.buttons).observeNodes(this._updateTemplate.bind(this));
+		},
+
+		detached: function() {
+			Polymer.dom(this.$.buttons).unobserveNodes(this._observer);
 		},
 
 		// Stamps the template into the Local DOM
