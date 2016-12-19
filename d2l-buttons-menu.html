@@ -85,7 +85,7 @@ top level menu item, the index is contained in `detail.index`.
 			<button is="d2l-button" class="d2l-dropdown-opener">
 				<span>[[text]]</span><d2l-icon icon="[[icon]]" aria-hidden="true"></d2l-icon>
 			</button>
-			<d2l-dropdown-menu>
+			<d2l-dropdown-menu render-content>
 				<d2l-menu label="[[text]]">
 					<slot name="items"></slot>
 				</d2l-menu>
@@ -158,6 +158,7 @@ top level menu item, the index is contained in `detail.index`.
 
 				// create menu items from template items
 				var items = Polymer.dom(this._instance.root).childNodes;
+
 				this._items = items
 					.filter(function(node) {
 						return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
@@ -227,6 +228,7 @@ top level menu item, the index is contained in `detail.index`.
 					menuItem = document.createElement('d2l-menu-item-separator');
 					addListener = false;
 				} else if (item.tagName.toLowerCase() === 'd2l-dropdown-button') {
+					item.querySelector('d2l-dropdown-menu').forceRender();
 					var subMenu = item.querySelector('d2l-menu');
 					source = subMenu;
 					menuItem = document.createElement('d2l-menu-item');
