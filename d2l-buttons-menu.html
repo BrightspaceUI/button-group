@@ -158,6 +158,9 @@ top level menu item, the index is contained in `detail.index`.
 
 				// create menu items from template items
 				var items = Polymer.dom(this._instance.root).childNodes;
+
+				this.$$('d2l-dropdown-menu').forceRender();
+
 				this._items = items
 					.filter(function(node) {
 						return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
