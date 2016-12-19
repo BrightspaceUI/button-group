@@ -129,7 +129,7 @@ top level menu item, the index is contained in `detail.index`.
 			_updateTemplate: function() {
 				var buttonTemplate = Polymer.dom(this.$.buttons).getDistributedNodes()
 					.filter(function(node) {
-						return node.tagName.toLowerCase() === 'template';
+						return node.tagName && node.tagName.toLowerCase() === 'template';
 					})[0];
 				if (buttonTemplate && buttonTemplate !== this._template) {
 					this._template = buttonTemplate;
