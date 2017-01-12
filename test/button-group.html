@@ -224,6 +224,7 @@
 				describe('when keepMax=' + keepMax, function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keepMax = keepMax;
+						Polymer.RenderStatus._flushNextRender();
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
@@ -234,6 +235,7 @@
 			describe('zero-button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('zero-button');
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
@@ -243,6 +245,7 @@
 			describe('one hidden button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('one-button-hidden')[1];
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
@@ -252,6 +255,7 @@
 			describe('one-button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('one-button');
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
@@ -280,6 +284,7 @@
 					sinon.spy(this.buttonGroup, '_chomp');
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					button.textContent = 'Something changed';
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(function() {
 						expect(this._chomp).to.have.been.calledOnce;
 						done();
@@ -290,6 +295,7 @@
 					sinon.spy(this.buttonGroup, '_chomp');
 					var button = this.buttonGroup.querySelector('d2l-button-list').querySelector('.button');
 					button.classList.add('changes');
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(function() {
 						expect(this._chomp).to.have.been.calledOnce;
 						done();
@@ -306,6 +312,7 @@
 					this._fixture = oneButtonBoundFixture;
 					this.template = this._fixture.querySelector('[is=dom-bind]');
 					var self = this;
+					Polymer.RenderStatus._flushNextRender();
 					flush(function() {
 						self.buttonGroup = oneButtonBoundFixture.querySelector('d2l-button-group');
 						self.buttonGroup.async(flush.bind(null, done), 1);
@@ -350,6 +357,7 @@
 			describe('two-button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button')[1];
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
@@ -401,6 +409,7 @@
 			describe('two visible button and one hidden button', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button-one-hidden')[1];
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
@@ -412,6 +421,7 @@
 				describe('when keep=1', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 1;
+						Polymer.RenderStatus._flushNextRender();
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
@@ -424,6 +434,7 @@
 				describe('when keep=2', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 2;
+						Polymer.RenderStatus._flushNextRender();
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
@@ -436,6 +447,7 @@
 				describe('when keep=3', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 3;
+						Polymer.RenderStatus._flushNextRender();
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
@@ -450,6 +462,7 @@
 			describe('two-button-restricted', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button-restricted')[1];
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
@@ -461,6 +474,7 @@
 				describe('when keep=1', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 1;
+						Polymer.RenderStatus._flushNextRender();
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
@@ -473,6 +487,7 @@
 				describe('when keep=2', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 2;
+						Polymer.RenderStatus._flushNextRender();
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
@@ -498,6 +513,7 @@
 			describe('two-button-one-zero-width-restricted', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('two-button-one-zero-width-restricted')[1];
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
@@ -509,6 +525,7 @@
 				describe('when keep=1', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 1;
+						Polymer.RenderStatus._flushNextRender();
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
@@ -521,6 +538,7 @@
 				describe('when keep=2', function() {
 					beforeEach(function(done) {
 						this.buttonGroup.keep = 2;
+						Polymer.RenderStatus._flushNextRender();
 						this.buttonGroup.async(flush.bind(null, done), 1);
 					});
 
@@ -534,6 +552,7 @@
 			describe('three-button-auto-keep', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('three-button-auto-keep')[1];
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 				it('should have keep=1', function() {
@@ -548,6 +567,7 @@
 			describe('mini', function() {
 				beforeEach(function(done) {
 					this.buttonGroup = fixture('mini')[1];
+					Polymer.RenderStatus._flushNextRender();
 					this.buttonGroup.async(flush.bind(null, done), 1);
 				});
 
