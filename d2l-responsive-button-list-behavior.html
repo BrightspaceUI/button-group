@@ -91,12 +91,15 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 				return;
 			}
 			this._listObserver.disconnect();
-			this._chomp(this._listNodes, this.$.menu);
-			this._listObserver.observe(this._listElement, {
-				childList: true,
-				characterData: true,
-				attributes: true,
-				subtree: true
+			Polymer.RenderStatus.afterNextRender(this, function() {
+				/* eslint no-invalid-this:0 */
+				this._chomp(this._listNodes, this.$.menu);
+				this._listObserver.observe(this._listElement, {
+					childList: true,
+					characterData: true,
+					attributes: true,
+					subtree: true
+				});
 			});
 		},
 
@@ -162,8 +165,7 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 			Polymer.dom(this).appendChild(list);
 
 			if (this.isAttached) {
-				// FIXME: need to wait 2 microtask cycles before chomp calculation will be correct
-				this.async(this.async.bind(this, this.chomp));
+				this.chomp();
 			}
 
 			Polymer.dom.flush();
