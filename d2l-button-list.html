@@ -47,20 +47,20 @@
 
 			/* FIXME: Specificity in Shady DOM is too low if d2l-button or
 			   d2l-image-action is imported after d2l-button-list */
-			:host > ::slotted(*) {
+			:host > ::slotted(button),
+			:host > ::slotted(a),
+			:host > ::slotted(span),
+			:host > ::slotted(d2l-dropdown),
+			:host > ::slotted(d2l-dropdown-button) {
 				margin-right: var(--d2l-button-list-spacing-inner);
 			}
 
-			:host > ::slotted(:last-child) {
-				margin-right: var(--d2l-button-list-spacing-inner);
-			}
-
-			:host-context([dir="rtl"]) > ::slotted(*) {
+			:host-context([dir="rtl"]) > ::slotted(button),
+			:host-context([dir="rtl"]) > ::slotted(a),
+			:host-context([dir="rtl"]) > ::slotted(span),
+			:host-context([dir="rtl"]) > ::slotted(d2l-dropdown),
+			:host-context([dir="rtl"]) > ::slotted(d2l-dropdown-button) {
 				margin-right: 0;
-				margin-left: var(--d2l-button-list-spacing-inner);
-			}
-
-			:host-context([dir="rtl"]) > ::slotted(:last-child) {
 				margin-left: var(--d2l-button-list-spacing-inner);
 			}
 		</style>
