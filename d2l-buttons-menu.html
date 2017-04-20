@@ -250,7 +250,7 @@ top level menu item, the index is contained in `detail.index`.
 				var source = item.source;
 				menuItem.href = source.href;
 				menuItem.preventDefault = source.getAttribute('data-prevent-default');
-				menuItem.text = source.label || source.textContent;
+				menuItem.text = source.label || source.text || source.textContent;
 				menuItem.setAttribute('data-index', index);
 				menuItem.disabled = source.disabled;
 				return item;
