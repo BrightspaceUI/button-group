@@ -65,9 +65,7 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 				var index = e.detail.index;
 				var button = this._listNodes[index];
 				if (button) {
-					var evt = document.createEvent('HTMLEvents');
-					evt.initEvent('d2l-responsive-button-list-menu-select', true, false);
-					button.dispatchEvent(evt);
+					button.dispatchEvent(new CustomEvent('d2l-responsive-button-list-menu-select'));
 					return;
 				}
 			}
