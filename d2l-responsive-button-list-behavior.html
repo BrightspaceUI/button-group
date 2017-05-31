@@ -65,7 +65,7 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 				var index = e.detail.index;
 				var button = this._listNodes[index];
 				if (button) {
-					button.dispatchEvent(new CustomEvent('d2l-responsive-button-list-menu-select'));
+					button.dispatchEvent(new CustomEvent('d2l-button-ghost-click'));
 					return;
 				}
 			}
