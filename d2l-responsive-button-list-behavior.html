@@ -60,30 +60,15 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 			});
 		},
 
-		_onTapItem: function(e) {
-			var button = Polymer.dom(e).localTarget;
-			if (
-				Polymer.dom(button).parentNode === this._listElement &&
-				button.tagName && button.tagName.toLowerCase() === 'button'
-			) {
-				this.fire('d2l-responsive-button-list-select', {
-					src: button
-				});
-			}
-		},
-
 		_onSelectItem: function(e) {
 			if (typeof e.detail.index === 'number') {
 				var index = e.detail.index;
 				var button = this._listNodes[index];
 				if (button) {
-					button.click();
+					button.dispatchEvent(new CustomEvent('d2l-button-ghost-click'));
 					return;
 				}
 			}
-			this.fire('d2l-responsive-button-list-select', {
-				src: e.detail.menuItem || e.target
-			});
 		},
 
 		chomp: function() {
