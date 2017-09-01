@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-button/d2l-button.html">
 <link rel="import" href="../d2l-icons/d2l-icon.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
 <link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
@@ -25,7 +26,7 @@
 
 <d2l-buttons-menu>
 	<template>
-		<button is="d2l-button">Stuff</button>
+		<d2l-button>Stuff</d2l-button>
 		<d2l-dropdown-button text="[[text]]">
 			<d2l-dropdown-menu>
 				<d2l-menu label="some menu">
@@ -46,45 +47,45 @@ top level menu item, the index is contained in `detail.index`.
 		<style include="d2l-dropdown-opener-styles d2l-offscreen-shared-styles">
 			:host button > span {
 				margin-right: var(--d2l-buttons-menu-button-text-spacing, 0.6rem);
-				@apply(--d2l-buttons-menu-text);
+				@apply --d2l-buttons-menu-text;
 			}
 			:host-context([dir="rtl"]) button > span {
 				margin-left: var(--d2l-buttons-menu-button-text-spacing, 0.6rem);
 				margin-right: 0;
-				@apply(--d2l-buttons-menu-text-rtl);
+				@apply --d2l-buttons-menu-text-rtl;
 			}
 
 			:host d2l-dropdown {
-				@apply(--d2l-buttons-menu-dropdown);
+				@apply --d2l-buttons-menu-dropdown;
 			}
 
 			:host button {
-				@apply(--d2l-buttons-menu-button);
+				@apply --d2l-buttons-menu-button;
 			}
 			:host button > d2l-icon {
-				@apply(--d2l-buttons-menu-icon);
+				@apply --d2l-buttons-menu-icon;
 			}
 
 			:host([mini]) button > span {
-				@apply(--d2l-offscreen);
-				@apply(--d2l-buttons-menu-text-mini);
+				@apply --d2l-offscreen;
+				@apply --d2l-buttons-menu-text-mini;
 			}
 
 			:host([mini]) d2l-dropdown {
 				height: 100%;
-				@apply(--d2l-buttons-menu-dropdown-mini);
+				@apply --d2l-buttons-menu-dropdown-mini;
 			}
 
 			:host([mini]) button {
 				padding: 0.5rem;
 				height: 100%;
-				@apply(--d2l-buttons-menu-button-mini);
+				@apply --d2l-buttons-menu-button-mini;
 			}
 		</style>
 		<d2l-dropdown>
-			<button is="d2l-button" class="d2l-dropdown-opener">
+			<d2l-button class="d2l-dropdown-opener">
 				<span>[[text]]</span><d2l-icon icon="[[icon]]" aria-hidden="true"></d2l-icon>
-			</button>
+			</d2l-button>
 			<d2l-dropdown-menu render-content>
 				<d2l-menu label="[[text]]">
 					<slot name="items"></slot>
@@ -127,8 +128,9 @@ top level menu item, the index is contained in `detail.index`.
 			},
 
 			_updateTemplate: function() {
-				var buttonTemplate = Polymer.dom(this.$.buttons).getDistributedNodes()
-					.filter(function(node) {
+				var buttonTemplate = Array.prototype.filter.call(
+					Polymer.dom(this.$.buttons).getDistributedNodes(),
+					function(node) {
 						return node.tagName && node.tagName.toLowerCase() === 'template';
 					})[0];
 				if (buttonTemplate && buttonTemplate !== this._template) {
@@ -157,14 +159,13 @@ top level menu item, the index is contained in `detail.index`.
 				this._clean();
 
 				// create menu items from template items
-				var items = Polymer.dom(this._instance.root).childNodes;
-
-				this._items = items
-					.filter(function(node) {
+				var items = Array.prototype.filter.call(
+					Polymer.dom(this._instance.root).childNodes,
+					function(node) {
 						return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
-					})
-					.map(this._createMenuItem.bind(this))
-					.map(this._updateMenuItem.bind(this));
+					});
+				items = Array.prototype.map.call(items, this._createMenuItem.bind(this));
+				this._items = Array.prototype.map.call(items, this._updateMenuItem.bind(this));
 
 				// Set hidden attributes
 				this._refresh();
