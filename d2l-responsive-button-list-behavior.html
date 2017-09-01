@@ -55,9 +55,11 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 		},
 
 		get _listNodes() {
-			return Polymer.dom(this._listElement).childNodes.filter(function(node) {
-				return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
-			});
+			return Array.prototype.filter.call(
+				Polymer.dom(this._listElement).childNodes,
+				function(node) {
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
+				});
 		},
 
 		_onSelectItem: function(e) {
@@ -100,8 +102,9 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 		},
 
 		_updateTemplate: function() {
-			var buttonTemplate = Polymer.dom(this.$.buttons).getDistributedNodes()
-				.filter(function(node) {
+			var buttonTemplate = Array.prototype.filter.call(
+				Polymer.dom(this.$.buttons).getDistributedNodes(),
+				function(node) {
 					return node.tagName && node.tagName.toLowerCase() === 'template';
 				})[0];
 			if (buttonTemplate && buttonTemplate !== this._template) {
@@ -172,9 +175,11 @@ behaviors: [D2L.PolymerBehaviors.ButtonGroup.ResponsiveButtonListBehavior]
 				return;
 			}
 
-			var listNodes = Polymer.dom(list).childNodes.filter(function(node) {
-				return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
-			});
+			var listNodes = Array.prototype.filter.call(
+				Polymer.dom(list).childNodes,
+			 	function(node) {
+					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
+				});
 			var keep, keepMax;
 			var keepClass = this.keepClass;
 			var noKeepClass = this.noKeepClass;

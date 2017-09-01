@@ -147,11 +147,9 @@ chomp: function() {
 		},
 
 		_showAll: function(items) {
-			items
-				.filter(function(node) {
+			Array.prototype.filter.call(items, function(node) {
 					return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
-				})
-				.forEach(this._showItem);
+				}).forEach(this._showItem);
 		},
 
 		_showItem: function(item) {

@@ -128,8 +128,9 @@ top level menu item, the index is contained in `detail.index`.
 			},
 
 			_updateTemplate: function() {
-				var buttonTemplate = Polymer.dom(this.$.buttons).getDistributedNodes()
-					.filter(function(node) {
+				var buttonTemplate = Array.prototype.filter.call(
+					Polymer.dom(this.$.buttons).getDistributedNodes(),
+					function(node) {
 						return node.tagName && node.tagName.toLowerCase() === 'template';
 					})[0];
 				if (buttonTemplate && buttonTemplate !== this._template) {
@@ -158,14 +159,13 @@ top level menu item, the index is contained in `detail.index`.
 				this._clean();
 
 				// create menu items from template items
-				var items = Polymer.dom(this._instance.root).childNodes;
-
-				this._items = items
-					.filter(function(node) {
+				var items = Array.prototype.filter.call(
+					Polymer.dom(this._instance.root).childNodes,
+					function(node) {
 						return node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'template';
-					})
-					.map(this._createMenuItem.bind(this))
-					.map(this._updateMenuItem.bind(this));
+					});
+				items = Array.prototype.map.call(items, this._createMenuItem.bind(this));
+				this._items = Array.prototype.map.call(items, this._updateMenuItem.bind(this));
 
 				// Set hidden attributes
 				this._refresh();
