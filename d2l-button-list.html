@@ -15,7 +15,7 @@
 </head>
 
 <d2l-button-list>
-	<button is="d2l-button">Stuff</button>
+	<d2l-button>Stuff</d2l-button>
 	<d2l-dropdown-button text="[[text]]">
 		<d2l-dropdown-menu>
 			<d2l-menu label="some menu">
@@ -35,28 +35,32 @@
 				display: block;
 			}
 
-			:host > ::slotted(button),
-			:host > ::slotted(a) {
+			:host > ::slotted(d2l-button),
+			:host > ::slotted(d2l-image-action-button),
+			:host > ::slotted(d2l-image-action-link) {
 				white-space: nowrap;
 			}
 
-			:host([can-shrink]) > ::slotted(button),
-			:host([can-shrink]) > ::slotted(a) {
+			:host([can-shrink]) > ::slotted(d2l-button),
+			:host([can-shrink]) > ::slotted(d2l-image-action-button),
+			:host([can-shrink]) > ::slotted(d2l-image-action-link) {
 				white-space: normal;
 			}
 
 			/* FIXME: Specificity in Shady DOM is too low if d2l-button or
 			   d2l-image-action is imported after d2l-button-list */
-			:host > ::slotted(button),
-			:host > ::slotted(a),
+			:host > ::slotted(d2l-button),
+			:host > ::slotted(d2l-image-action-button),
+			:host > ::slotted(d2l-image-action-link),
 			:host > ::slotted(span),
 			:host > ::slotted(d2l-dropdown),
 			:host > ::slotted(d2l-dropdown-button) {
 				margin-right: var(--d2l-button-list-spacing-inner);
 			}
 
-			:host-context([dir="rtl"]) > ::slotted(button),
-			:host-context([dir="rtl"]) > ::slotted(a),
+			:host-context([dir="rtl"]) > ::slotted(d2l-button),
+			:host-context([dir="rtl"]) > ::slotted(d2l-image-action-button),
+			:host-context([dir="rtl"]) > ::slotted(d2l-image-action-link),
 			:host-context([dir="rtl"]) > ::slotted(span),
 			:host-context([dir="rtl"]) > ::slotted(d2l-dropdown),
 			:host-context([dir="rtl"]) > ::slotted(d2l-dropdown-button) {

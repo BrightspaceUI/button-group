@@ -1,27 +1,20 @@
 {
   "name": "d2l-button-group",
-  "description": "",
+  "description": "Polymer-based web component to responsively encapsulate a group of buttons and drowdowns",
   "private": true,
-  "main": "index.js",
   "scripts": {
-    "postinstall": "bower install",
-    "test": "concurrently -p name -n lint,unit \"npm run test:lint\" \"npm run test:unit:local\"",
-    "test:lint": "concurrently -p name -n js,wc \"npm run test:lint:js\" \"npm run test:lint:wc\"",
-    "test:lint:js": "eslint --ext html .",
-    "test:lint:wc": "polymer lint --input *.html",
-    "test:unit:local": "wct --skip-plugin sauce"
+    "postinstall": "polymer install --variants",
+    "lint": "npm run lint:html && npm run lint:wc",
+    "lint:html": "eslint *.html demo/*.html test/*.html",
+    "lint:wc": "polymer lint",
+    "test": "npm run lint && polymer test --skip-plugin sauce"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
-  "dependencies": {
-    "bower": "^1.7.9"
-  },
   "devDependencies": {
-    "concurrently": "^3.1.0",
-    "eslint": "^3.8.1",
-    "eslint-config-brightspace": "^0.2.4",
-    "eslint-plugin-html": "^1.5.5",
-    "polymer-cli": "^0.16.0",
-    "web-component-tester": "^5.0.0"
+    "eslint": "^4.5.0",
+    "eslint-config-brightspace": "^0.3.1",
+    "eslint-plugin-html": "^3.1.0",
+    "polymer-cli": "^1.5.4"
   }
 }
