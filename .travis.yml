@@ -1,9 +1,5 @@
 language: node_js
-node_js: stable
-cache:
-  directories:
-  - node_modules
-  - bower_components
+node_js: node
 script:
   - npm run test:lint
   - wct --skip-plugin local
