@@ -20,9 +20,9 @@
     "web-component-tester": "^5.0.0"
   },
   "dependencies": {
-    "app-localize-behavior": "PolymerElements/app-localize-behavior#^1.0.2",
     "d2l-button": "^3.3.0",
     "d2l-dropdown": "^5.0.6",
+    "d2l-localize-behavior": "^1.0.1",
     "d2l-menu": "^0.3.5",
     "d2l-offscreen": "^2.2.5",
     "iron-resizable-behavior": "^1.0.5",
