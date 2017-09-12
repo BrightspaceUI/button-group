@@ -1,4 +1,4 @@
-<link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../d2l-localize-behavior/d2l-localize-behavior.html">
 <script>
 (function() {
 	'use strict';
@@ -7,13 +7,9 @@
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
 
-	/** @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior */
+	/** @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.LocalizeBehaviorImpl */
 	D2L.PolymerBehaviors.ButtonGroup.LocalizeBehaviorImpl = {
 		properties: {
-			language: {
-				type: String,
-				computed: '_computeLanguage(resources)'
-			},
 			resources: {
 				value: function() {
 					var ar = {
@@ -80,25 +76,11 @@
 					};
 				}
 			}
-		},
-		_computeLanguage: function(resources) {
-			var locale = document.documentElement.lang
-				|| document.documentElement.getAttribute('data-lang-default')
-				|| 'en-us';
-			locale = locale.toLowerCase();
-			if (resources[locale]) {
-				return locale;
-			}
-			var langAndRegion = locale.split('-');
-			if (resources[langAndRegion[0]]) {
-				return langAndRegion[0];
-			}
-			return 'en';
 		}
 	};
 	/** @polymerBehavior */
 	D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior = [
-		Polymer.AppLocalizeBehavior,
+		D2L.PolymerBehaviors.LocalizeBehavior,
 		D2L.PolymerBehaviors.ButtonGroup.LocalizeBehaviorImpl
 	];
 })();
