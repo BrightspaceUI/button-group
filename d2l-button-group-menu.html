@@ -1,0 +1,144 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-button/d2l-button.html">
+<link rel="import" href="../d2l-button/d2l-button-shared-styles.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="../d2l-icons/d2l-icon.html">
+<link rel="import" href="../d2l-menu/d2l-menu.html">
+<link rel="import" href="../d2l-offscreen/d2l-offscreen-shared-styles.html">
+
+<dom-module id="d2l-button-group-menu">
+	<template strip-whitespace>
+		<style include="d2l-offscreen-shared-styles">
+
+			:host .d2l-dropdown-opener {
+				background-color: var(--d2l-color-sylvite);
+				border-color: var(--d2l-color-mica);
+				border-width: 1px;
+				border-style: solid;
+				border-radius: 0.3rem;
+				box-sizing: border-box;
+				color: var(--d2l-color-ferrite);
+				cursor: pointer;
+				display: inline-block;
+				font-family: inherit;
+				font-size: 0.7rem;
+				font-weight: 700;
+				letter-spacing: 0.02rem;
+				line-height: 1rem;
+				margin: 0;
+				min-height: -webkit-calc(2rem + 2px);
+				min-height: calc(2rem + 2px);
+				outline: none;
+				padding: 0.5rem 1.5rem;
+				text-align: center;
+				transition: box-shadow 0.2s;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				vertical-align: middle;
+				white-space: nowrap;
+				width: auto;
+			}
+
+			/* Firefox includes a hidden border which messes up button dimensions */
+			button::-moz-focus-inner {
+				border: 0;
+			}
+
+			:host .d2l-dropdown-opener:hover {
+				background-color: var(--d2l-color-gypsum);
+				@apply --d2l-button-hover;
+			}
+
+			:host .d2l-dropdown-opener:focus {
+				@apply --d2l-secondary-button-focus;
+			}
+
+			:host .d2l-dropdown-opener-text {
+				margin-right: 0.6rem;
+			}
+
+			:host-context([dir='rtl']) .d2l-dropdown-opener-text {
+				margin-left: 0.6rem;
+				margin-right: 0;
+			}
+
+			:host(:dir(rtl)) .d2l-dropdown-opener-text {
+				margin-left: 0.6rem;
+				margin-right: 0;
+			}
+
+			:host([subtle]) .d2l-dropdown-opener {
+				padding: 0;
+				margin: 0;
+				border: 0;
+				background-color: transparent;
+				min-height: auto;
+				font-weight: normal;
+			}
+
+			:host([subtle]) .d2l-dropdown-opener-text {
+				margin-right: 0.2rem;
+			}
+
+			:host-context([subtle][dir='rtl']) .d2l-dropdown-opener-text {
+				margin-left: 0.6rem;
+				margin-right: 0;
+			}
+
+			:host([subtle]:dir(rtl)) .d2l-dropdown-opener-text {
+				margin-left: 0.2rem;
+				margin-right: 0;
+			}
+
+			:host([mini]) .d2l-dropdown-opener-text {
+				@apply --d2l-offscreen;
+			}
+
+			:host([mini]) .d2l-dropdown-opener {
+				padding-left: 0.5rem;
+				padding-right: 0.5rem;
+			}
+
+		</style>
+		<d2l-dropdown>
+			<button class="d2l-dropdown-opener">
+				<span class="d2l-dropdown-opener-text">[[text]]</span><d2l-icon icon="[[icon]]" aria-hidden="true"></d2l-icon>
+			</button>
+			<d2l-dropdown-menu render-content>
+				<d2l-menu id="overflowMenu" label="[[text]]">
+					<slot></slot>
+				</d2l-menu>
+			</d2l-dropdown-menu>
+		</d2l-dropdown>
+	</template>
+	<script>
+		Polymer({
+			is: 'd2l-button-group-menu',
+
+			properties: {
+				mini: {
+					type: Boolean,
+					reflectToAttribute: true
+				},
+				icon: {
+					type: String,
+					computed: '_getIcon(mini)'
+				},
+				subtle: {
+					type: Boolean,
+					reflectToAttribute: true
+				},
+				text: String
+			},
+
+			_getIcon: function(mini) {
+				return mini ? 'd2l-tier1:more' : 'd2l-tier1:chevron-down';
+			}
+
+		});
+	</script>
+</dom-module>

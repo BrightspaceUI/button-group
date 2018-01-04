@@ -7,80 +7,104 @@
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
 		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+		<link rel="import" href="../../d2l-typography/d2l-typography.html">
 		<link rel="import" href="../../d2l-button/d2l-button.html">
 		<link rel="import" href="../../d2l-image-action/d2l-image-action.html">
-		<link rel="import" href="../../d2l-icons/tier1-icons.html">
-		<link rel="import" href="../../d2l-typography/d2l-typography.html">
+		<link rel="import" href="../../d2l-link/d2l-link.html">
+		<link rel="import" href="../../d2l-dropdown/d2l-dropdown-button.html">
+		<link rel="import" href="../../d2l-dropdown/d2l-dropdown-menu.html">
+		<link rel="import" href="../../d2l-menu/d2l-menu.html">
+		<link rel="import" href="../../d2l-menu/d2l-menu-item.html">
 		<link rel="import" href="../d2l-button-group.html">
 		<link rel="import" href="../d2l-action-button-group.html">
-		<custom-style include="demo-pages-shared-styles">
+		<custom-style>
 			<style is="custom-style" include="demo-pages-shared-styles"></style>
 		</custom-style>
 		<custom-style include="d2l-typography">
 			<style is="custom-style" include="d2l-typography"></style>
 		</custom-style>
 		<style>
-		html {
-			font-size: 20px;
-		}
-		</style>
+			html {
+				font-size: 20px;
+			}
+			</style>
 	</head>
 	<body unresolved class="d2l-typography">
 		<div class="vertical-section-container centered">
 
-			<h3>button menu</h3>
+			<h3>Standard Buttons</h3>
+			<!--
+			<button id="addButton">Add button</button>
+			<button id="removeButton">Remove button</button>
+			-->
 			<demo-snippet>
 				<template>
-					<d2l-button-group keep="2">
-						<template strip-whitspace>
-							<d2l-button primary>Edit Submission</d2l-button>
-							<d2l-button>Email Users</d2l-button>
-							<d2l-button>Add Feedback Files</d2l-button>
-							<d2l-button>Something else</d2l-button>
-							<d2l-button>Something else</d2l-button>
-						</template>
+					<d2l-button-group id="myButtonGroup" min-to-show="1" max-to-show="9">
+						<d2l-button id="myButton" primary>Edit Submission</d2l-button>
+						<d2l-button id="emailButton">Email Users</d2l-button>
+						<d2l-button>Add Feedback Files</d2l-button>
+						<d2l-button>Something else</d2l-button>
+						<d2l-button id="mytest">Something else 2</d2l-button>
+						<d2l-button>Something else 3</d2l-button>
+						<d2l-button>Something else 4</d2l-button>
+						<d2l-dropdown-button id="dropdownButton" text="My Dropdown Button!">
+							<d2l-dropdown-menu id="dropdown">
+								<d2l-menu label="Astronomy">
+									<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
+									<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
+									<d2l-menu-item text="The Solar System"></d2l-menu-item>
+									<d2l-menu-item text="Stars &amp; Galaxies"></d2l-menu-item>
+									<d2l-menu-item text="The Night Sky"></d2l-menu-item>
+									<d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-button>
+						<d2l-link href="http://www.desire2learn.com">D2L</d2l-link>
 					</d2l-button-group>
 				</template>
 			</demo-snippet>
 
-			<h3>button menu with dropdown</h3>
+			<h3>Image Actions</h3>
 			<demo-snippet>
 				<template>
-					<d2l-button-group keep="1">
-						<template strip-whitspace>
-							<d2l-button primary>Primary Button</d2l-button>
-							<d2l-dropdown-button text="Add Participants">
-								<d2l-dropdown-menu render-content>
-									<d2l-menu label="Add Participants">
-										<d2l-menu-item text="Add Existing Users"></d2l-menu-item>
-										<d2l-menu-item text="Create and enroll a new user"></d2l-menu-item>
-										<d2l-menu-item text="Import users from file"></d2l-menu-item>
-									</d2l-menu>
-								</d2l-dropdown-menu>
-							</d2l-dropdown-button>
-							<d2l-button>Something else</d2l-button>
-							<d2l-button>Something else</d2l-button>
-						</template>
-					</d2l-button-group>
-				</template>
-			</demo-snippet>
-
-			<h3>action button group</h3>
-			<demo-snippet>
-				<template>
-					<d2l-action-button-group keep="1">
-						<template strip-whitspace>
-							<d2l-image-action-button icon="d2l-tier1:email">Email</d2l-image-action-button>
-							<d2l-image-action-button icon="d2l-tier1:messages">Instant Message</d2l-image-action-button>
-							<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
-							<d2l-image-action-button icon="d2l-tier1:enrollment">Enrollment</d2l-image-action-button>
-							<d2l-image-action-link icon="d2l-tier1:remove-user">Unenroll</d2l-image-action-link>
-							<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
-							<d2l-image-action-link icon="d2l-tier1:chat">Something else</d2l-image-action-link>
-						</template>
+					<d2l-action-button-group id="myButtonGroup" min-to-show="1" max-to-show="3">
+						<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:pin">Pin</d2l-image-action-button>
+						<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
+						<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
 					</d2l-action-button-group>
 				</template>
 			</demo-snippet>
+
 		</div>
+		<script>
+			window.addEventListener('WebComponentsReady', function(e) {
+
+				var button = document.getElementById('mytest');
+				button.addEventListener('click', function() {
+					console.log('this is a click ghost');
+				});
+
+				/*
+				var addButton = document.getElementById('addButton');
+				addButton.addEventListener('click', function() {
+					var newButton = document.createElement('d2l-button');
+					newButton.textContent = 'new button';
+					Polymer.dom(document.getElementById('myButtonGroup'))
+						.insertBefore(newButton, document.getElementById('emailButton'));
+				});
+
+				var removeButton = document.getElementById('removeButton');
+				removeButton.addEventListener('click', function() {
+					Polymer.dom(document.getElementById('myButtonGroup'))
+						.removeChild(document.getElementById('dropdownButton'));
+				});
+				*/
+
+			});
+
+		</script>
 	</body>
 </html>

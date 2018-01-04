@@ -10,17 +10,19 @@
     "wct.conf.json"
   ],
   "dependencies": {
-    "app-localize-behavior": "PolymerElements/app-localize-behavior#^1.0.2 || ^2.0.0",
-    "d2l-button": "^4.0.0",
-    "d2l-dropdown": "^6.0.1",
-    "d2l-icons": "^3.6.0 || ^4.4.1",
+    "d2l-button": "^4.0.1",
+    "d2l-dropdown": "^6.0.3",
+    "d2l-fastdom-import": "https://github.com/Brightspace/fastdom-import.git#v1.0.2",
+    "d2l-icons": "^3.7.0 || ^4.5.0",
+    "d2l-localize-behavior": "^1.0.0",
     "d2l-menu": "^0.3.7 || ^1.0.3",
-    "d2l-offscreen": "^2.2.5 || ^3.0.1",
+    "d2l-offscreen": "^2.2.5 || ^3.0.2",
     "iron-resizable-behavior": "^1.0.6 || ^2.0.1",
     "polymer": "Polymer/polymer#1.9 - 2"
   },
   "devDependencies": {
     "d2l-image-action": "^2.0.0",
+    "d2l-link": "^4.0.0",
     "d2l-typography": "^5.4.0 || ^6.0.0",
     "iron-component-page": "PolymerElements/iron-component-page#1 - 2",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#1 - 2",
@@ -29,8 +31,7 @@
   "variants": {
     "1.x": {
       "dependencies": {
-        "app-localize-behavior": "PolymerElements/app-localize-behavior#^1.0.2",
-        "d2l-icons": "^3.6.0",
+        "d2l-icons": "^3.7.0",
         "d2l-menu": "^0.3.7",
         "d2l-offscreen": "^2.2.5",
         "iron-resizable-behavior": "^1.0.6",

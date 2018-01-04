@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "postinstall": "polymer install --variants",
-    "lint": "npm run lint:html && npm run lint:wc",
-    "lint:html": "eslint *.html demo/*.html test/*.html",
-    "lint:wc": "polymer lint",
-    "test": "npm run lint && polymer test --skip-plugin sauce"
+    "test": "npm run test:lint:js && npm run test:lint:wc",
+    "test:lint:js": "eslint *.html",
+    "test:lint:wc": "polymer lint -i *.html",
+    "test:unit:local": "polymer test --skip-plugin sauce"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BrightspaceUI/button-group.git"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
@@ -15,6 +19,6 @@
     "eslint": "^4.5.0",
     "eslint-config-brightspace": "^0.3.1",
     "eslint-plugin-html": "^3.1.0",
-    "polymer-cli": "^1.5.4"
+    "polymer-cli": "^1.5.7"
   }
 }
