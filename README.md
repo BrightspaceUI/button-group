@@ -50,7 +50,7 @@
 	<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
 	<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
 	<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
-	<d2l-image-action-button icon="d2l-tier1:pin">Pin</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:pin-filled">Pin</d2l-image-action-button>
 	<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
 	<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
 </d2l-action-button-group>
@@ -107,7 +107,7 @@ A `<d2l-action-button-group>` custom element can be used in your application to 
 	<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
 	<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
 	<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
-	<d2l-image-action-button icon="d2l-tier1:pin">Pin</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:pin-filled">Pin</d2l-image-action-button>
 	<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
 	<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
 </d2l-action-button-group>
