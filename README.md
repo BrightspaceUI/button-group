@@ -37,6 +37,9 @@
         line-height: 1.4rem;
       }
     </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '200px'; });
+    </script>
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
