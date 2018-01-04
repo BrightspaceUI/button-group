@@ -27,6 +27,7 @@
       html {
         font-size: 20px;
       }
+      d2l-button-group,
       d2l-action-button-group {
         color: var(--d2l-color-ferrite);
         font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
@@ -42,24 +43,14 @@
 ```
 -->
 ```html
-<d2l-button-group min-to-show="1" max-to-show="3">
-	<d2l-button primary>New</d2l-button>
-	<d2l-button>Instant Message</d2l-button>
-	<d2l-button>Add Feedback</d2l-button>
-	<d2l-button>Preview</d2l-button>
-	<d2l-dropdown-button text="Explore Topics">
-		<d2l-dropdown-menu>
-			<d2l-menu label="Astronomy">
-				<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
-				<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
-				<d2l-menu-item text="The Solar System"></d2l-menu-item>
-				<d2l-menu-item text="Stars &amp; Galaxies"></d2l-menu-item>
-				<d2l-menu-item text="The Night Sky"></d2l-menu-item>
-				<d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
-			</d2l-menu>
-		</d2l-dropdown-menu>
-	</d2l-dropdown-button>
-</d2l-button-group>
+<d2l-action-button-group min-to-show="1" max-to-show="3">
+	<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:pin">Pin</d2l-image-action-button>
+	<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
+	<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
+</d2l-action-button-group>
 ```
 
 For further information on this and other Brightspace UI components, see the docs at [ui.developers.brightspace.com](http://ui.developers.brightspace.com/).
