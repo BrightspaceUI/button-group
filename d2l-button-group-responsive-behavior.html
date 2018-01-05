@@ -4,11 +4,16 @@
 <link rel="import" href="../d2l-menu/d2l-menu-item-separator.html">
 
 <script>
+/* eslint-disable no-invalid-this */
 (function() {
 	'use strict';
 
-	/** @polymerBehavior ResponsiveBehavior */
-	var ResponsiveBehaviorImpl = {
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
+
+	/** @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehavior */
+	D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 
 		properties: {
 
@@ -89,7 +94,7 @@
 			} else if (tagName === 'd2l-link' || tagName === 'd2l-image-action-link' || tagName === 'a') {
 				menuItem = this._createMenuItemLink(item);
 			} else if (item.getAttribute('role') === 'separator') {
-				menuItem = this._createMenuItemSeparator();;
+				menuItem = this._createMenuItemSeparator();
 			} else if (tagName === 'd2l-dropdown-button') {
 				menuItem = this._createMenuItemMenu(item);
 			} else {
@@ -117,7 +122,7 @@
 		_autoDetectBoundaries: function(items) {
 
 			var minToShow, maxToShow;
-			for(var i=0; i<items.length; i++) {
+			for (var i = 0; i < items.length; i++) {
 				if (items[i].classList.contains(this._autoShowClass)) {
 					minToShow = i + 1;
 				}
@@ -150,7 +155,7 @@
 
 		},
 
-		_boundaryChanged: function(value, oldValue) {
+		_boundaryChanged: function() {
 
 			if (!this._layout) {
 				// avoid chomping before init
@@ -200,7 +205,7 @@
 				}.bind(this);
 
 				var isSoftOverflowing, isForcedOverflowing, chompIndex = 0;
-				for(var i=0; i<this._layout.items.length; i++) {
+				for (var i = 0; i < this._layout.items.length; i++) {
 					var itemLayout = this._layout.items[i];
 
 					if (!itemLayout.isVisible) {
@@ -254,7 +259,7 @@
 			if (item.disabled) {
 				menuItem.setAttribute('disabled', 'disabled');
 			}
-			menuItem.addEventListener('d2l-menu-item-select', function(e) {
+			menuItem.addEventListener('d2l-menu-item-select', function() {
 				item.click();
 			});
 			return menuItem;
@@ -379,24 +384,24 @@
 			fastdom.measure(function() {
 
 				var items = this._getItems();
-				var addedIndex, removedIndex;
+				var item, itemLayout;
 
-				for(var addedIndex=0; addedIndex<addedNodes.length; addedIndex++) {
-					var item = addedNodes[addedIndex];
+				for (var addedIndex = 0; addedIndex < addedNodes.length; addedIndex++) {
+					item = addedNodes[addedIndex];
 					var itemIndex = items.indexOf(item);
-					var itemLayout = this._createLayoutItem(item);
+					itemLayout = this._createLayoutItem(item);
 					this._layout.items.splice(itemIndex, 0, itemLayout);
 					if (itemLayout.isVisible) {
 						this._layout.totalWidth += itemLayout.width;
 					}
 				}
 
-				for(var removedIndex=0; removedIndex<removedNodes.length; removedIndex++) {
-					var item = removedNodes[removedIndex];
+				for (var removedIndex = 0; removedIndex < removedNodes.length; removedIndex++) {
+					item = removedNodes[removedIndex];
 
 					var refId = item.getAttribute('bgi-ref');
-					for(var i=0; i<this._layout.items.length; i++) {
-						var itemLayout = this._layout.items[i];
+					for (var i = 0; i < this._layout.items.length; i++) {
+						itemLayout = this._layout.items[i];
 						if (itemLayout.refId === refId) {
 							if (itemLayout.isVisible) {
 								this._layout.totalWidth -= itemLayout.width;
@@ -408,8 +413,8 @@
 
 					if (item.hasAttribute('chomped')) {
 						fastdom.mutate(function() {
-								this._removeFromOverflowMenu(item);
-								item.removeAttribute('chomped');
+							this._removeFromOverflowMenu(item);
+							item.removeAttribute('chomped');
 						}, this);
 					}
 
@@ -423,13 +428,9 @@
 
 	};
 
-	window.D2L = window.D2L || {};
-	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
-
-	/** @polymerBehavior ResponsiveBehavior */
-	window.D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehavior = [
-		ResponsiveBehaviorImpl
+	/** @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehavior */
+	D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehavior = [
+		D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl
 	];
 
 })();

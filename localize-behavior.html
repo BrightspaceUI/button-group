@@ -3,8 +3,12 @@
 (function() {
 	'use strict';
 
-	/** @polymerBehavior LocalizeBehavior */
-	var LocalizeBehaviorImpl = {
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
+
+	/** @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior */
+	D2L.PolymerBehaviors.ButtonGroup.LocalizeBehaviorImpl = {
 		properties: {
 			/**
 			 * Localization resources.
@@ -66,14 +70,10 @@
 		}
 	};
 
-	window.D2L = window.D2L || {};
-	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
-
-	/** @polymerBehavior LocalizeBehavior */
-	window.D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior = [
+	/** @polymerBehavior D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior */
+	D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior = [
 		D2L.PolymerBehaviors.LocalizeBehavior,
-		LocalizeBehaviorImpl
+		D2L.PolymerBehaviors.ButtonGroup.LocalizeBehaviorImpl
 	];
 
 })();
