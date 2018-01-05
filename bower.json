@@ -1,7 +1,7 @@
 {
   "name": "d2l-button-group",
   "description": "Polymer-based web component to responsively encapsulate a group of buttons and dropdowns",
-  "main": "d2l-button-group.html",
+  "main": "all-imports.html",
   "license": "Apache-2.0",
   "ignore": [
     "**/.*",
