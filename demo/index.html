@@ -39,23 +39,20 @@
 			-->
 			<demo-snippet>
 				<template>
-					<d2l-button-group id="myButtonGroup" min-to-show="1" max-to-show="9">
-						<d2l-button id="myButton" primary>Edit Submission</d2l-button>
-						<d2l-button id="emailButton">Email Users</d2l-button>
-						<d2l-button>Add Feedback Files</d2l-button>
-						<d2l-button>Something else</d2l-button>
-						<d2l-button id="mytest">Something else 2</d2l-button>
-						<d2l-button>Something else 3</d2l-button>
-						<d2l-button>Something else 4</d2l-button>
-						<d2l-dropdown-button id="dropdownButton" text="My Dropdown Button!">
-							<d2l-dropdown-menu id="dropdown">
+					<d2l-button-group min-to-show="1" max-to-show="3">
+						<d2l-button primary>New</d2l-button>
+						<d2l-button>Copy</d2l-button>
+						<d2l-button>Import</d2l-button>
+						<d2l-button>Delete</d2l-button>
+						<d2l-dropdown-button text="Explore Topics">
+							<d2l-dropdown-menu>
 								<d2l-menu label="Astronomy">
-									<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
+									<d2l-menu-item text="Introduction"></d2l-menu-item>
 									<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
 									<d2l-menu-item text="The Solar System"></d2l-menu-item>
 									<d2l-menu-item text="Stars &amp; Galaxies"></d2l-menu-item>
 									<d2l-menu-item text="The Night Sky"></d2l-menu-item>
-									<d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
+									<d2l-menu-item text="The Universe"></d2l-menu-item>
 								</d2l-menu>
 							</d2l-dropdown-menu>
 						</d2l-dropdown-button>
@@ -67,11 +64,12 @@
 			<h3>Image Actions</h3>
 			<demo-snippet>
 				<template>
-					<d2l-action-button-group id="myButtonGroup" min-to-show="1" max-to-show="3">
+					<d2l-action-button-group min-to-show="1" max-to-show="5">
 						<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
 						<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
-						<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
 						<d2l-image-action-button icon="d2l-tier1:pin-filled">Pin</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:delete">Delete</d2l-image-action-button>
 						<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
 						<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
 					</d2l-action-button-group>

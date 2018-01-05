@@ -3,8 +3,8 @@
 (function() {
 	'use strict';
 
-	/** @polymerBehavior */
-	var LocalizeBehavior = {
+	/** @polymerBehavior LocalizeBehavior */
+	var LocalizeBehaviorImpl = {
 		properties: {
 			/**
 			 * Localization resources.
@@ -70,10 +70,10 @@
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 	window.D2L.PolymerBehaviors.ButtonGroup = window.D2L.PolymerBehaviors.ButtonGroup || {};
 
-	/** @polymerBehavior */
+	/** @polymerBehavior LocalizeBehavior */
 	window.D2L.PolymerBehaviors.ButtonGroup.LocalizeBehavior = [
 		D2L.PolymerBehaviors.LocalizeBehavior,
-		LocalizeBehavior
+		LocalizeBehaviorImpl
 	];
 
 })();
