@@ -9,14 +9,12 @@
 		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
 		<link rel="import" href="../../d2l-typography/d2l-typography.html">
 		<link rel="import" href="../../d2l-button/d2l-button.html">
-		<link rel="import" href="../../d2l-image-action/d2l-image-action.html">
 		<link rel="import" href="../../d2l-link/d2l-link.html">
 		<link rel="import" href="../../d2l-dropdown/d2l-dropdown-button.html">
 		<link rel="import" href="../../d2l-dropdown/d2l-dropdown-menu.html">
 		<link rel="import" href="../../d2l-menu/d2l-menu.html">
 		<link rel="import" href="../../d2l-menu/d2l-menu-item.html">
 		<link rel="import" href="../d2l-button-group.html">
-		<link rel="import" href="../d2l-action-button-group.html">
 		<custom-style>
 			<style is="custom-style" include="demo-pages-shared-styles"></style>
 		</custom-style>
@@ -32,11 +30,19 @@
 	<body unresolved class="d2l-typography">
 		<div class="vertical-section-container centered">
 
-			<h3>Standard Buttons</h3>
-			<!--
-			<button id="addButton">Add button</button>
-			<button id="removeButton">Remove button</button>
-			-->
+			<h3>Buttons</h3>
+			<demo-snippet>
+				<template>
+					<d2l-button-group min-to-show="1" max-to-show="3">
+						<d2l-button primary>New</d2l-button>
+						<d2l-button>Copy</d2l-button>
+						<d2l-button>Import</d2l-button>
+						<d2l-button>Delete</d2l-button>
+						<d2l-button>Explore</d2l-button>
+				</template>
+			</demo-snippet>
+
+			<h3>Buttons with Dropdown Button</h3>
 			<demo-snippet>
 				<template>
 					<d2l-button-group min-to-show="1" max-to-show="3">
@@ -61,48 +67,11 @@
 				</template>
 			</demo-snippet>
 
-			<h3>Image Actions</h3>
-			<demo-snippet>
-				<template>
-					<d2l-action-button-group min-to-show="1" max-to-show="5">
-						<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
-						<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
-						<d2l-image-action-button icon="d2l-tier1:pin-filled">Pin</d2l-image-action-button>
-						<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
-						<d2l-image-action-button icon="d2l-tier1:delete">Delete</d2l-image-action-button>
-						<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
-						<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
-					</d2l-action-button-group>
-				</template>
-			</demo-snippet>
 
 		</div>
 		<script>
-			window.addEventListener('WebComponentsReady', function(e) {
-
-				var button = document.getElementById('mytest');
-				button.addEventListener('click', function() {
-					console.log('this is a click ghost');
-				});
-
-				/*
-				var addButton = document.getElementById('addButton');
-				addButton.addEventListener('click', function() {
-					var newButton = document.createElement('d2l-button');
-					newButton.textContent = 'new button';
-					Polymer.dom(document.getElementById('myButtonGroup'))
-						.insertBefore(newButton, document.getElementById('emailButton'));
-				});
-
-				var removeButton = document.getElementById('removeButton');
-				removeButton.addEventListener('click', function() {
-					Polymer.dom(document.getElementById('myButtonGroup'))
-						.removeChild(document.getElementById('dropdownButton'));
-				});
-				*/
-
-			});
-
+			//window.addEventListener('WebComponentsReady', function(e) {
+			//});
 		</script>
 	</body>
 </html>
