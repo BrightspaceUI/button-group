@@ -249,6 +249,8 @@
 
 				this._overflowMenu.style.display = ((!isSoftOverflowing && !isForcedOverflowing) ? 'none' : '');
 
+				this.dispatchEvent(new CustomEvent('d2l-button-group-updated', {bubbles: true, composed: true}));
+
 			}, this);
 
 		},
@@ -260,6 +262,7 @@
 				menuItem.setAttribute('disabled', 'disabled');
 			}
 			menuItem.addEventListener('d2l-menu-item-select', function() {
+				//item.dispatchEvent(new CustomEvent('d2l-button-ghost-click'));
 				item.click();
 			});
 			return menuItem;
