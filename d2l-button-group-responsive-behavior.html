@@ -4,7 +4,7 @@
 <link rel="import" href="../d2l-menu/d2l-menu-item-separator.html">
 
 <script>
-/* eslint-disable no-invalid-this */
+/* eslint-disable no-invalid-this, no-redeclare */
 (function() {
 	'use strict';
 
@@ -204,7 +204,7 @@
 					}
 				}.bind(this);
 
-				var isSoftOverflowing, isForcedOverflowing, chompIndex = 0;
+				var isSoftOverflowing, isForcedOverflowing;
 				for (var i = 0; i < this._layout.items.length; i++) {
 					var itemLayout = this._layout.items[i];
 
@@ -245,7 +245,7 @@
 				}
 
 				if (isSoftOverflowing || isForcedOverflowing) {
-					for(var i = this._layout.items.length; i--;) {
+					for (var i = this._layout.items.length; i--;) {
 						if (showing.width + this._layout.overflowMenuWidth < this._layout.availableWidth) {
 							break;
 						}
