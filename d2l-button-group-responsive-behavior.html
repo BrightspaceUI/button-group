@@ -216,14 +216,16 @@
 					if (showing.count < this.minToShow) {
 						showing.width += itemLayout.width;
 						showing.count += 1;
-						undoChomp(items[i]);
+						itemLayout.trigger = 'force-show';
+						itemLayout.isChomped = false;
 						continue;
 					}
 
 					// make sure we only show the max
 					if (this.maxToShow >= 0 && showing.count >= this.maxToShow) {
 						isForcedOverflowing = true;
-						chomp(items[i], chompIndex++);
+						itemLayout.trigger = 'force-hide';
+						itemLayout.isChomped = true;
 						continue;
 					}
 
@@ -231,13 +233,41 @@
 					if (!isSoftOverflowing && ((showing.width + itemLayout.width) < this._layout.availableWidth)) {
 						showing.width += itemLayout.width;
 						showing.count += 1;
-						undoChomp(items[i]);
+						itemLayout.trigger = 'soft-show';
+						itemLayout.isChomped = false;
 					} else {
 						// as soon as one overflows due to space, overflow the rest so they don't seem out of order
 						isSoftOverflowing = true;
-						chomp(items[i], chompIndex++);
+						itemLayout.trigger = 'soft-hide';
+						itemLayout.isChomped = true;
 					}
 
+				}
+
+				if (isSoftOverflowing || isForcedOverflowing) {
+					for(var i = this._layout.items.length; i--;) {
+						if (showing.width + this._layout.overflowMenuWidth < this._layout.availableWidth) {
+							break;
+						}
+						var itemLayout = this._layout.items[i];
+						if (!itemLayout.isVisible || itemLayout.trigger !== 'soft-show') {
+							continue;
+						}
+						showing.width -= itemLayout.width;
+						isSoftOverflowing = true;
+						itemLayout.trigger = 'soft-hide';
+						itemLayout.isChomped = true;
+					}
+				}
+
+				var chompIndex = 0;
+				for (var i = 0; i < this._layout.items.length; i++) {
+					var itemLayout = this._layout.items[i];
+					if (itemLayout.isChomped) {
+						chomp(items[i], chompIndex++);
+					} else {
+						undoChomp(items[i]);
+					}
 				}
 
 				// if there is at least one showing and no more to be hidden, enable collapsing more button to [...]
@@ -343,8 +373,7 @@
 				}.bind(this));
 
 				this._layout.overflowMenuWidth = this._overflowMenu.offsetWidth;
-				this._layout.availableWidth = this._container.clientWidth - this._layout.overflowMenuWidth;
-
+				this._layout.availableWidth = this._container.clientWidth;
 				this._chomp(items);
 
 			}, this);
@@ -373,7 +402,7 @@
 				return;
 			}
 			fastdom.measure(function() {
-				this._layout.availableWidth = this._container.clientWidth - this._layout.overflowMenuWidth;
+				this._layout.availableWidth = this._container.clientWidth;
 				this._chomp();
 			}, this);
 		},
