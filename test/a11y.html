@@ -2,176 +2,73 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>wrapper tests</title>
+		<title>button-group a11y tests</title>
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 		<script src="../../web-component-tester/browser.js"></script>
 		<link rel="import" href="../d2l-button-group.html">
+		<style>
+			button {
+				width: 75px;
+			}
+		</style>
+
 	</head>
 	<body>
 
-		<test-fixture id="one-button">
+		<test-fixture id="less-than-min-to-show">
 			<template>
-				<d2l-button-group menu-text="More Actions">
-					<template>
-						<d2l-button class="button">Button</d2l-button>
-					</template>
-				</d2l-button-group>
+					<div style="width: 500px;">
+						<d2l-button-group min-to-show="2">
+							<button>button 1</button>
+						</d2l-button-group>
+					</div>
 			</template>
 		</test-fixture>
 
-		<test-fixture id="one-button-hidden">
+		<test-fixture id="between-min-max-to-show">
 			<template>
-				<style>
-					.hidden {
-						display: none;
-					}
-				</style>
-				<d2l-button-group menu-text="More Actions">
-					<template>
-						<d2l-button class="button hidden">Button</d2l-button>
-					</template>
-				</d2l-button-group>
+					<div style="width: 500px;">
+						<d2l-button-group min-to-show="2" max-to-show="4">
+							<button>button 1</button>
+							<button>button 2</button>
+							<button>button 3</button>
+						</d2l-button-group>
+					</div>
 			</template>
 		</test-fixture>
 
-		<test-fixture id="two-button">
+		<test-fixture id="max-to-show">
 			<template>
-				<style>
-					.button {
-						width: 100px;
-						box-sizing: border-box;
-					}
-					d2l-button-group {
-						width: 300px;
-					}
-				</style>
-				<d2l-button-group menu-text="More Actions">
-					<template>
-						<d2l-button class="button">Button1</d2l-button>
-						<d2l-button class="button">Button2</d2l-button>
-					</template>
-				</d2l-button-group>
+					<div style="width: 500px;">
+						<d2l-button-group min-to-show="2" max-to-show="3">
+							<button>button 1</button>
+							<button>button 2</button>
+							<button>button 3</button>
+						</d2l-button-group>
+					</div>
 			</template>
 		</test-fixture>
 
-		<test-fixture id="two-button-one-hidden">
+		<test-fixture id="greater-than-max-to-show">
 			<template>
-				<style>
-					.button {
-						width: 100px;
-						box-sizing: border-box;
-					}
-					.hidden {
-						display: none;
-					}
-					d2l-button-group {
-						width: 170px;
-					}
-				</style>
-				<d2l-button-group menu-text="More Actions">
-					<template>
-						<d2l-button class="button">Button1</d2l-button>
-						<d2l-button class="hidden button">Hidden Button</d2l-button>
-						<d2l-button class="button">Button2</d2l-button>
-					</template>
-				</d2l-button-group>
-			</template>
-		</test-fixture>
-
-		<test-fixture id="two-button-restricted">
-			<template>
-				<style>
-					.button {
-						width: 100px;
-						box-sizing: border-box;
-					}
-					d2l-button-group {
-						width: 170px;
-					}
-				</style>
-				<d2l-button-group menu-text="More Actions">
-					<template>
-						<d2l-button class="button">Button1</d2l-button>
-						<d2l-button class="button">Button2</d2l-button>
-					</template>
-				</d2l-button-group>
-			</template>
-		</test-fixture>
-
-		<test-fixture id="two-button-one-zero-width-restricted">
-			<template>
-				<style>
-					button.button {
-						width: 100px;
-						box-sizing: border-box;
-					}
-					.zero-width {
-						width: 0;
-						box-sizing: border-box;
-					}
-					d2l-button-group {
-						width: 170px;
-					}
-				</style>
-				<d2l-button-group menu-text="More Actions">
-					<template>
-						<d2l-button class="button">Button1</d2l-button>
-						<d2l-button class="button">Button2</d2l-button>
-						<span class="zero-width button"></span>
-					</template>
-				</d2l-button-group>
-			</template>
-		</test-fixture>
-
-		<test-fixture id="three-button-auto-keep">
-			<template>
-				<style>
-					.button {
-						width: 100px;
-						box-sizing: border-box;
-					}
-				</style>
-				<d2l-button-group auto-keep keep-class="d2l-button-group-keep" no-keep-class="d2l-button-group-no-keep">
-					<template>
-						<d2l-button class="button d2l-button-group-keep">Button1</d2l-button>
-						<d2l-button class="button">Button2</d2l-button>
-						<d2l-button class="button d2l-button-group-no-keep">Button3</d2l-button>
-					</template>
-				</d2l-button-group>
-			</template>
-		</test-fixture>
-
-		<test-fixture id="mini">
-			<template>
-				<style>
-					.button {
-						width: 100px;
-						box-sizing: border-box;
-					}
-					d2l-button-group {
-						width: 0;
-					}
-				</style>
-				<d2l-button-group menu-text="More Actions">
-					<template>
-						<d2l-button class="button">Button1</d2l-button>
-						<d2l-button class="button">Button2</d2l-button>
-					</template>
-				</d2l-button-group>
+					<div style="width: 500px;">
+						<d2l-button-group min-to-show="2" max-to-show="3">
+							<button>button 1</button>
+							<button>button 2</button>
+							<button>button 3</button>
+							<button>button 4</button>
+						</d2l-button-group>
+					</div>
 			</template>
 		</test-fixture>
 
 		<script>
 			describe('a11y', function() {
-				a11ySuite('one-button');
-				a11ySuite('one-button-hidden');
-				a11ySuite('two-button');
-				a11ySuite('two-button-one-hidden');
-				a11ySuite('two-button-restricted');
-				a11ySuite('two-button-one-zero-width-restricted');
-				a11ySuite('three-button-auto-keep');
-				a11ySuite('mini');
+				a11ySuite('less-than-min-to-show');
+				a11ySuite('between-min-max-to-show');
+				a11ySuite('max-to-show');
+				a11ySuite('greater-than-max-to-show');
 			});
 		</script>
 	</body>
