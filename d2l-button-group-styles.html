@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="d2l-button-group-styles">
+	<template>
+		<style>
+
+			:host {
+				display: block;
+			}
+
+			:host .d2l-button-group-container {
+				/*align-items: stretch;*/
+				display: flex;
+				flex: 0 1 auto;
+				flex-wrap: wrap;
+			}
+
+			:host .d2l-button-group-container ::slotted(d2l-button),
+			:host .d2l-button-group-container ::slotted(d2l-link),
+			:host .d2l-button-group-container ::slotted(d2l-image-action-button),
+			:host .d2l-button-group-container ::slotted(d2l-image-action-link),
+			:host .d2l-button-group-container ::slotted(span),
+			:host .d2l-button-group-container ::slotted(d2l-dropdown),
+			:host .d2l-button-group-container ::slotted(d2l-dropdown-button) {
+				margin-right: 0.75rem;
+			}
+
+			:host .d2l-button-group-container ::slotted([chomped]) {
+				display: none;
+			}
+
+		</style>
+	</template>
+</dom-module>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<title>d2l-action-button-group demo</title>
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+		<link rel="import" href="../../d2l-typography/d2l-typography.html">
+		<link rel="import" href="../../d2l-image-action/d2l-image-action.html">
+		<link rel="import" href="../d2l-action-button-group.html">
+		<custom-style>
+			<style is="custom-style" include="demo-pages-shared-styles"></style>
+		</custom-style>
+		<custom-style include="d2l-typography">
+			<style is="custom-style" include="d2l-typography"></style>
+		</custom-style>
+		<style>
+			html {
+				font-size: 20px;
+			}
+			</style>
+	</head>
+	<body unresolved class="d2l-typography">
+		<div class="vertical-section-container centered">
+
+			<h3>Image Actions</h3>
+			<demo-snippet>
+				<template>
+					<d2l-action-button-group min-to-show="1" max-to-show="5">
+						<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:pin-filled">Pin</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
+						<d2l-image-action-button icon="d2l-tier1:delete">Delete</d2l-image-action-button>
+						<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
+						<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
+					</d2l-action-button-group>
+				</template>
+			</demo-snippet>
+
+		</div>
+		<script>
+			//window.addEventListener('WebComponentsReady', function(e) {
+			//});
+		</script>
+	</body>
+</html>

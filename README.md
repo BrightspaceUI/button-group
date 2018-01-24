@@ -1,10 +1,11 @@
 # d2l-button-group
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/BrightspaceUI/button-group)
 [![Bower version][bower-image]][bower-url]
 [![Build status][ci-image]][ci-url]
 
-A collapsible button group component
+[Polymer](https://www.polymer-project.org)-based web component for responsive button groups, overflowing buttons into a dropdown menu based on configuration and space available.
 
-For further information on this and other D2L UI components, see the docs at [ui.valence.d2l.com](http://ui.valence.d2l.com/).
+For further information on this and other Brightspace UI components, see the docs at [ui.developers.brightspace.com](http://ui.developers.brightspace.com/).
 
 ## Installation
 
@@ -15,35 +16,164 @@ bower install d2l-button-group
 
 ## Usage
 
+Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import `d2l-button-group.html` or `d2l-action-button-group.html`:
+
+```html
+<head>
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../d2l-button-group/d2l-button-group.html">
+</head>
 ```
-polymer serve -o
+
+A `<d2l-button-group>` custom element can be used in your application to define a responsive group of buttons and dropdown buttons.  The `min-to-show` and `max-to-show` attributes can be used to configure how many buttons will be displayed.  By default, a minimum of zero buttons will be displayed, and all buttons will be displayed if space is available.
+
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="../d2l-button/d2l-button.html">
+    <link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
+    <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+    <link rel="import" href="../d2l-menu/d2l-menu.html">
+    <link rel="import" href="../d2l-menu/d2l-menu-item.html">
+    <link rel="import" href="d2l-button-group.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      d2l-button-group,
+      d2l-action-button-group {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '200px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<d2l-button-group min-to-show="1" max-to-show="3">
+	<d2l-button primary>New</d2l-button>
+	<d2l-button>Copy</d2l-button>
+	<d2l-button>Import</d2l-button>
+	<d2l-button>Delete</d2l-button>
+	<d2l-dropdown-button text="Explore Topics">
+		<d2l-dropdown-menu>
+			<d2l-menu label="Astronomy">
+				<d2l-menu-item text="Introduction"></d2l-menu-item>
+				<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
+				<d2l-menu-item text="The Solar System"></d2l-menu-item>
+				<d2l-menu-item text="Stars &amp; Galaxies"></d2l-menu-item>
+				<d2l-menu-item text="The Night Sky"></d2l-menu-item>
+				<d2l-menu-item text="The Universe"></d2l-menu-item>
+			</d2l-menu>
+		</d2l-dropdown-menu>
+	</d2l-dropdown-button>
+</d2l-button-group>
 ```
 
-### No "More Actions"
-![screenshot of group with no dropdown](screenshots/full.png)
+A `<d2l-action-button-group>` custom element can be used in your application to define a responsive group of actions with the same behavior and attributes as described for `<d2l-button-group>`.  Typically these will include one or more image-actions as shown.
 
-![screenshot of group with no dropdown and submenu opened](screenshots/full-menu.png)
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="../d2l-button/d2l-button.html">
+    <link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
+    <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+    <link rel="import" href="../d2l-menu/d2l-menu.html">
+    <link rel="import" href="../d2l-menu/d2l-menu-item.html">
+    <link rel="import" href="../d2l-image-action/d2l-image-action.html">
+    <link rel="import" href="../d2l-icons/tier1-icons.html">
+    <link rel="import" href="d2l-button-group.html">
+    <link rel="import" href="d2l-action-button-group.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      d2l-button-group,
+      d2l-action-button-group {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '200px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<d2l-action-button-group min-to-show="1" max-to-show="5">
+	<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:pin-filled">Pin</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
+	<d2l-image-action-button icon="d2l-tier1:delete">Delete</d2l-image-action-button>
+	<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
+	<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
+</d2l-action-button-group>
+```
 
-### With "More Actions"
-![screenshot of group with two under dropdown](screenshots/two.png)
+## Developing, Testing and Contributing
 
-![screenshot of group with three under dropdown](screenshots/one.png)
+After cloning the repo, run `npm install` to install dependencies.
 
-#### Submenu in "More Actions"
-![screenshot of group with three under dropdown and opened](screenshots/one-menu.png)
+If you don't have it already, install the [Polymer CLI](https://www.polymer-project.org/2.0/docs/tools/polymer-cli) globally:
 
-### Compressed
-![screenshot of group with small screen size](screenshots/mini.png)
+```shell
+npm install -g polymer-cli
+```
 
-![screenshot of group with smaller screen size](screenshots/compressed.png)
+To start a [local web server](https://www.polymer-project.org/2.0/docs/tools/polymer-cli-commands#serve) that hosts the demo page and tests:
 
-## Coding styles
+```shell
+polymer serve
+```
 
-### General
+To lint ([eslint](http://eslint.org/) and [Polymer lint](https://www.polymer-project.org/2.0/docs/tools/polymer-cli-commands#lint)):
 
-See the [VUI Best Practices & Style Guide](https://github.com/Brightspace/valence-ui-docs/wiki/Best-Practices-&-Style-Guide) for information on VUI naming conventions, plus information about the [EditorConfig](http://editorconfig.org) rules used in this repo.
+```shell
+npm run lint
+```
+
+To run unit tests locally using [Polymer test](https://www.polymer-project.org/2.0/docs/tools/polymer-cli-commands#tests):
+
+```shell
+polymer test --skip-plugin sauce
+```
+
+To lint AND run local unit tests:
+
+```shell
+npm test
+```
 
 [bower-url]: http://bower.io/search/?q=d2l-button-group
-[bower-image]: https://img.shields.io/bower/v/d2l-button-group.svg
+[bower-image]: https://badge.fury.io/bo/d2l-button-group.svg
 [ci-url]: https://travis-ci.org/BrightspaceUI/button-group
 [ci-image]: https://travis-ci.org/BrightspaceUI/button-group.svg?branch=master
