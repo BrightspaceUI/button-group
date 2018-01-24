@@ -260,6 +260,13 @@
 					}
 				}
 
+				// if there is at least one showing and no more to be hidden, enable collapsing more button to [...]
+				if (this.minToShow > 0 && (showing.width + this._layout.overflowMenuWidth > this._layout.availableWidth)) {
+					this._overflowMenu.mini = true;
+				} else {
+					this._overflowMenu.mini = false;
+				}
+
 				var chompIndex = 0;
 				for (var i = 0; i < this._layout.items.length; i++) {
 					var itemLayout = this._layout.items[i];
@@ -271,11 +278,11 @@
 				}
 
 				// if there is at least one showing and no more to be hidden, enable collapsing more button to [...]
-				if (this.minToShow > 0 && (showing.width > this._layout.availableWidth)) {
-					this._overflowMenu.mini = true;
-				} else {
-					this._overflowMenu.mini = false;
-				}
+				//if (this.minToShow > 0 && (showing.width + this._layout.overflowMenuWidth > this._layout.availableWidth)) {
+				//	this._overflowMenu.mini = true;
+				//} else {
+				//	this._overflowMenu.mini = false;
+				//}
 
 				this._overflowMenu.style.display = ((!isSoftOverflowing && !isForcedOverflowing) ? 'none' : '');
 
@@ -378,6 +385,10 @@
 
 			}, this);
 
+		},
+
+		_isOverflowMenuMini: function() {
+			return this._overflowMenu.hasAttribute('mini');
 		},
 
 		_removeFromOverflowMenu: function(item) {

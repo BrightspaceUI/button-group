@@ -110,6 +110,18 @@
 			</template>
 		</test-fixture>
 
+		<test-fixture id="mini-overflow-menu">
+			<template>
+					<div style="width: 200px;">
+						<d2l-button-group min-to-show="2">
+							<button></button>
+							<button></button>
+							<button id="last"></button>
+						</d2l-button-group>
+					</div>
+			</template>
+		</test-fixture>
+
 		<test-fixture id="dropdown">
 			<template>
 					<div style="width: 500px;">
@@ -361,6 +373,28 @@
 						done();
 					});
 					buttonGroup.minToShow = 3;
+				});
+
+			});
+
+			describe('mini-overflow', function() {
+
+				beforeEach(function(done) {
+					initFixture(done, 'mini-overflow-menu');
+				});
+
+				it('has visible mini overflow menu', function() {
+					expectVisibleOverflow();
+					expect(buttonGroup._isOverflowMenuMini()).to.equal(true);
+				});
+
+				it('reverts to normal overflow menu when space is freed up', function() {
+					onUpdated(function() {
+						expectHiddenOverflow();
+						expect(buttonGroup._isOverflowMenuMini()).to.equal(false);
+						done();
+					});
+					buttonGroup.minToShow = 1;
 				});
 
 			});
