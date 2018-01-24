@@ -89,7 +89,7 @@
 
 		<test-fixture id="width-not-overflowing">
 			<template>
-					<div style="width: 360px;">
+					<div style="width: 160px;">
 						<d2l-button-group>
 							<button></button>
 							<button id="last"></button>
@@ -100,7 +100,7 @@
 
 		<test-fixture id="width-overflowing">
 			<template>
-					<div style="width: 360px;">
+					<div style="width: 210px;">
 						<d2l-button-group>
 							<button></button>
 							<button></button>
@@ -147,13 +147,19 @@
 				expect(Polymer.dom(buttonGroup).querySelectorAll('[chomped]').length).to.equal(0);
 			};
 
-			var expectVisibleOverflow = function(chompedCount, id) {
-				var button = Polymer.dom(buttonGroup).querySelector('#' + id);
-				expect(button.hasAttribute('chomped')).to.be.true;
+			var expectVisibleOverflow = function() {
 				expect(buttonGroup._overflowMenu.style.display).to.equal('');
-				expect(Polymer.dom(buttonGroup._overflowMenu).childNodes.length).to.equal(1);
-				expect(Polymer.dom(buttonGroup._overflowMenu).childNodes[0].getAttribute('bgi-ref')).to.equal(button.getAttribute('bgi-ref'));
-				expect(Polymer.dom(buttonGroup).querySelectorAll('[chomped]').length).to.equal(chompedCount);
+				expect(Polymer.dom(buttonGroup._overflowMenu).childNodes.length).to.not.equal(0);
+
+				var chompedItems = Polymer.dom(buttonGroup).querySelectorAll('[chomped]');
+				var overflowItems = Polymer.dom(buttonGroup._overflowMenu).querySelectorAll('d2l-menu-item');
+
+				// expect that the order, count, and reference ids are in sync
+				expect(chompedItems.length).to.equal(overflowItems.length);
+				for (var i=0; i<chompedItems.length; i++) {
+					expect(chompedItems[i].getAttribute('bgi-ref')).to.equal(overflowItems[i].getAttribute('bgi-ref'));
+				}
+
 			};
 
 			var initFixture = function(done, id) {
@@ -199,17 +205,16 @@
 
 				it('shows overflow menu when new button added is greater than max-to-show', function(done) {
 					onUpdated(function() {
-						expectVisibleOverflow(1, 'last');
+						expectVisibleOverflow();
 						done();
 					});
 					var button = document.createElement('button');
-					button.id = "last"
 					Polymer.dom(buttonGroup).appendChild(button);
 				});
 
 				it('shows overflow menu when maxToShow is reduced', function(done) {
 					onUpdated(function() {
-						expectVisibleOverflow(1, 'third');
+						expectVisibleOverflow();
 						done();
 					});
 					buttonGroup.setAttribute('max-to-show', '2');
@@ -224,7 +229,7 @@
 				});
 
 				it('has visible overflow menu', function() {
-					expectVisibleOverflow(1, 'last');
+					expectVisibleOverflow();
 				});
 
 				it('hides overflow menu when button removed results in button count equal to max-to-show', function(done) {
@@ -267,7 +272,7 @@
 
 				it('shows overflow menu when maxToShow is reduced', function(done) {
 					onUpdated(function() {
-						expectVisibleOverflow(1, 'last');
+						expectVisibleOverflow();
 						done();
 					});
 					buttonGroup.setAttribute('max-to-show', '1');
@@ -282,7 +287,7 @@
 				});
 
 				it('has visible overflow menu', function() {
-					expectVisibleOverflow(1, 'last');
+					expectVisibleOverflow();
 				});
 
 				it('identifies min-to-show', function() {
@@ -315,17 +320,16 @@
 
 				it('shows overflow menu when new button added', function(done) {
 					onUpdated(function() {
-						expectVisibleOverflow(1, 'new-last');
+						expectVisibleOverflow();
 						done();
 					});
 					var button = document.createElement('button');
-					button.id = "new-last"
 					Polymer.dom(buttonGroup).appendChild(button);
 				});
 
 				it('shows overflow menu when max-to-show allows fewer buttons than space permits', function(done) {
 					onUpdated(function() {
-						expectVisibleOverflow(1, 'last');
+						expectVisibleOverflow();
 						done();
 					});
 					buttonGroup.maxToShow = 1;
@@ -340,7 +344,7 @@
 				});
 
 				it('has visible overflow menu', function() {
-					expectVisibleOverflow(1, 'last');
+					expectVisibleOverflow();
 				});
 
 				it('hides overflow menu when button removed', function(done) {
