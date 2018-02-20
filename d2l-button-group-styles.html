@@ -25,6 +25,9 @@
 				margin-right: 0.75rem;
 			}
 
+			/* using !important to force override.  ex. consumer has explicitly
+			specified display. note: inline styles, and shadow-dom with consumer specified
+			css will override this unless !important is specified */
 			:host .d2l-button-group-container ::slotted([chomped]) {
 				display: none !important;
 			}
