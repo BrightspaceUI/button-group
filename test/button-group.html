@@ -122,18 +122,11 @@
 			</template>
 		</test-fixture>
 
-		<test-fixture id="dropdown">
+		<test-fixture id="things-to-chomp">
 			<template>
-					<div style="width: 500px;">
-						<d2l-button-group min-to-show="1" max-to-show="2">
+					<div >
+						<d2l-button-group max-to-show="1">
 							<button></button>
-							<d2l-dropdown-button id="last" text="Test Menu">
-								<d2l-dropdown-menu>
-									<d2l-menu label="Test Menu">
-										<d2l-menu-item text="Test Item"></d2l-menu-item>
-									</d2l-menu>
-								</d2l-dropdown-menu>
-							</d2l-dropdown-button>
 						</d2l-button-group>
 					</div>
 			</template>
@@ -164,7 +157,7 @@
 				expect(Polymer.dom(buttonGroup._overflowMenu).childNodes.length).to.not.equal(0);
 
 				var chompedItems = Polymer.dom(buttonGroup).querySelectorAll('[chomped]');
-				var overflowItems = Polymer.dom(buttonGroup._overflowMenu).querySelectorAll('d2l-menu-item');
+				var overflowItems = Polymer.dom(buttonGroup._overflowMenu).querySelectorAll('[role="menuitem"]');
 
 				// expect that the order, count, and reference ids are in sync
 				expect(chompedItems.length).to.equal(overflowItems.length);
@@ -395,6 +388,54 @@
 						done();
 					});
 					buttonGroup.minToShow = 1;
+				});
+
+			});
+
+			describe('things-to-chomp', function() {
+
+				beforeEach(function(done) {
+					initFixture(done, 'things-to-chomp');
+				});
+
+				var tagNamesToChomp = [
+					'button',
+					'd2l-button',
+					'd2l-image-action-button',
+					'a',
+					'd2l-link',
+					'd2l-image-action-link'
+				];
+
+				tagNamesToChomp.forEach(function(tagName) {
+
+					it('shows overflow menu when new ' + tagName + ' is added', function(done) {
+						onUpdated(function() {
+							expectVisibleOverflow();
+							done();
+						});
+						var element = document.createElement(tagName);
+						Polymer.dom(buttonGroup).appendChild(element);
+					});
+
+				});
+
+				var classNamesToChomp = [
+					'd2l-button-group-custom-item'
+				];
+
+				classNamesToChomp.forEach(function(className) {
+
+					it('shows overflow menu when new .' + className + ' is added', function(done) {
+						onUpdated(function() {
+							expectVisibleOverflow();
+							done();
+						});
+						var element = document.createElement('div');
+						element.classList.add(className);
+						Polymer.dom(buttonGroup).appendChild(element);
+					});
+
 				});
 
 			});
