@@ -97,6 +97,8 @@
 				menuItem = this._createMenuItemSeparator();
 			} else if (tagName === 'd2l-dropdown-button') {
 				menuItem = this._createMenuItemMenu(item);
+			} else if (item.classList.contains('d2l-button-group-custom-item')) {
+				menuItem = this._createMenuItem(item);
 			} else {
 				return;
 			}
