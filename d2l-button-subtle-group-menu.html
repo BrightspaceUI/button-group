@@ -1,11 +1,11 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-button-subtle.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
 <link rel="import" href="../d2l-icons/d2l-icon.html">
 <link rel="import" href="../d2l-menu/d2l-menu.html">
 
-<dom-module id="d2l-button-group-menu">
+<dom-module id="d2l-button-subtle-group-menu">
 	<template strip-whitespace>
 		<style>
 
@@ -16,17 +16,17 @@
 
 		</style>
 
-		<d2l-dropdown-button text="[[text]]" class="d2l-dropdown-opener">
+		<d2l-dropdown-button-subtle text="[[text]]" class="d2l-dropdown-opener">
 			<d2l-dropdown-menu render-content>
 				<d2l-menu id="overflowMenu" label="[[text]]">
 					<slot></slot>
 				</d2l-menu>
 			</d2l-dropdown-menu>
-		</d2l-dropdown-button>
+		</d2l-dropdown-button-subtle>
 	</template>
 	<script>
 		Polymer({
-			is: 'd2l-button-group-menu',
+			is: 'd2l-button-subtle-group-menu',
 
 			properties: {
 				mini: {

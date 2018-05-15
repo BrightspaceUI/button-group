@@ -89,9 +89,9 @@
 
 			var tagName = item.tagName.toLowerCase();
 			var menuItem;
-			if (tagName === 'd2l-button' || tagName === 'd2l-image-action-button' || tagName === 'button') {
+			if (tagName === 'd2l-button' || tagName === 'd2l-button-subtle' || tagName === 'button') {
 				menuItem = this._createMenuItem(item);
-			} else if (tagName === 'd2l-link' || tagName === 'd2l-image-action-link' || tagName === 'a') {
+			} else if (tagName === 'd2l-link' || tagName === 'a') {
 				menuItem = this._createMenuItemLink(item);
 			} else if (item.getAttribute('role') === 'separator') {
 				menuItem = this._createMenuItemSeparator();
@@ -296,7 +296,8 @@
 
 		_createMenuItem: function(item) {
 			var menuItem = document.createElement('d2l-menu-item');
-			menuItem.setAttribute('text', item.label || item.text || item.textContent);
+			var childText = item.firstChild && (item.firstChild.label || item.firstChild.text || item.firstChild.textContent);
+			menuItem.setAttribute('text', item.label || item.text || item.textContent || childText);
 			if (item.disabled) {
 				menuItem.setAttribute('disabled', 'disabled');
 			}
@@ -362,7 +363,7 @@
 			fastdom.measure(function() {
 
 				this._container = Polymer.dom(this.root).querySelector('.d2l-button-group-container');
-				this._overflowMenu = Polymer.dom(this.root).querySelector('d2l-button-group-menu');
+				this._overflowMenu = Polymer.dom(this.root).querySelector('d2l-button-group-menu') || Polymer.dom(this.root).querySelector('d2l-button-subtle-group-menu');
 
 				var items = this._getItems();
 				if (this.autoShow) {
