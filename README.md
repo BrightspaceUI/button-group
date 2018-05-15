@@ -85,7 +85,7 @@ A `<d2l-button-group>` custom element can be used in your application to define 
 </d2l-button-group>
 ```
 
-A `<d2l-action-button-group>` custom element can be used in your application to define a responsive group of actions with the same behavior and attributes as described for `<d2l-button-group>`.  Typically these will include one or more image-actions as shown.
+A `<d2l-action-button-group>` custom element can be used in your application to define a responsive group of actions with the same behavior and attributes as described for `<d2l-button-group>`.  Typically these will include one or more subtle buttons (`<d2l-button-subtle>`) as shown.
 
 <!---
 ```
@@ -94,11 +94,11 @@ A `<d2l-action-button-group>` custom element can be used in your application to 
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="../d2l-button/d2l-button.html">
+    <link rel="import" href="../d2l-button/d2l-button-subtle.html">
     <link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
     <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
     <link rel="import" href="../d2l-menu/d2l-menu.html">
     <link rel="import" href="../d2l-menu/d2l-menu-item.html">
-    <link rel="import" href="../d2l-image-action/d2l-image-action.html">
     <link rel="import" href="../d2l-icons/tier1-icons.html">
     <link rel="import" href="d2l-button-group.html">
     <link rel="import" href="d2l-action-button-group.html">
@@ -129,13 +129,13 @@ A `<d2l-action-button-group>` custom element can be used in your application to 
 -->
 ```html
 <d2l-action-button-group min-to-show="1" max-to-show="5">
-	<d2l-image-action-button icon="d2l-tier1:add">Add</d2l-image-action-button>
-	<d2l-image-action-button icon="d2l-tier1:copy">Copy</d2l-image-action-button>
-	<d2l-image-action-button icon="d2l-tier1:pin-filled">Pin</d2l-image-action-button>
-	<d2l-image-action-button icon="d2l-tier1:print">Print</d2l-image-action-button>
-	<d2l-image-action-button icon="d2l-tier1:delete">Delete</d2l-image-action-button>
-	<d2l-image-action-link icon="d2l-tier1:gear">Settings</d2l-image-action-link>
-	<d2l-image-action-link icon="d2l-tier1:refresh">Refresh</d2l-image-action-link>
+	<d2l-button-subtle icon="d2l-tier1:add">Add</d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:copy">Copy</d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:pin-filled">Pin</d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:print">Print</d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:delete">Delete</d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:gear">Settings</d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:refresh">Refresh</d2l-button-subtle>
 </d2l-action-button-group>
 ```
 
