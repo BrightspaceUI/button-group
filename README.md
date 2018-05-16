@@ -129,13 +129,13 @@ A `<d2l-action-button-group>` custom element can be used in your application to 
 -->
 ```html
 <d2l-action-button-group min-to-show="1" max-to-show="5">
-	<d2l-button-subtle icon="d2l-tier1:add">Add</d2l-button-subtle>
-	<d2l-button-subtle icon="d2l-tier1:copy">Copy</d2l-button-subtle>
-	<d2l-button-subtle icon="d2l-tier1:pin-filled">Pin</d2l-button-subtle>
-	<d2l-button-subtle icon="d2l-tier1:print">Print</d2l-button-subtle>
-	<d2l-button-subtle icon="d2l-tier1:delete">Delete</d2l-button-subtle>
-	<d2l-button-subtle icon="d2l-tier1:gear">Settings</d2l-button-subtle>
-	<d2l-button-subtle icon="d2l-tier1:refresh">Refresh</d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:add" text="Add"></d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:copy" text="Copy"></d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:pin-filled" text="Pin"></d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:print" text="Print"></d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:delete" text="Delete"></d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:gear" text="Settings"></d2l-button-subtle>
+	<d2l-button-subtle icon="d2l-tier1:refresh" text="Refresh"></d2l-button-subtle>
 </d2l-action-button-group>
 ```
 
