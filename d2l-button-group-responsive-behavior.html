@@ -89,7 +89,7 @@
 
 			var tagName = item.tagName.toLowerCase();
 			var menuItem;
-			if (tagName === 'd2l-button' || tagName === 'd2l-button-subtle' || tagName === 'button') {
+			if (tagName === 'd2l-button' || tagName === 'd2l-button-subtle' || tagName === 'button' || tagName === 'd2l-button-icon') {
 				menuItem = this._createMenuItem(item);
 			} else if (tagName === 'd2l-link' || tagName === 'a') {
 				menuItem = this._createMenuItemLink(item);
