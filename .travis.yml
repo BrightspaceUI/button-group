@@ -1,13 +1,18 @@
 language: node_js
-node_js:
-  - 9
-script:
-  - npm run test:lint:js
-  - npm run test:lint:wc
-  - polymer test --skip-plugin local
+node_js: node
 addons:
-  jwt:
-    secure: gWfORkfQIjF0bzopu049rJmgLwjpFg9ss0HkmopZzJpqL7fyy6btXN+hlB2TQYKovcbAFlYyyrM8NDENpQMfRJmDpG4wtF0r4WPAu2fONbCgiFIrKrc/MbTsbe8p1pbBDZIRhPk1yfUEJZtkMtKZPCz3/4dYU9dPleXzLVQ+Dr7r/h37hSnh6epEsNwxgnFpEfsCneaz3TxsMqjs50AqOufuh7gdYDjFmbOCQqPPZ0J7nLq4heuKCPTC8kJCJwSmKudYR2gYssBzXERnS7PZQcSFaqhHT6vEzOVpZkpSbAP6md8mp5mb42AvzDiRVfz1fD1gN7M5vfCWmVSZmnjD5El7OKS28n39Ugz5ODwnsunhlCCjT1n74meU9uwAeuB2mZe8DMiQ0lrac00qS6GP+KcENPI3xBYHjntWIGGifDVadPpjMLHiQChIxZ+yrKjJdWauuw0hEwYtTIiMOtO48etdjPD092QY3Pgjlv4+KTZXwq4EtJjvt6pG42qiXEvCR5R4xczgbBixVra6R5RSq0tvIEZg2PLn1wFXpwQeDm2oFqKT+COqhaitBx1oVCgsCbHmSjRsFcIaiYcgo272FAgpFs9jYSi8CxouVoloe1DgQnlX9cfX+RXnWt7Q8NYhQcZYuPwWt7GSTHSxTOTQfWe6zYqcOsnMNCKZ8S02M2A=
+  chrome: stable
+script:
+- npm run lint
+- |
+  if [ $TRAVIS_PULL_REQUEST != false ] && [ $TRAVIS_SECURE_ENV_VARS == true ]; then
+    echo "Pull request with secure environment variables, running Sauce tests...";
+    npm run test:polymer:sauce || travis_terminate 1;
+  else
+    echo "Not a pull request and/or no secure environment variables, running headless tests...";
+    npm run test:polymer:local || travis_terminate 1;
+  fi
 env:
   global:
-    SAUCE_USERNAME: Desire2Learn
+  - SAUCE_USERNAME: Desire2Learn
+  - secure: AZZ3LndvzSdLVjyNbR7kVkaxOtlKahCyjr0cqL+6jZep3UIcCUvxXZ3ofWNhIWqVSDI3Ph8/pvk0QNrrsndGSOD5n/pWYMn5TfQmpAuhSo42wvNINQRBD3GVteaEKDxtsgbf6L11IhcWlz5V3XhFOBGfhzOndil7WKgpAyqaGVcUemtUAdQfMKwIzGL9ebr/5/sHlRatjc0MBs/zwjEC+t1t3jgRsr7vfB3cVBOrlKJOfvV6XyxGsls6IAsAUbqx/6x69LjehFIaIA+Prq3fOApkRaWpDH/1mT3+LM9vNpkg9GT7FetldSnbEdr6LJyE4fhJ5Wzs+d7eaRNgazPAZnmgp+A4nhAH5qkm2vZOZtY41EwOefj9jg7dbiSyrG50O691KfKIz4qQSEfPC/DdzVQ17oDSJOfXaSfGJn/fcbyrPTnWHTvbPUmwwrwvBkHURWS7BcpQC8PnQCZoJVMb4z+zS5dbnbYE+v8IQ/sjR2C1G8VXm8WkxG23VhTY3+F0gpByo5E/gavmsB/enApjtYeNAmCaM1nBOldKyOt8Ey3bQMYHofjVjQ9zY7nFWjNUE9Z6o+VFFF8CYgGhRvrqX/D0zdgeDxRSRfPNhbKmeZKEtbqTB6bsO7GZnEb80dALY/GOn7cQlnwpdFJyYeDTYfbfMbU+P7llLGJ789NtDOI=
