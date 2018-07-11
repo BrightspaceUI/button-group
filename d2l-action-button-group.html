@@ -13,7 +13,13 @@ Polymer-based web component to responsively encapsulate a group of actions butto
 
 <dom-module id="d2l-action-button-group">
 	<template strip-whitespace>
-		<style include="d2l-button-group-styles"></style>
+		<style include="d2l-button-group-styles">
+			/*
+			 * https://github.com/Polymer/tools/issues/408
+			 * Empty style blocks break linter.
+			 */
+			:host {}
+		</style>
 		<div class="d2l-button-group-container">
 			<slot id="buttons"></slot>
 			<d2l-button-subtle-group-menu text="[[localize('more')]]"></d2l-button-subtle-group-menu>
