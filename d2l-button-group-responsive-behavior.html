@@ -4,7 +4,6 @@
 <link rel="import" href="../d2l-menu/d2l-menu-item-separator.html">
 
 <script>
-/* eslint-disable no-invalid-this, no-redeclare */
 (function() {
 	'use strict';
 
@@ -177,7 +176,7 @@
 			if (this._layout.totalWidth === 0) {
 				fastdom.mutate(function() {
 					this._overflowMenu.style.display = 'none';
-				}, this);
+				}.bind(this));
 				return;
 			}
 
@@ -247,18 +246,18 @@
 				}
 
 				if (isSoftOverflowing || isForcedOverflowing) {
-					for (var i = this._layout.items.length; i--;) {
+					for (var j = this._layout.items.length; j--;) {
 						if (showing.width + this._layout.overflowMenuWidth < this._layout.availableWidth) {
 							break;
 						}
-						var itemLayout = this._layout.items[i];
-						if (!itemLayout.isVisible || itemLayout.trigger !== 'soft-show') {
+						var itemLayoutOverflowing = this._layout.items[j];
+						if (!itemLayoutOverflowing.isVisible || itemLayoutOverflowing.trigger !== 'soft-show') {
 							continue;
 						}
-						showing.width -= itemLayout.width;
+						showing.width -= itemLayoutOverflowing.width;
 						isSoftOverflowing = true;
-						itemLayout.trigger = 'soft-hide';
-						itemLayout.isChomped = true;
+						itemLayoutOverflowing.trigger = 'soft-hide';
+						itemLayoutOverflowing.isChomped = true;
 					}
 				}
 
@@ -270,12 +269,12 @@
 				}
 
 				var chompIndex = 0;
-				for (var i = 0; i < this._layout.items.length; i++) {
-					var itemLayout = this._layout.items[i];
-					if (itemLayout.isChomped) {
-						chomp(items[i], chompIndex++);
+				for (var k = 0; k < this._layout.items.length; k++) {
+					var itemLayoutDetailed = this._layout.items[k];
+					if (itemLayoutDetailed.isChomped) {
+						chomp(items[k], chompIndex++);
 					} else {
-						undoChomp(items[i]);
+						undoChomp(items[k]);
 					}
 				}
 
@@ -290,7 +289,7 @@
 
 				this.dispatchEvent(new CustomEvent('d2l-button-group-updated', {bubbles: true, composed: true}));
 
-			}, this);
+			}.bind(this));
 
 		},
 
@@ -386,7 +385,7 @@
 				this._layout.availableWidth = this._container.clientWidth;
 				this._chomp(items);
 
-			}, this);
+			}.bind(this));
 
 		},
 
@@ -418,7 +417,7 @@
 			fastdom.measure(function() {
 				this._layout.availableWidth = this._container.clientWidth;
 				this._chomp();
-			}, this);
+			}.bind(this));
 		},
 
 		_update: function(addedNodes, removedNodes) {
@@ -461,14 +460,14 @@
 						fastdom.mutate(function() {
 							this._removeFromOverflowMenu(item);
 							item.removeAttribute('chomped');
-						}, this);
+						}.bind(this));
 					}
 
 				}
 
 				this._chomp(items);
 
-			}, this);
+			}.bind(this));
 
 		}
 
