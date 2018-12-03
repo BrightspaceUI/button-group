@@ -1,9 +1,9 @@
-import '../fastdom/fastdom.js';
-import '../d2l-menu/d2l-menu-item.js';
-import '../d2l-menu/d2l-menu-item-link.js';
-import '../d2l-menu/d2l-menu-item-separator.js';
-import { afterNextRender } from '../@polymer/polymer/lib/utils/render-status.js';
-import { dom } from '../@polymer/polymer/lib/legacy/polymer.dom.js';
+import 'fastdom/fastdom.js';
+import 'd2l-menu/d2l-menu-item.js';
+import 'd2l-menu/d2l-menu-item-link.js';
+import 'd2l-menu/d2l-menu-item-separator.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};

@@ -1,10 +1,10 @@
-import '../@polymer/polymer/polymer-legacy.js';
-import '../d2l-dropdown/d2l-dropdown-button.js';
-import '../d2l-dropdown/d2l-dropdown-menu.js';
-import '../d2l-icons/tier1-icons.js';
-import '../d2l-icons/d2l-icon.js';
-import '../d2l-menu/d2l-menu.js';
-import { Polymer } from '../@polymer/polymer/lib/legacy/polymer-fn.js';
+import '@polymer/polymer/polymer-legacy.js';
+import 'd2l-dropdown/d2l-dropdown-button.js';
+import 'd2l-dropdown/d2l-dropdown-menu.js';
+import 'd2l-icons/tier1-icons.js';
+import 'd2l-icons/d2l-icon.js';
+import 'd2l-menu/d2l-menu.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-button-group-menu">

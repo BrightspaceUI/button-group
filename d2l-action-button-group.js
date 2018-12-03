@@ -9,13 +9,13 @@ Polymer-based web component to responsively encapsulate a group of actions butto
   from HTML and may be out of place here. Review them and
   then delete this comment!
 */
-import '../@polymer/polymer/polymer-legacy.js';
+import '@polymer/polymer/polymer-legacy.js';
 
 import './d2l-button-group-responsive-behavior.js';
 import './d2l-button-group-styles.js';
 import './d2l-button-subtle-group-menu.js';
 import './localize-behavior.js';
-import { Polymer } from '../@polymer/polymer/lib/legacy/polymer-fn.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-action-button-group">
