@@ -38,13 +38,13 @@
   },
   "main": "all-imports.js",
   "dependencies": {
-    "d2l-button": "BrightspaceUI/button#semver:^5.0.0",
-    "d2l-dropdown": "BrightspaceUI/dropdown#semver:^7.0.0",
+    "d2l-button": "BrightspaceUI/button#semver:^5",
+    "d2l-dropdown": "BrightspaceUI/dropdown#semver:^7",
     "fastdom": "^1.0.8",
-    "d2l-icons": "BrightspaceUI/icons#semver:^6.0.0",
-    "d2l-localize-behavior": "BrightspaceUI/localize-behavior#semver:^2.0.0",
-    "d2l-menu": "BrightspaceUI/menu#semver:^2.0.0",
-    "d2l-offscreen": "BrightspaceUI/offscreen#semver:^4.0.0",
+    "d2l-icons": "BrightspaceUI/icons#semver:^6",
+    "d2l-localize-behavior": "BrightspaceUI/localize-behavior#semver:^2",
+    "d2l-menu": "BrightspaceUI/menu#semver:^2",
+    "d2l-offscreen": "BrightspaceUI/offscreen#semver:^4",
     "@polymer/polymer": "^3.0.0"
   }
 }
