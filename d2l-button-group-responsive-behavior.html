@@ -41,6 +41,16 @@
 				type: Number,
 				observer: '_boundaryChanged',
 				value: -1
+			},
+
+			mini: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+
+			icon: {
+				type: String,
+				computed: '_getIcon(mini)'
 			}
 
 		},
@@ -263,9 +273,10 @@
 
 				// if there is at least one showing and no more to be hidden, enable collapsing more button to [...]
 				if (this.minToShow > 0 && (showing.width + this._layout.overflowMenuWidth > this._layout.availableWidth)) {
-					this._overflowMenu.mini = true;
+					this.mini = true;
 				} else {
-					this._overflowMenu.mini = false;
+					console.log('false')
+					this.mini = false;
 				}
 
 				var chompIndex = 0;
@@ -280,9 +291,9 @@
 
 				// if there is at least one showing and no more to be hidden, enable collapsing more button to [...]
 				//if (this.minToShow > 0 && (showing.width + this._layout.overflowMenuWidth > this._layout.availableWidth)) {
-				//	this._overflowMenu.mini = true;
+				//	this.mini = true;
 				//} else {
-				//	this._overflowMenu.mini = false;
+				//	this.mini = false;
 				//}
 
 				this._overflowMenu.style.display = ((!isSoftOverflowing && !isForcedOverflowing) ? 'none' : '');
@@ -348,6 +359,10 @@
 
 		},
 
+		_getIcon: function(mini) {
+			return mini ? 'd2l-tier1:more' : 'd2l-tier1:chevron-down';
+		},
+
 		_getItems: function() {
 			return Array.prototype.filter.call(
 				Polymer.dom(this).childNodes,
@@ -362,7 +377,7 @@
 			fastdom.measure(function() {
 
 				this._container = Polymer.dom(this.root).querySelector('.d2l-button-group-container');
-				this._overflowMenu = Polymer.dom(this.root).querySelector('d2l-button-group-menu') || Polymer.dom(this.root).querySelector('d2l-button-subtle-group-menu');
+				this._overflowMenu = Polymer.dom(this.root).querySelector('d2l-menu');
 
 				var items = this._getItems();
 				if (this.autoShow) {
@@ -390,7 +405,7 @@
 		},
 
 		_isOverflowMenuMini: function() {
-			return this._overflowMenu.hasAttribute('mini');
+			return this.mini;
 		},
 
 		_removeFromOverflowMenu: function(item) {
