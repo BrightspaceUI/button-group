@@ -114,7 +114,7 @@
 
 			menuItem.setAttribute('bgi-ref', item.getAttribute('bgi-ref'));
 
-			var overflowMenu = Polymer.dom(this._overflowMenu);
+			var overflowMenu = Polymer.dom(this._overflowMenu.querySelector('d2l-menu#overflowMenu'));
 
 			/**
 			 * 3 scenarios
@@ -275,7 +275,6 @@
 				if (this.minToShow > 0 && (showing.width + this._layout.overflowMenuWidth > this._layout.availableWidth)) {
 					this.mini = true;
 				} else {
-					console.log('false')
 					this.mini = false;
 				}
 
@@ -377,7 +376,7 @@
 			fastdom.measure(function() {
 
 				this._container = Polymer.dom(this.root).querySelector('.d2l-button-group-container');
-				this._overflowMenu = Polymer.dom(this.root).querySelector('d2l-menu');
+				this._overflowMenu = Polymer.dom(this.root).querySelector('d2l-dropdown.d2l-overflow-dropdown');
 
 				var items = this._getItems();
 				if (this.autoShow) {

@@ -147,7 +147,8 @@
 
 			var expectHiddenOverflow = function() {
 				expect(buttonGroup._overflowMenu.style.display).to.equal('none');
-				expect(Polymer.dom(buttonGroup._overflowMenu).childNodes.length).to.equal(0);
+				var overflowItems = Polymer.dom(buttonGroup._overflowMenu).querySelectorAll('[role="menuitem"]');
+				expect(overflowItems.length).to.equal(0);
 				expect(Polymer.dom(buttonGroup).querySelectorAll('[chomped]').length).to.equal(0);
 			};
 
