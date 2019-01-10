@@ -104,7 +104,7 @@
 				menuItem = this._createMenuItemLink(item);
 			} else if (item.getAttribute('role') === 'separator') {
 				menuItem = this._createMenuItemSeparator();
-			} else if (tagName === 'd2l-dropdown-button') {
+			} else if (tagName === 'd2l-dropdown-button' || tagName === 'd2l-dropdown-button-subtle') {
 				menuItem = this._createMenuItemMenu(item);
 			} else if (item.classList.contains('d2l-button-group-custom-item')) {
 				menuItem = this._createMenuItem(item);
@@ -415,9 +415,13 @@
 			}
 
 			var tagName = item.tagName.toLowerCase();
-			if (tagName === 'd2l-dropdown-button') {
+			if (tagName === 'd2l-dropdown-button' || tagName === 'd2l-dropdown-button-subtle') {
+				var menu = Polymer.dom(menuItem).querySelector('d2l-menu');
+				menu.removeAttribute('child-view');
+				var clone = menu.cloneNode(true);
+
 				Polymer.dom(item).querySelector('d2l-dropdown-menu').appendChild(
-					Polymer.dom(menuItem).querySelector('d2l-menu')
+					clone
 				);
 			}
 			Polymer.dom(Polymer.dom(menuItem).parentNode).removeChild(menuItem);
