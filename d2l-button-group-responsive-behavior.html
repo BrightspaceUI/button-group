@@ -418,10 +418,8 @@
 			if (tagName === 'd2l-dropdown-button' || tagName === 'd2l-dropdown-button-subtle') {
 				var menu = Polymer.dom(menuItem).querySelector('d2l-menu');
 				menu.removeAttribute('child-view');
-				var clone = menu.cloneNode(true);
-
 				Polymer.dom(item).querySelector('d2l-dropdown-menu').appendChild(
-					clone
+					menu
 				);
 			}
 			Polymer.dom(Polymer.dom(menuItem).parentNode).removeChild(menuItem);
