@@ -26,7 +26,12 @@ Polymer-based web component to responsively encapsulate a group of buttons and d
 				vertical-align: middle;
 			}
 
- 			:host-context([dir='rtl']) .d2l-dropdown-opener-text {
+			:host-context([dir='rtl']) .d2l-dropdown-opener-text {
+				margin-left: 0.3rem;
+				margin-right: 0;
+			}
+
+			:host(:dir(rtl)) .d2l-dropdown-opener-text {
 				margin-left: 0.3rem;
 				margin-right: 0;
 			}
