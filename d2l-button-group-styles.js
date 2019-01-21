@@ -28,19 +28,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-button-group-styles">
 				margin-right: 0.75rem;
 			}
 
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(d2l-button),
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(d2l-button-subtle),
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(d2l-button-icon),
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(d2l-link),
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(span),
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(d2l-dropdown:not(.d2l-overflow-dropdown)),
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(d2l-dropdown-button),
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(d2l-dropdown-button-subtle),
-			:host-context([dir='rtl']) .d2l-button-group-container ::slotted(.d2l-button-group-custom-item) {
-				margin-left: 0.75rem;
-				margin-right: 0;
-			}
-
 			:host(:dir(rtl)) .d2l-button-group-container ::slotted(d2l-button),
 			:host(:dir(rtl)) .d2l-button-group-container ::slotted(d2l-button-subtle),
 			:host(:dir(rtl)) .d2l-button-group-container ::slotted(d2l-button-icon),

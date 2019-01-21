@@ -33,11 +33,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-button-group">
 				vertical-align: middle;
 			}
 
-			:host-context([dir='rtl']) .d2l-dropdown-opener-text {
-				margin-left: 0.3rem;
-				margin-right: 0;
-			}
-
 			:host(:dir(rtl)) .d2l-dropdown-opener-text {
 				margin-left: 0.3rem;
 				margin-right: 0;

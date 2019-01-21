@@ -39,11 +39,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-action-button-group">
 				color: var(--d2l-color-celestine);
 			}
 
-			:host-context([dir='rtl']) .d2l-dropdown-opener-text {
-				margin-left: 0.3rem;
-				margin-right: 0;
-			}
-
 			:host(:dir(rtl)) .d2l-dropdown-opener-text {
 				margin-left: 0.3rem;
 				margin-right: 0;
