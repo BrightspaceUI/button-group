@@ -9,6 +9,8 @@
 		<script type="module" src="../../@polymer/iron-demo-helpers/demo-snippet.js"></script>
 		<script type="module" src="../../d2l-typography/d2l-typography.js"></script>
 		<script type="module" src="../../d2l-button/d2l-button-subtle.js"></script>
+		<script type="module" src="../../d2l-dropdown/d2l-dropdown-button-subtle.js"></script>
+		<script type="module" src="../../d2l-dropdown/d2l-dropdown-menu.js"></script>
 		<script type="module" src="../d2l-action-button-group.js"></script>
 		<!-- FIXME(polymer-modulizer):
 		These imperative modules that innerHTML your HTML are
@@ -60,10 +62,31 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container centered
 					<d2l-action-button-group min-to-show="1" max-to-show="5">
 						<d2l-button-subtle icon="d2l-tier1:add" text="Add"></d2l-button-subtle>
 						<d2l-button-subtle icon="d2l-tier1:copy" text="Copy"></d2l-button-subtle>
+						<d2l-dropdown-button-subtle text="Explore Topics">
+							<d2l-dropdown-menu>
+								<d2l-menu label="Astronomy">
+									<d2l-menu-item text="Introduction"></d2l-menu-item>
+									<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
+									<d2l-menu-item text="The Solar System"></d2l-menu-item>
+									<d2l-menu-item text="Stars &amp; Galaxies"></d2l-menu-item>
+									<d2l-menu-item text="The Night Sky"></d2l-menu-item>
+									<d2l-menu-item text="The Universe"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-button-subtle>
 						<d2l-button-subtle icon="d2l-tier1:pin-filled" text="Pin"></d2l-button-subtle>
 						<d2l-button-subtle icon="d2l-tier1:print" text="Print"></d2l-button-subtle>
 						<d2l-button-subtle icon="d2l-tier1:delete" text="Delete"></d2l-button-subtle>
 						<d2l-button-subtle icon="d2l-tier1:gear" text="Settings"></d2l-button-subtle>
+						<d2l-dropdown-button-subtle text="Types of Dogs">
+							<d2l-dropdown-menu>
+								<d2l-menu label="Dogs">
+									<d2l-menu-item text="Dachshund"></d2l-menu-item>
+									<d2l-menu-item text="Golden Retriever"></d2l-menu-item>
+									<d2l-menu-item text="Sheltie"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-button-subtle>
 						<d2l-button-subtle icon="d2l-tier1:refresh" text="Refresh"></d2l-button-subtle>
 						<div class="d2l-button-group-custom-item"><d2l-button-subtle icon="d2l-tier1:refresh" text="Custom Refresh"></d2l-button-subtle></div>
 					</d2l-action-button-group>
@@ -79,6 +102,8 @@ import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
 import '@polymer/iron-demo-helpers/demo-snippet.js';
 import 'd2l-typography/d2l-typography.js';
 import 'd2l-button/d2l-button-subtle.js';
+import 'd2l-dropdown/d2l-dropdown-button-subtle.js';
+import 'd2l-dropdown/d2l-dropdown-menu.js';
 import '../d2l-action-button-group.js';
 </script>
 	</body>
