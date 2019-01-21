@@ -4,7 +4,6 @@
 		<meta charset="utf-8">
 		<title>button-group tests</title>
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-		<script src="../../@babel/polyfill/browser.js"></script>
 		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 		<script src="../../wct-browser-legacy/browser.js"></script>
 		<script type="module" src="../d2l-button-group.js"></script>
@@ -150,7 +149,8 @@ describe('<d2l-button-group>', function() {
 
 	var expectHiddenOverflow = function() {
 		expect(buttonGroup._overflowMenu.style.display).to.equal('none');
-		expect(dom(buttonGroup._overflowMenu).childNodes.length).to.equal(0);
+		var overflowItems = dom(buttonGroup._overflowMenu).querySelectorAll('[role="menuitem"]');
+		expect(overflowItems.length).to.equal(0);
 		expect(dom(buttonGroup).querySelectorAll('[chomped]').length).to.equal(0);
 	};
 

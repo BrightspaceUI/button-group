@@ -39,6 +39,16 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 			type: Number,
 			observer: '_boundaryChanged',
 			value: -1
+		},
+
+		mini: {
+			type: Boolean,
+			reflectToAttribute: true
+		},
+
+		icon: {
+			type: String,
+			computed: '_getIcon(mini)'
 		}
 
 	},
@@ -92,7 +102,7 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 			menuItem = this._createMenuItemLink(item);
 		} else if (item.getAttribute('role') === 'separator') {
 			menuItem = this._createMenuItemSeparator();
-		} else if (tagName === 'd2l-dropdown-button') {
+		} else if (tagName === 'd2l-dropdown-button' || tagName === 'd2l-dropdown-button-subtle') {
 			menuItem = this._createMenuItemMenu(item);
 		} else if (item.classList.contains('d2l-button-group-custom-item')) {
 			menuItem = this._createMenuItem(item);
@@ -102,7 +112,7 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 
 		menuItem.setAttribute('bgi-ref', item.getAttribute('bgi-ref'));
 
-		var overflowMenu = dom(this._overflowMenu);
+		var overflowMenu = dom(this._overflowMenu.querySelector('d2l-menu#overflowMenu'));
 
 		/**
 		 * 3 scenarios
@@ -261,9 +271,9 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 
 			// if there is at least one showing and no more to be hidden, enable collapsing more button to [...]
 			if (this.minToShow > 0 && (showing.width + this._layout.overflowMenuWidth > this._layout.availableWidth)) {
-				this._overflowMenu.mini = true;
+				this.mini = true;
 			} else {
-				this._overflowMenu.mini = false;
+				this.mini = false;
 			}
 
 			var chompIndex = 0;
@@ -278,9 +288,9 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 
 			// if there is at least one showing and no more to be hidden, enable collapsing more button to [...]
 			//if (this.minToShow > 0 && (showing.width + this._layout.overflowMenuWidth > this._layout.availableWidth)) {
-			//	this._overflowMenu.mini = true;
+			//	this.mini = true;
 			//} else {
-			//	this._overflowMenu.mini = false;
+			//	this.mini = false;
 			//}
 
 			this._overflowMenu.style.display = ((!isSoftOverflowing && !isForcedOverflowing) ? 'none' : '');
@@ -346,6 +356,10 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 
 	},
 
+	_getIcon: function(mini) {
+		return mini ? 'd2l-tier1:more' : 'd2l-tier1:chevron-down';
+	},
+
 	_getItems: function() {
 		return Array.prototype.filter.call(
 			dom(this).childNodes,
@@ -360,7 +374,7 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 		fastdom.measure(function() {
 
 			this._container = dom(this.root).querySelector('.d2l-button-group-container');
-			this._overflowMenu = dom(this.root).querySelector('d2l-button-group-menu') || dom(this.root).querySelector('d2l-button-subtle-group-menu');
+			this._overflowMenu = dom(this.root).querySelector('d2l-dropdown.d2l-overflow-dropdown');
 
 			var items = this._getItems();
 			if (this.autoShow) {
@@ -388,7 +402,7 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 	},
 
 	_isOverflowMenuMini: function() {
-		return this._overflowMenu.hasAttribute('mini');
+		return this.mini;
 	},
 
 	_removeFromOverflowMenu: function(item) {
@@ -399,9 +413,11 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 		}
 
 		var tagName = item.tagName.toLowerCase();
-		if (tagName === 'd2l-dropdown-button') {
+		if (tagName === 'd2l-dropdown-button' || tagName === 'd2l-dropdown-button-subtle') {
+			var menu = dom(menuItem).querySelector('d2l-menu');
+			menu.removeAttribute('child-view');
 			dom(item).querySelector('d2l-dropdown-menu').appendChild(
-				dom(menuItem).querySelector('d2l-menu')
+				menu
 			);
 		}
 		dom(dom(menuItem).parentNode).removeChild(menuItem);
