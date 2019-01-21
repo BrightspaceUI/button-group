@@ -1,7 +1,14 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-button/d2l-button-subtle.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../d2l-icons/d2l-icon.html">
+<link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="../d2l-menu/d2l-menu.html">
+<link rel="import" href="../d2l-offscreen/d2l-offscreen-shared-styles.html">
 <link rel="import" href="d2l-button-group-responsive-behavior.html">
 <link rel="import" href="d2l-button-group-styles.html">
-<link rel="import" href="d2l-button-subtle-group-menu.html">
 <link rel="import" href="localize-behavior.html">
 
 <!--
@@ -13,16 +20,45 @@ Polymer-based web component to responsively encapsulate a group of actions butto
 
 <dom-module id="d2l-action-button-group">
 	<template strip-whitespace>
-		<style include="d2l-button-group-styles">
-			/*
-			 * https://github.com/Polymer/tools/issues/408
-			 * Empty style blocks break linter.
-			 */
-			:host {}
+		<style include="d2l-button-group-styles d2l-offscreen-shared-styles">
+
+			.d2l-dropdown-opener-text {
+				margin-right: 0.3rem;
+				vertical-align: middle;
+			}
+
+			.d2l-dropdown-opener-text,
+			d2l-icon {
+				color: var(--d2l-color-celestine);
+			}
+
+			:host-context([dir='rtl']) .d2l-dropdown-opener-text {
+				margin-left: 0.3rem;
+				margin-right: 0;
+			}
+
+			:host(:dir(rtl)) .d2l-dropdown-opener-text {
+				margin-left: 0.3rem;
+				margin-right: 0;
+			}
+
+			:host([mini]) .d2l-dropdown-opener-text {
+				@apply --d2l-offscreen;
+			}
+
 		</style>
 		<div class="d2l-button-group-container">
 			<slot id="buttons"></slot>
-			<d2l-button-subtle-group-menu text="[[localize('more')]]"></d2l-button-subtle-group-menu>
+			<d2l-dropdown class="d2l-overflow-dropdown">
+				<d2l-button-subtle class="d2l-dropdown-opener">
+					<span class="d2l-dropdown-opener-text">[[localize('moreActions')]]</span>
+					<d2l-icon icon="[[icon]]"></d2l-icon>
+				</d2l-button-subtle>
+				<d2l-dropdown-menu render-content>
+					<d2l-menu id="overflowMenu" label="[[localize('more')]]">
+					</d2l-menu>
+				</d2l-dropdown-menu>
+			</d2l-dropdown>
 		</div>
 	</template>
 	<script>
