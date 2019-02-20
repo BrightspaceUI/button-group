@@ -12,20 +12,7 @@ script:
     echo "Not a pull request and/or no secure environment variables, running headless tests...";
     npm run test:polymer:local || travis_terminate 1;
   fi
-- |
-  if [ "$TRAVIS_BRANCH" == "master" ] && [ $TRAVIS_PULL_REQUEST == false ]; then
-    echo "Not a Pull Request and on branch master so bumping version";
-    frauci-update-version;
-    export TRAVIS_TAG=$(frauci-get-version)
-  fi
-deploy:
-  provider: releases
-  api_key: "$GITHUB_RELEASE_TOKEN"
-  on:
-    tags: true
 env:
   global:
-  - REPO_NAME=button-group
   - SAUCE_USERNAME: Desire2Learn
   - secure: AZZ3LndvzSdLVjyNbR7kVkaxOtlKahCyjr0cqL+6jZep3UIcCUvxXZ3ofWNhIWqVSDI3Ph8/pvk0QNrrsndGSOD5n/pWYMn5TfQmpAuhSo42wvNINQRBD3GVteaEKDxtsgbf6L11IhcWlz5V3XhFOBGfhzOndil7WKgpAyqaGVcUemtUAdQfMKwIzGL9ebr/5/sHlRatjc0MBs/zwjEC+t1t3jgRsr7vfB3cVBOrlKJOfvV6XyxGsls6IAsAUbqx/6x69LjehFIaIA+Prq3fOApkRaWpDH/1mT3+LM9vNpkg9GT7FetldSnbEdr6LJyE4fhJ5Wzs+d7eaRNgazPAZnmgp+A4nhAH5qkm2vZOZtY41EwOefj9jg7dbiSyrG50O691KfKIz4qQSEfPC/DdzVQ17oDSJOfXaSfGJn/fcbyrPTnWHTvbPUmwwrwvBkHURWS7BcpQC8PnQCZoJVMb4z+zS5dbnbYE+v8IQ/sjR2C1G8VXm8WkxG23VhTY3+F0gpByo5E/gavmsB/enApjtYeNAmCaM1nBOldKyOt8Ey3bQMYHofjVjQ9zY7nFWjNUE9Z6o+VFFF8CYgGhRvrqX/D0zdgeDxRSRfPNhbKmeZKEtbqTB6bsO7GZnEb80dALY/GOn7cQlnwpdFJyYeDTYfbfMbU+P7llLGJ789NtDOI=
-  - secure: Q8mv1ceaOfNgqYug3FLQ4GhHZ5aMbGWwj8iocIltLWPK2mIJUeooezGsfqEg5kVVmQiKkNsDngvp7nw9DsrM3jTVKaiZanrFpUKrhgArUCVArOl65z8NBmUPPEtZBtF1oRIfIT2Sugstfc1e4w2IlMeSystNSabvpl2xYH3XN9tAYpKuGIKBtDz/5fmZGTqQyGjkaaQ6l/8S2u+qckQc9iVxdLeGBLbe3hbAX3C7Pyl/G6ugT/aNwOesrgvLdMfrSkYjerWsKUtOp35HOoHz31BUY7ah3IsaY7GnS/Da+znMAUx7u4X6ibfwWzR07wjI9DbBDKP1DXDV66vMCTBuO20RbJ+E5tf75pSK3B+x3p+XtWqqjgqWqy1r7sL4zZhHqQw3fj2SsqxrArfnQskgD+swEN+dS9PWPUOAdTOIHBgSeIy34+eR9kaPmVtiiG2yRlCcJqiloU4Tg8biVpUZoRDGGnFpkQFimZcdPAAf+BxejxfcIruNw61xTlLnrNeu/JbdKiH8TzDwujkM3uAVycY97OcfhzQ5TuELX1TUlKcgvd6MJLopKJ9ajGEMDhSIxcwIMhR23zI47WEkMCo5PFFZ5hOKb4ILfYOTBC3LKWpROQEAsydIfyX4Llk1Tw5mQkEAsitgy2y65vQQRr4VkjSV1dvC4Ivv3vjBkDrgThI=
