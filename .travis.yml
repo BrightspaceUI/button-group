@@ -25,6 +25,7 @@ deploy:
     tags: true
 env:
   global:
+  - OWNER_NAME=BrightspaceUI
   - REPO_NAME=button-group
   - SAUCE_USERNAME: Desire2Learn
   - secure: AZZ3LndvzSdLVjyNbR7kVkaxOtlKahCyjr0cqL+6jZep3UIcCUvxXZ3ofWNhIWqVSDI3Ph8/pvk0QNrrsndGSOD5n/pWYMn5TfQmpAuhSo42wvNINQRBD3GVteaEKDxtsgbf6L11IhcWlz5V3XhFOBGfhzOndil7WKgpAyqaGVcUemtUAdQfMKwIzGL9ebr/5/sHlRatjc0MBs/zwjEC+t1t3jgRsr7vfB3cVBOrlKJOfvV6XyxGsls6IAsAUbqx/6x69LjehFIaIA+Prq3fOApkRaWpDH/1mT3+LM9vNpkg9GT7FetldSnbEdr6LJyE4fhJ5Wzs+d7eaRNgazPAZnmgp+A4nhAH5qkm2vZOZtY41EwOefj9jg7dbiSyrG50O691KfKIz4qQSEfPC/DdzVQ17oDSJOfXaSfGJn/fcbyrPTnWHTvbPUmwwrwvBkHURWS7BcpQC8PnQCZoJVMb4z+zS5dbnbYE+v8IQ/sjR2C1G8VXm8WkxG23VhTY3+F0gpByo5E/gavmsB/enApjtYeNAmCaM1nBOldKyOt8Ey3bQMYHofjVjQ9zY7nFWjNUE9Z6o+VFFF8CYgGhRvrqX/D0zdgeDxRSRfPNhbKmeZKEtbqTB6bsO7GZnEb80dALY/GOn7cQlnwpdFJyYeDTYfbfMbU+P7llLGJ789NtDOI=
