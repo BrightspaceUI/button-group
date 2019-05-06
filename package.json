@@ -39,6 +39,7 @@
   "main": "all-imports.js",
   "dependencies": {
     "d2l-button": "BrightspaceUI/button#semver:^5",
+    "d2l-colors": "BrightspaceUI/colors#semver:^4",
     "d2l-dropdown": "BrightspaceUI/dropdown#semver:^7",
     "fastdom": "^1.0.8",
     "d2l-icons": "BrightspaceUI/icons#semver:^6",
