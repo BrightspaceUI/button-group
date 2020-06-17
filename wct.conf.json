@@ -26,12 +26,12 @@
         {
           "browserName": "microsoftedge",
           "platform": "Windows 10",
-          "version": ""
+          "version": "latest"
         },
         {
-          "browserName": "internet explorer",
+          "browserName": "microsoftedge",
           "platform": "Windows 10",
-          "version": "11"
+          "version": "18.17763"
         }
       ]
     }
