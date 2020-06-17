@@ -141,8 +141,10 @@ describe('<d2l-button-group>', function() {
 
 	var onUpdated = function(delegate) {
 		var handleUpdated = function() {
-			buttonGroup.removeEventListener('d2l-button-group-updated', handleUpdated);
-			delegate();
+			requestAnimationFrame(function() {
+				buttonGroup.removeEventListener('d2l-button-group-updated', handleUpdated);
+				delegate();
+			});
 		};
 		buttonGroup.addEventListener('d2l-button-group-updated', handleUpdated);
 	};
