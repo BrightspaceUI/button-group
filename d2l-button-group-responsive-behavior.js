@@ -303,8 +303,8 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 
 	_createMenuItem: function(item) {
 		var menuItem = document.createElement('d2l-menu-item');
-		var childText = item.firstChild && (item.firstChild.label || item.firstChild.text || item.firstChild.textContent);
-		menuItem.setAttribute('text', item.label || item.text || item.textContent || childText);
+		var childText = item.firstChild && (item.firstChild.label || item.firstChild.text || item.firstChild.textContent.trim());
+		menuItem.setAttribute('text', item.label || item.text || item.textContent.trim() || childText);
 		if (item.disabled) {
 			menuItem.setAttribute('disabled', 'disabled');
 		}
@@ -318,7 +318,7 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 	_createMenuItemLink: function(item) {
 		var menuItem = document.createElement('d2l-menu-item-link');
 		menuItem.preventDefault = item.getAttribute('data-prevent-default');
-		menuItem.setAttribute('text', item.textContent);
+		menuItem.setAttribute('text', item.textContent.trim());
 		menuItem.setAttribute('href', item.href);
 		if (item.target) {
 			menuItem.setAttribute('target', item.target);
