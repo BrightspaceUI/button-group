@@ -56,7 +56,7 @@ const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<div class="vertical-section-container centered">
 
-			<h3>Image Actions</h3>
+			<h3>Image Actions ("button" opener)</h3>
 			<demo-snippet>
 				<template>
 					<d2l-action-button-group min-to-show="1" max-to-show="5">
@@ -92,7 +92,42 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container centered
 					</d2l-action-button-group>
 				</template>
 			</demo-snippet>
-
+			<h3>Image Actions ("more" opener)</h3>
+			<demo-snippet>
+				<template>
+					<d2l-action-button-group min-to-show="1" max-to-show="5" opener-type="more">
+						<d2l-button-subtle icon="d2l-tier1:add" text="Add"></d2l-button-subtle>
+						<d2l-button-subtle icon="d2l-tier1:copy" text="Copy"></d2l-button-subtle>
+						<d2l-dropdown-button-subtle text="Explore Topics">
+							<d2l-dropdown-menu>
+								<d2l-menu label="Astronomy">
+									<d2l-menu-item text="Introduction"></d2l-menu-item>
+									<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
+									<d2l-menu-item text="The Solar System"></d2l-menu-item>
+									<d2l-menu-item text="Stars &amp; Galaxies"></d2l-menu-item>
+									<d2l-menu-item text="The Night Sky"></d2l-menu-item>
+									<d2l-menu-item text="The Universe"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-button-subtle>
+						<d2l-button-subtle icon="d2l-tier1:pin-filled" text="Pin"></d2l-button-subtle>
+						<d2l-button-subtle icon="d2l-tier1:print" text="Print"></d2l-button-subtle>
+						<d2l-button-subtle icon="d2l-tier1:delete" text="Delete"></d2l-button-subtle>
+						<d2l-button-subtle icon="d2l-tier1:gear" text="Settings"></d2l-button-subtle>
+						<d2l-dropdown-button-subtle text="Types of Dogs">
+							<d2l-dropdown-menu>
+								<d2l-menu label="Dogs">
+									<d2l-menu-item text="Dachshund"></d2l-menu-item>
+									<d2l-menu-item text="Golden Retriever"></d2l-menu-item>
+									<d2l-menu-item text="Sheltie"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-button-subtle>
+						<d2l-button-subtle icon="d2l-tier1:refresh" text="Refresh"></d2l-button-subtle>
+						<div class="d2l-button-group-custom-item"><d2l-button-subtle icon="d2l-tier1:refresh" text="Custom Refresh"></d2l-button-subtle></div>
+					</d2l-action-button-group>
+				</template>
+			</demo-snippet>
 		</div>`;
 
 document.body.appendChild($_documentContainer.content);
