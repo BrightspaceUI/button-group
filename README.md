@@ -1,69 +1,14 @@
 # d2l-button-group
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/BrightspaceUI/button-group)
-[![Bower version][bower-image]][bower-url]
 [![Build status][ci-image]][ci-url]
 
 [Polymer](https://www.polymer-project.org)-based web component for responsive button groups, overflowing buttons into a dropdown menu based on configuration and space available.
 
 For further information on this and other components, refer to [The Brightspace UI Guide](https://github.com/BrightspaceUI/guide/wiki).
 
-## Installation
-
-`d2l-button-group` can be installed from [Bower][bower-url]:
-```shell
-bower install d2l-button-group
-```
-
 ## Usage
-
-Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import `d2l-button-group.html` or `d2l-action-button-group.html`:
-
-```html
-<head>
-  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../d2l-button-group/d2l-button-group.html">
-</head>
-```
 
 A `<d2l-button-group>` custom element can be used in your application to define a responsive group of buttons and dropdown buttons.  The `min-to-show` and `max-to-show` attributes can be used to configure how many buttons will be displayed.  By default, a minimum of zero buttons will be displayed, and all buttons will be displayed if space is available.
 
-<!---
-```
-<custom-element-demo>
-  <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../d2l-typography/d2l-typography.html">
-    <link rel="import" href="../d2l-button/d2l-button.html">
-    <link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
-    <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
-    <link rel="import" href="../d2l-menu/d2l-menu.html">
-    <link rel="import" href="../d2l-menu/d2l-menu-item.html">
-    <link rel="import" href="d2l-button-group.html">
-    <custom-style include="d2l-typography">
-      <style is="custom-style" include="d2l-typography"></style>
-    </custom-style>
-    <style>
-      html {
-        font-size: 20px;
-      }
-      d2l-button-group,
-      d2l-action-button-group {
-        color: var(--d2l-color-ferrite);
-        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-        letter-spacing: 0.01rem;
-        font-size: 0.95rem;
-        font-weight: 400;
-        line-height: 1.4rem;
-      }
-    </style>
-    <script>
-      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '200px'; });
-    </script>
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
 ```html
 <d2l-button-group min-to-show="1" max-to-show="3">
 	<d2l-button primary>New</d2l-button>
@@ -87,46 +32,6 @@ A `<d2l-button-group>` custom element can be used in your application to define 
 
 A `<d2l-action-button-group>` custom element can be used in your application to define a responsive group of actions with the same behavior and attributes as described for `<d2l-button-group>`.  Typically these will include one or more subtle buttons (`<d2l-button-subtle>`) as shown.
 
-<!---
-```
-<custom-element-demo>
-  <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../d2l-typography/d2l-typography.html">
-    <link rel="import" href="../d2l-button/d2l-button.html">
-    <link rel="import" href="../d2l-button/d2l-button-subtle.html">
-    <link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
-    <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
-    <link rel="import" href="../d2l-menu/d2l-menu.html">
-    <link rel="import" href="../d2l-menu/d2l-menu-item.html">
-    <link rel="import" href="../d2l-icons/tier1-icons.html">
-    <link rel="import" href="d2l-button-group.html">
-    <link rel="import" href="d2l-action-button-group.html">
-    <custom-style include="d2l-typography">
-      <style is="custom-style" include="d2l-typography"></style>
-    </custom-style>
-    <style>
-      html {
-        font-size: 20px;
-      }
-      d2l-button-group,
-      d2l-action-button-group {
-        color: var(--d2l-color-ferrite);
-        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-        letter-spacing: 0.01rem;
-        font-size: 0.95rem;
-        font-weight: 400;
-        line-height: 1.4rem;
-      }
-    </style>
-    <script>
-      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '200px'; });
-    </script>
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
 ```html
 <d2l-action-button-group min-to-show="1" max-to-show="5">
 	<d2l-button-subtle icon="d2l-tier1:add" text="Add"></d2l-button-subtle>
@@ -138,6 +43,8 @@ A `<d2l-action-button-group>` custom element can be used in your application to 
 	<d2l-button-subtle icon="d2l-tier1:refresh" text="Refresh"></d2l-button-subtle>
 </d2l-action-button-group>
 ```
+
+To use a `<d2l-dropdown-more>` "..." opener, set the `opener-type` attribute to `"more"`.
 
 ## Developing, Testing and Contributing
 
@@ -173,8 +80,6 @@ To lint AND run local unit tests:
 npm test
 ```
 
-[bower-url]: http://bower.io/search/?q=d2l-button-group
-[bower-image]: https://badge.fury.io/bo/d2l-button-group.svg
 [ci-url]: https://travis-ci.com/BrightspaceUI/button-group
 [ci-image]: https://travis-ci.com/BrightspaceUI/button-group.svg?branch=master
 

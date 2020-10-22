@@ -374,7 +374,7 @@ D2L.PolymerBehaviors.ButtonGroup.ResponsiveBehaviorImpl = {
 		fastdom.measure(function() {
 
 			this._container = dom(this.root).querySelector('.d2l-button-group-container');
-			this._overflowMenu = dom(this.root).querySelector('d2l-dropdown.d2l-overflow-dropdown');
+			this._overflowMenu = dom(this.root).querySelector('.d2l-overflow-dropdown');
 
 			var items = this._getItems();
 			if (this.autoShow) {
