@@ -1,5 +1,6 @@
 # d2l-button-group
-[![Build status][ci-image]][ci-url]
+
+![Build status](https://github.com/BrightspaceUI/intl/workflows/CI/badge.svg)
 
 [Polymer](https://www.polymer-project.org)-based web component for responsive button groups, overflowing buttons into a dropdown menu based on configuration and space available.
 
@@ -80,11 +81,12 @@ To lint AND run local unit tests:
 npm test
 ```
 
-[ci-url]: https://travis-ci.com/BrightspaceUI/button-group
-[ci-image]: https://travis-ci.com/BrightspaceUI/button-group.svg?branch=master
-
 ## Versioning & Releasing
 
 All version changes should obey [semantic versioning](https://semver.org/) rules.
 
-Include either `[increment major]`, `[increment minor]` or `[increment patch]` in your merge commit message to automatically increment the `package.json` version and create a tag during the next build.
+Releases use the [semantic-release](https://semantic-release.gitbook.io/) tooling and the [angular preset](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular) for commit message syntax. Upon release, the version in `package.json` is updated, a tag and GitHub release is created and a new package will be deployed to NPM.
+
+Commits prefixed with `feat` will trigger a minor release, while `fix` or `perf` will trigger a patch release. A commit containing `BREAKING CHANGE` will cause a major release to occur.
+
+Other useful prefixes that will not trigger a release: `build`, `ci`, `docs`, `refactor`, `style` and `test`. More details in the [Angular Contribution Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type).
