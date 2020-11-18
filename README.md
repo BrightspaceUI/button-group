@@ -1,6 +1,6 @@
 # d2l-button-group
 
-![Build status](https://github.com/BrightspaceUI/intl/workflows/CI/badge.svg)
+![Build status](https://github.com/BrightspaceUI/button-group/workflows/CI/badge.svg)
 
 [Polymer](https://www.polymer-project.org)-based web component for responsive button groups, overflowing buttons into a dropdown menu based on configuration and space available.
 
