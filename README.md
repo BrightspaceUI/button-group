@@ -1,3 +1,6 @@
+> Deprecated: use [BrightspaceUI/core/components/overflow-group](https://github.com/BrightspaceUI/core/tree/master/components/overflow-group) `<d2l-overflow-group>` web component instead.
+
+
 # d2l-button-group
 
 [Polymer](https://www.polymer-project.org)-based web component for responsive button groups, overflowing buttons into a dropdown menu based on configuration and space available.
